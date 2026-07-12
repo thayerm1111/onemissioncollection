@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { Wordmark } from "./Wordmark";
 
 /**
  * First-visit intro: a shopping bag with the One Mission Collection mark.
@@ -61,8 +62,7 @@ export function IntroSplash() {
         </svg>
         {/* wordmark on the bag face */}
         <div className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center pt-10 text-paper">
-          <span style={{ fontSize: 11, letterSpacing: "0.24em" }}>ONE MISSION</span>
-          <span style={{ fontSize: 20, fontWeight: 700, letterSpacing: "0.22em" }}>COLLECTION</span>
+          <Wordmark size="md" />
         </div>
       </div>
       <style>{`

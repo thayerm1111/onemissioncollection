@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { Search, User, ShoppingBag, Menu, X } from "lucide-react";
 import { checkoutDomain } from "@/lib/shopify";
+import { Wordmark } from "./Wordmark";
 
 const NAV = [
   { label: "Featured", href: "/" },
@@ -38,11 +39,8 @@ export function Header() {
         </div>
 
         {/* Center: wordmark */}
-        <Link href="/" className="justify-self-center text-center">
-          <span className="label-sm block leading-none text-mute">One Mission</span>
-          <span className="block text-sm font-semibold uppercase tracking-widest2 text-ink sm:text-base">
-            Collection
-          </span>
+        <Link href="/" className="justify-self-center text-center text-ink" aria-label="One Mission">
+          <Wordmark />
         </Link>
 
         {/* Right: utilities */}
