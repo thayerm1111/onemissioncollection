@@ -587,7 +587,9 @@ export function getProductByPid(pid: string): ShopProduct | null {
 /** Products filtered for a nav category. "all" returns everything. */
 export function productsFor(cat: "all" | "men" | "women"): ShopProduct[] {
   if (cat === "all") return products;
-  if (cat === "women") return products.filter((p) => p.gender === "women" || p.gender === "unisex");
+  // Women's page shows only women's-specific pieces (not the whole unisex catalog).
+  if (cat === "women") return products.filter((p) => p.gender === "women");
+  // Men's page shows men + unisex apparel.
   return products.filter((p) => p.gender === "men" || p.gender === "unisex");
 }
 
