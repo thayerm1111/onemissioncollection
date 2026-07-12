@@ -55,7 +55,7 @@ export interface ShopProduct {
   pairsWith?: string[];     // product ids to offer as a matching set (e.g. hoodie → sweats)
   badge?: string;           // featured ribbon text, e.g. "Hottest Item"
   colorImages?: Record<string, string>; // color name → image URL (main photo swaps with color)
-  gender?: "men" | "women" | "unisex";  // used for the Men / Women nav on the store
+  gender?: "men" | "women" | "unisex" | "accessory";  // used for the Men / Women / Accessories nav
 }
 export interface ShopCollection {
   title: string;

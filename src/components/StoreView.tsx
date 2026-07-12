@@ -6,6 +6,7 @@ const TABS = [
   { label: "All", href: "/" },
   { label: "Men", href: "/men" },
   { label: "Women", href: "/women" },
+  { label: "Accessories", href: "/accessories" },
 ];
 
 export function StoreView({
