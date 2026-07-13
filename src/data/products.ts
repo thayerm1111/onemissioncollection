@@ -555,7 +555,7 @@ export const staticCollections: Record<string, ShopCollection> = {
         handle: "one-mission-high-waisted-yoga-leggings",
         description: "High-waisted yoga leggings in 13 colors. 80% nylon / 20% spandex.",
         imageUrl: I("d8d966f8d69f47969392ca4ae17d9d68", "1783897728"), imageAlt: "Women's High-Waisted Yoga Leggings",
-        images: [I("ad2fb689d6814f66bacc8585b87a6bb8", "1783897728"), I("760b5e958ace4b0bb6030b88cfeae682", "1783897728"), I("0293a72f4a8f471297ef2305d78a0802", "1783897728"), I("0edc829721fe426fb621403f36debc0a", "1783897728"), I("ed3ddf7b333d49d88ab927903a8329cc", "1783897728"), I("83250f4a0e804d2087161a2e68b5a4a5", "1783897728"), I("90cbde60daa04ff9b33b5f14d74f8b25", "1783897728"), I("ad2611a1a92046a2bfc2f8547468f9d7", "1783897728"), I("8ab51a8d097a407dae7d59aa044ca66c", "1783897728"), I("1811e4e85e5e48c8935986917b91d5e5", "1783897728"), I("ddc86131d17445fa9496c2b964d6f105", "1783897728"), I("9c51b75688f9437893691eaa751bcaac", "1783897728"), I("9a003300c67a4c6da7d26d5f40c5e09f", "1783897728")],
+        images: [I("ddc86131d17445fa9496c2b964d6f105", "1783897728"), I("b2a874ef911e4018b5f01d38c3668006", "1783897728"), I("90cbde60daa04ff9b33b5f14d74f8b25", "1783897728"), I("e1e3dd9bbf62447d845d6837c7393576", "1783897728"), I("ed3ddf7b333d49d88ab927903a8329cc", "1783897728"), I("b0889b32241b493687b67c9e2f13411a", "1783897728"), I("1811e4e85e5e48c8935986917b91d5e5", "1783897728"), I("ed06460a40eb49519a2f9d629d2361c0", "1783897728"), I("0edc829721fe426fb621403f36debc0a", "1783897728"), I("2e248d74b175414fa64fafada9555852", "1783897728"), I("9c51b75688f9437893691eaa751bcaac", "1783897728"), I("61b7772043894cf58886733574ed0f58", "1783897728"), I("8ab51a8d097a407dae7d59aa044ca66c", "1783897728"), I("32e4f10672ff4849b28f255f2f4cee7a", "1783897728"), I("9a003300c67a4c6da7d26d5f40c5e09f", "1783897728"), I("3eedeae88e094a7e94765d6f20de6da6", "1783897728"), I("ad2611a1a92046a2bfc2f8547468f9d7", "1783897728"), I("18cebc5714cc4b69b1e0e088583387a4", "1783897728"), I("83250f4a0e804d2087161a2e68b5a4a5", "1783897728"), I("c075111bfb3b43e396651f550c338f36", "1783897728"), I("0293a72f4a8f471297ef2305d78a0802", "1783897728"), I("9fce5bdaf2324566b6c48a186cfcc4d6", "1783897728"), I("760b5e958ace4b0bb6030b88cfeae682", "1783897728"), I("717c06606e884dd4af72127237d3c864", "1783897728"), I("ad2fb689d6814f66bacc8585b87a6bb8", "1783897728")],
         colorImages: {
           "Red": I("ad2fb689d6814f66bacc8585b87a6bb8", "1783897728"),
           "Dark Green": I("760b5e958ace4b0bb6030b88cfeae682", "1783897728"),
@@ -646,7 +646,7 @@ export const staticCollections: Record<string, ShopCollection> = {
         handle: "one-mission-cropped-half-zip-sweatshirt",
         description: "Cropped half-zip sweatshirt in Gray, Black, Navy Blue, and Green.",
         imageUrl: I("0a048fb673c445dd8be1416a2f691411", "1783897563"), imageAlt: "Women's Cropped Half-Zip Sweatshirt",
-        images: [I("43098b3e15da437fa7d713210034c701", "1783897563"), I("0a048fb673c445dd8be1416a2f691411", "1783897563"), I("188715278eba4a7bb362f7cfa366051c", "1783897563"), I("60c90c8d92184991a87ac6d09c05bae0", "1783897563")],
+        images: [I("0a048fb673c445dd8be1416a2f691411", "1783897563"), I("19f5f67cc4ba4c74ad3bf874a66c2327", "1783897563"), I("60c90c8d92184991a87ac6d09c05bae0", "1783897563"), I("1558eb3cf2c54a39b7f25716b1a0f623", "1783897563"), I("43098b3e15da437fa7d713210034c701", "1783897563"), I("363d8bc90a4e4844b86f58211cc0af28", "1783897562"), I("188715278eba4a7bb362f7cfa366051c", "1783897563"), I("b90fe9c68fd54925bd1f113d4339847b", "1783897563")],
         colorImages: {
           "Gray": I("43098b3e15da437fa7d713210034c701", "1783897563"),
           "Black": I("0a048fb673c445dd8be1416a2f691411", "1783897563"),
@@ -675,7 +675,7 @@ export const staticCollections: Record<string, ShopCollection> = {
         handle: "one-mission-essential-cropped-hoodie",
         description: "Essential cropped hoodie in Dark Reddish Purple, Black, and Charcoal Gray.",
         imageUrl: I("5b8584533bbd4727bc9225367c1db8ca", "1783897473"), imageAlt: "Women's Essential Cropped Hoodie",
-        images: [I("3cc865a107ca4b3c9cb29b41440f5722", "1783897473"), I("5b8584533bbd4727bc9225367c1db8ca", "1783897473"), I("dfdb71ba9c9e4598a4b4d8a56cee6231", "1783897473")],
+        images: [I("5b8584533bbd4727bc9225367c1db8ca", "1783897473"), I("82bc236b07604a64bad91140e503ee8b", "1783897473"), I("dfdb71ba9c9e4598a4b4d8a56cee6231", "1783897473"), I("e184a234191b4763b8502a1a38dbca1d", "1783897473"), I("3cc865a107ca4b3c9cb29b41440f5722", "1783897473"), I("8e8d8734612c4217a94b0e624af0d7fa", "1783897473")],
         colorImages: {
           "Dark Reddish Purple": I("3cc865a107ca4b3c9cb29b41440f5722", "1783897473"),
           "Black": I("5b8584533bbd4727bc9225367c1db8ca", "1783897473"),
