@@ -48,6 +48,11 @@ function Tile({ product }: { product: ShopProduct }) {
         {!soldOut && product.badge && (
           <span className="absolute left-4 top-4 label-sm text-ink">Featured</span>
         )}
+        {!soldOut && product.badge && (
+          <span className="absolute right-4 top-4 bg-ink px-2 py-1 text-[10px] font-semibold uppercase tracking-widest2 text-paper">
+            Limited
+          </span>
+        )}
       </div>
       <div className="mt-3 sm:mt-4">
         <p className="label-sm text-mute">One Mission</p>

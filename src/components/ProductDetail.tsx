@@ -107,6 +107,15 @@ export function ProductDetail({ product, pairs = [] }: { product: ShopProduct; p
           <h1 className="mt-2 text-xl font-medium text-ink sm:text-2xl">{product.title}</h1>
           <p className="mt-3 text-base text-ink">{product.hasOptions ? "From " : ""}{product.minPrice}</p>
 
+          {product.badge && (
+            <div className="mt-4 inline-flex items-center gap-2 border border-ink px-3 py-1.5">
+              <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-ink" />
+              <span className="text-[11px] font-semibold uppercase tracking-widest2 text-ink">
+                Limited availability — once it&apos;s gone, it&apos;s gone
+              </span>
+            </div>
+          )}
+
           {!single && colors.length > 0 && (
             <div className="mt-8">
               <p className="label text-mute">Color: <span className="text-ink">{color}</span></p>
