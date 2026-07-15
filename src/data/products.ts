@@ -844,13 +844,13 @@ export const staticCollections: Record<string, ShopCollection> = {
         title: "ONEMISSION Swim Shorts",
         handle: "swim-trunks-minimal-onemission-logo-swim-shorts",
         description: "Lightweight, quick-dry swim shorts with minimal ONEMISSION branding. 100% polyester, elastic drawstring waist, mesh-lined pockets. Crisp white.",
-        imageUrl: "https://cdn.shopify.com/s/files/1/1016/0406/5559/files/7980430137510901865_2048.jpg?v=1783914596",
+        imageUrl: "https://cdn.shopify.com/s/files/1/1016/0406/5559/files/14024662994711828744_2048.jpg?v=1783914598",
         imageAlt: "ONEMISSION Swim Shorts",
         images: [
-          "https://cdn.shopify.com/s/files/1/1016/0406/5559/files/7980430137510901865_2048.jpg?v=1783914596",
           "https://cdn.shopify.com/s/files/1/1016/0406/5559/files/14024662994711828744_2048.jpg?v=1783914598",
           "https://cdn.shopify.com/s/files/1/1016/0406/5559/files/12622907643620485730_2048.jpg?v=1783914599",
           "https://cdn.shopify.com/s/files/1/1016/0406/5559/files/4132023011361013706_2048.jpg?v=1783914600",
+          "https://cdn.shopify.com/s/files/1/1016/0406/5559/files/7980430137510901865_2048.jpg?v=1783914596",
         ],
         minPrice: "$49.65", currency: "USD", hasOptions: true,
         variants: [
@@ -868,9 +868,8 @@ export const staticCollections: Record<string, ShopCollection> = {
         title: "The Fit — Hoodie + Lounge Shorts",
         handle: "the-fit",
         description: "The full look: the Statement Hoodie paired with the One Mission Lounge Shorts. Buy the set or either piece, in any color.",
-        imageUrl: I("198d8f9982b3471f8981350f40d77558", "1783935528"), imageAlt: "The Fit",
-        images: [I("198d8f9982b3471f8981350f40d77558", "1783935528"), I("c9a1f934f5a04b788bb66a1189d9a21c", "1783935528"), I("7c3c43376f53456fbbeb00ff33d2ce6d", "1783935528")],
-        model: I("198d8f9982b3471f8981350f40d77558", "1783935528"),
+        imageUrl: I("778fa639e48f465da5338c463cd8b140", "1783935528"), imageAlt: "The Fit",
+        images: [I("778fa639e48f465da5338c463cd8b140", "1783935528"), I("499d15ba1ede4a6783e0115d2a3d8a4d", "1783881768"), I("198d8f9982b3471f8981350f40d77558", "1783935528")],
         minPrice: "$214", currency: "USD", hasOptions: true,
         badge: "The Set",
         bundle: ["gid://shopify/Product/10410647159063", "gid://shopify/Product/10410155442455"],
@@ -983,9 +982,15 @@ export function productsFor(cat: "all" | "men" | "women" | "accessories"): ShopP
   return products.filter((p) => p.gender === "men" || p.gender === "unisex");
 }
 
-/** Featured order — flagged "hottest" items first, then the rest. */
+/** Featured order — the set first, then the statement hoodies, then flagged items. */
 export function featuredProducts(): ShopProduct[] {
-  return [...products].sort((a, b) => (b.badge ? 1 : 0) - (a.badge ? 1 : 0));
+  const score = (p: ShopProduct) => {
+    if (p.bundle?.length) return 100;                       // The Fit set — top left
+    if (/^statement hoodie$/i.test(p.title)) return 90;     // washed OM statement hoodie
+    if (/one mission statement hoodie/i.test(p.title)) return 80;
+    return p.badge ? 50 : 0;
+  };
+  return [...products].sort((a, b) => score(b) - score(a));
 }
 
 /** Resolve a product's paired items to full product objects. */
