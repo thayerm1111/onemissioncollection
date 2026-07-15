@@ -15,10 +15,16 @@ export function ProductGrid({ products }: { products: ShopProduct[] }) {
   );
 }
 
+// "$125" → "$ 125" to match the tracked-out label style.
+function priceLabel(v?: string) {
+  return (v ?? "").replace(/^\$\s*/, "$ ");
+}
+
 function Tile({ product }: { product: ShopProduct }) {
   const imgs = product.images?.length ? product.images : product.imageUrl ? [product.imageUrl] : [];
-  const front = imgs[0] ?? null;
-  const hover = imgs[1] ?? null;
+  // If a lifestyle/model photo is set, lead with it and flip to the flat product on hover.
+  const front = product.model ?? imgs[0] ?? null;
+  const hover = product.model ? (imgs[0] ?? null) : (imgs[1] ?? null);
   const soldOut = Boolean(product.soldOut);
   const href = `/product/${productPid(product.id)}`;
 
@@ -55,11 +61,9 @@ function Tile({ product }: { product: ShopProduct }) {
         )}
       </div>
       <div className="mt-3 sm:mt-4">
-        <p className="label-sm text-mute">One Mission</p>
-        <p className="mt-1 text-sm text-ink sm:text-[15px]">{product.title}</p>
-        <p className="mt-1 text-sm text-mute">
-          {product.hasOptions ? "" : ""}{product.minPrice}
-        </p>
+        <p className="text-[10px] uppercase tracking-[0.22em] text-mute">One Mission</p>
+        <p className="mt-1.5 text-[13px] tracking-[0.02em] text-ink">{product.title}</p>
+        <p className="mt-1 text-[13px] tracking-[0.06em] text-mute">{priceLabel(product.minPrice)}</p>
       </div>
     </Link>
   );
