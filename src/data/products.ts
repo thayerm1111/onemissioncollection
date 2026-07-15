@@ -259,10 +259,10 @@ export const staticCollections: Record<string, ShopCollection> = {
       },
       {
         id: "gid://shopify/Product/10410155442455",
-        title: "One Mission Lounge Pants",
+        title: "One Mission Lounge Shorts",
         handle: "one-mission-lounge",
-        description: "Relaxed lounge pants in six colors: Brown, Navy, Gray Green, Sand, Black, and Carbon Gray.",
-        imageUrl: I("499d15ba1ede4a6783e0115d2a3d8a4d", "1783881768"), imageAlt: "One Mission Lounge Pants",
+        description: "Relaxed lounge shorts in six colors: Brown, Navy, Gray Green, Sand, Black, and Carbon Gray.",
+        imageUrl: I("499d15ba1ede4a6783e0115d2a3d8a4d", "1783881768"), imageAlt: "One Mission Lounge Shorts",
         images: [I("499d15ba1ede4a6783e0115d2a3d8a4d", "1783881768"), I("c8554ab8b9174994aaf737b08ce452ec", "1783881768"), I("402ed1785eb7408391e81f24feb4b582", "1783881768"), I("952e55c347514a569161862889aa9386", "1783881768"), I("49efd00dd9ca49e5a6d96034768a5405", "1783881768"), I("796bdb1d38aa476dbd4cd2871de88ef0", "1783881768"), I("5223c9c8802d425f8f2a9466bd5afeb5", "1783881768"), I("03a6ba92e4384b99864c0d6f51dab553", "1783881768"), I("c52ee30e5bdb4a5f9ae20ba3711f2a46", "1783881768"), I("197908a4d6e74ddcbec74fe74d52ce46", "1783881768")],
         colorImages: {
           "Brown": I("d535c76a6d434faeb80dc1836328b7c1", "1783881768"),
@@ -781,6 +781,101 @@ export const staticCollections: Record<string, ShopCollection> = {
           V("gid://shopify/ProductVariant/53665144668439", "iPhone 17 Pro Max", "$37.99"),
         ],
       },
+      {
+        id: "gid://shopify/Product/10410647159063",
+        title: "Statement Hoodie",
+        handle: "statement-hoodie",
+        description: "Washed heavyweight hoodie with the ornate OM back print — One Mission · Matthew 18:12 · Our Calling. 100% cotton, 12.4 oz. Seven colors.",
+        imageUrl: I("778fa639e48f465da5338c463cd8b140", "1783935528"), imageAlt: "Statement Hoodie",
+        images: [I("778fa639e48f465da5338c463cd8b140", "1783935528"), I("198d8f9982b3471f8981350f40d77558", "1783935528"), I("c9ab9d80665d43b48aa34f42c8de62c7", "1783935528"), I("c9a1f934f5a04b788bb66a1189d9a21c", "1783935528"), I("af09cef4436a4bcdac23198c0e036108", "1783935528"), I("7c3c43376f53456fbbeb00ff33d2ce6d", "1783935528"), I("34482e8e22194f27826436260cb54dcd", "1783935528"), I("858bdc27b54d459c954eac361db21c86", "1783935528"), I("0d4196279fed43f48ed91b71856f1b72", "1783935528"), I("5ddf79bccb47453980855c0558a37197", "1783935528"), I("597ddb53d00041b2a65addef4340724d", "1783935528"), I("439ff6c6b964401ba2f6484d6206afc7", "1783935528"), I("b03c30d7a28a41be8cc5b2d492f38806", "1783935528"), I("b689c5178851499b854df314dbaaa178", "1783935528")],
+        model: I("198d8f9982b3471f8981350f40d77558", "1783935528"),
+        badge: "🔥 New Drop",
+        colorImages: {
+          "Dark Green": I("0d4196279fed43f48ed91b71856f1b72", "1783935528"),
+          "Sand": I("af09cef4436a4bcdac23198c0e036108", "1783935528"),
+          "Black Beauty": I("778fa639e48f465da5338c463cd8b140", "1783935528"),
+          "Dark Blue": I("34482e8e22194f27826436260cb54dcd", "1783935528"),
+          "Light Gray": I("c9ab9d80665d43b48aa34f42c8de62c7", "1783935528"),
+          "Dark Gray": I("597ddb53d00041b2a65addef4340724d", "1783935528"),
+          "Dark Red": I("b03c30d7a28a41be8cc5b2d492f38806", "1783935528"),
+        },
+        minPrice: "$125", currency: "USD", hasOptions: true,
+        variants: [
+          V("gid://shopify/ProductVariant/53669505597719", "Dark Green / S", "$125"),
+          V("gid://shopify/ProductVariant/53669505630487", "Dark Green / M", "$125"),
+          V("gid://shopify/ProductVariant/53669505663255", "Dark Green / L", "$125"),
+          V("gid://shopify/ProductVariant/53669505696023", "Dark Green / XL", "$125"),
+          V("gid://shopify/ProductVariant/53669505728791", "Dark Green / 2XL", "$125"),
+          V("gid://shopify/ProductVariant/53669505761559", "Sand / S", "$125"),
+          V("gid://shopify/ProductVariant/53669505794327", "Sand / M", "$125"),
+          V("gid://shopify/ProductVariant/53669505827095", "Sand / L", "$125"),
+          V("gid://shopify/ProductVariant/53669505859863", "Sand / XL", "$125"),
+          V("gid://shopify/ProductVariant/53669505892631", "Sand / 2XL", "$125"),
+          V("gid://shopify/ProductVariant/53669505925399", "Black Beauty / S", "$125"),
+          V("gid://shopify/ProductVariant/53669505958167", "Black Beauty / M", "$125"),
+          V("gid://shopify/ProductVariant/53669505990935", "Black Beauty / L", "$125"),
+          V("gid://shopify/ProductVariant/53669506023703", "Black Beauty / XL", "$125"),
+          V("gid://shopify/ProductVariant/53669506056471", "Black Beauty / 2XL", "$125"),
+          V("gid://shopify/ProductVariant/53669506089239", "Black Beauty / 3XL", "$125"),
+          V("gid://shopify/ProductVariant/53669506122007", "Dark Blue / S", "$125"),
+          V("gid://shopify/ProductVariant/53669506154775", "Dark Blue / M", "$125"),
+          V("gid://shopify/ProductVariant/53669506187543", "Dark Blue / L", "$125"),
+          V("gid://shopify/ProductVariant/53669506220311", "Dark Blue / XL", "$125"),
+          V("gid://shopify/ProductVariant/53669506253079", "Dark Blue / 2XL", "$125"),
+          V("gid://shopify/ProductVariant/53669506285847", "Light Gray / S", "$125"),
+          V("gid://shopify/ProductVariant/53669506318615", "Light Gray / M", "$125"),
+          V("gid://shopify/ProductVariant/53669506351383", "Light Gray / L", "$125"),
+          V("gid://shopify/ProductVariant/53669506384151", "Light Gray / XL", "$125"),
+          V("gid://shopify/ProductVariant/53669506416919", "Light Gray / 2XL", "$125"),
+          V("gid://shopify/ProductVariant/53669506449687", "Dark Gray / S", "$125"),
+          V("gid://shopify/ProductVariant/53669506482455", "Dark Gray / M", "$125"),
+          V("gid://shopify/ProductVariant/53669506515223", "Dark Gray / L", "$125"),
+          V("gid://shopify/ProductVariant/53669506547991", "Dark Gray / XL", "$125"),
+          V("gid://shopify/ProductVariant/53669506580759", "Dark Gray / 2XL", "$125"),
+          V("gid://shopify/ProductVariant/53669506613527", "Dark Red / S", "$125"),
+          V("gid://shopify/ProductVariant/53669506646295", "Dark Red / M", "$125"),
+          V("gid://shopify/ProductVariant/53669506679063", "Dark Red / L", "$125"),
+          V("gid://shopify/ProductVariant/53669506711831", "Dark Red / XL", "$125"),
+          V("gid://shopify/ProductVariant/53669506744599", "Dark Red / 2XL", "$125"),
+        ],
+      },
+      {
+        id: "gid://shopify/Product/10410367385879",
+        title: "ONEMISSION Swim Shorts",
+        handle: "swim-trunks-minimal-onemission-logo-swim-shorts",
+        description: "Lightweight, quick-dry swim shorts with minimal ONEMISSION branding. 100% polyester, elastic drawstring waist, mesh-lined pockets. Crisp white.",
+        imageUrl: "https://cdn.shopify.com/s/files/1/1016/0406/5559/files/7980430137510901865_2048.jpg?v=1783914596",
+        imageAlt: "ONEMISSION Swim Shorts",
+        images: [
+          "https://cdn.shopify.com/s/files/1/1016/0406/5559/files/7980430137510901865_2048.jpg?v=1783914596",
+          "https://cdn.shopify.com/s/files/1/1016/0406/5559/files/14024662994711828744_2048.jpg?v=1783914598",
+          "https://cdn.shopify.com/s/files/1/1016/0406/5559/files/12622907643620485730_2048.jpg?v=1783914599",
+          "https://cdn.shopify.com/s/files/1/1016/0406/5559/files/4132023011361013706_2048.jpg?v=1783914600",
+        ],
+        minPrice: "$49.65", currency: "USD", hasOptions: true,
+        variants: [
+          V("gid://shopify/ProductVariant/53666263826711", "XS", "$49.65"),
+          V("gid://shopify/ProductVariant/53666263859479", "S", "$49.65"),
+          V("gid://shopify/ProductVariant/53666263892247", "M", "$49.65"),
+          V("gid://shopify/ProductVariant/53666263925015", "L", "$49.65"),
+          V("gid://shopify/ProductVariant/53666263957783", "XL", "$49.65"),
+          V("gid://shopify/ProductVariant/53666263990551", "2XL", "$49.65"),
+          V("gid://shopify/ProductVariant/53666264023319", "3XL", "$49.65"),
+        ],
+      },
+      {
+        id: "gid://shopify/Product/bundle-the-fit",
+        title: "The Fit — Hoodie + Lounge Shorts",
+        handle: "the-fit",
+        description: "The full look: the Statement Hoodie paired with the One Mission Lounge Shorts. Buy the set or either piece, in any color.",
+        imageUrl: I("198d8f9982b3471f8981350f40d77558", "1783935528"), imageAlt: "The Fit",
+        images: [I("198d8f9982b3471f8981350f40d77558", "1783935528"), I("c9a1f934f5a04b788bb66a1189d9a21c", "1783935528"), I("7c3c43376f53456fbbeb00ff33d2ce6d", "1783935528")],
+        model: I("198d8f9982b3471f8981350f40d77558", "1783935528"),
+        minPrice: "$214", currency: "USD", hasOptions: true,
+        badge: "The Set",
+        bundle: ["gid://shopify/Product/10410647159063", "gid://shopify/Product/10410155442455"],
+        variants: [],
+      },
     ],
   },
   "1m-experiences": {
@@ -841,6 +936,7 @@ for (const p of staticCollections["the-collection"].products) {
 // Order matters: check the most specific keywords first.
 function typeOf(title: string): string {
   const t = title.toLowerCase();
+  if (/the fit|bundle|\bset\b|full look/.test(t)) return "Sets";
   if (/phone case|case/.test(t)) return "Phone Cases";
   if (/hat|cap|beanie/.test(t)) return "Hats";
   if (/legging/.test(t)) return "Leggings";
@@ -860,7 +956,7 @@ for (const p of staticCollections["the-collection"].products) {
 
 /** Preferred display order for the subcategory chips. */
 export const TYPE_ORDER = [
-  "Hoodies", "Sweatshirts", "T-Shirts", "Long Sleeves", "Tanks", "Crop Tops",
+  "Sets", "Hoodies", "Sweatshirts", "T-Shirts", "Long Sleeves", "Tanks", "Crop Tops",
   "Shorts", "Sweatpants", "Leggings", "Hats", "Phone Cases", "Other",
 ];
 
@@ -896,6 +992,14 @@ export function featuredProducts(): ShopProduct[] {
 export function pairedProducts(product: ShopProduct): ShopProduct[] {
   if (!product.pairsWith?.length) return [];
   return product.pairsWith
+    .map((id) => products.find((p) => p.id === id))
+    .filter((p): p is ShopProduct => Boolean(p));
+}
+
+/** Resolve a bundle/set product's component items to full product objects. */
+export function bundleProducts(product: ShopProduct): ShopProduct[] {
+  if (!product.bundle?.length) return [];
+  return product.bundle
     .map((id) => products.find((p) => p.id === id))
     .filter((p): p is ShopProduct => Boolean(p));
 }
