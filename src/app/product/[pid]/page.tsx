@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
-import { getProductByPid, pairedProducts } from "@/data/products";
+import { getProductByPid, pairedProducts, bundleProducts } from "@/data/products";
 import { ProductDetail } from "@/components/ProductDetail";
 
 export function generateMetadata({ params }: { params: { pid: string } }): Metadata {
@@ -20,5 +20,5 @@ export function generateMetadata({ params }: { params: { pid: string } }): Metad
 export default function ProductPage({ params }: { params: { pid: string } }) {
   const product = getProductByPid(params.pid);
   if (!product) notFound();
-  return <ProductDetail product={product} pairs={pairedProducts(product)} />;
+  return <ProductDetail product={product} pairs={pairedProducts(product)} bundleItems={bundleProducts(product)} />;
 }
