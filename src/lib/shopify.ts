@@ -57,6 +57,8 @@ export interface ShopProduct {
   colorImages?: Record<string, string>; // color name → image URL (main photo swaps with color)
   optionName?: string;      // label for the size/option selector, e.g. "Model" for a phone case
   gender?: "men" | "women" | "unisex" | "accessory";  // used for the Men / Women / Accessories nav
+  type?: string;            // subcategory for drill-down nav, e.g. "Hoodies", "Shorts", "T-Shirts"
+  model?: string;           // optional lifestyle/model photo shown as the grid lead (flips to flat on hover)
 }
 export interface ShopCollection {
   title: string;
