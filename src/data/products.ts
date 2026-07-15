@@ -837,6 +837,33 @@ for (const p of staticCollections["the-collection"].products) {
   else p.gender = "unisex";
 }
 
+// Subcategory tagging for the drill-down nav (Hoodies, Shorts, Tees, …).
+// Order matters: check the most specific keywords first.
+function typeOf(title: string): string {
+  const t = title.toLowerCase();
+  if (/phone case|case/.test(t)) return "Phone Cases";
+  if (/hat|cap|beanie/.test(t)) return "Hats";
+  if (/legging/.test(t)) return "Leggings";
+  if (/crop/.test(t)) return "Crop Tops";
+  if (/tank/.test(t)) return "Tanks";
+  if (/long[\s-]?sleeve/.test(t)) return "Long Sleeves";
+  if (/\btee\b|t-shirt|t shirt/.test(t)) return "T-Shirts";
+  if (/short/.test(t)) return "Shorts";
+  if (/sweatpant|jogger|\bsweats\b/.test(t)) return "Sweatpants";
+  if (/half[\s-]?zip|quarter[\s-]?zip|crewneck|sweatshirt/.test(t)) return "Sweatshirts";
+  if (/hoodie/.test(t)) return "Hoodies";
+  return "Other";
+}
+for (const p of staticCollections["the-collection"].products) {
+  p.type = typeOf(p.title);
+}
+
+/** Preferred display order for the subcategory chips. */
+export const TYPE_ORDER = [
+  "Hoodies", "Sweatshirts", "T-Shirts", "Long Sleeves", "Tanks", "Crop Tops",
+  "Shorts", "Sweatpants", "Leggings", "Hats", "Phone Cases", "Other",
+];
+
 /** The full clothing catalog — this store sells apparel only. */
 export const products: ShopProduct[] = staticCollections["the-collection"].products;
 
