@@ -1,6 +1,5 @@
 "use client";
 
-import { useEffect, useRef } from "react";
 import Link from "next/link";
 import { featuredProducts } from "@/data/products";
 import { ProductGrid } from "./ProductGrid";
@@ -31,18 +30,8 @@ function Editorial({
 }
 
 export function HomeLanding() {
-  const ref = useRef<HTMLDivElement>(null);
-  useEffect(() => {
-    const io = new IntersectionObserver((es) => {
-      es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } });
-    }, { threshold: 0.16 });
-    ref.current?.querySelectorAll(".rvl").forEach((el) => io.observe(el));
-    return () => io.disconnect();
-  }, []);
-
   return (
-    <div ref={ref}>
-      <style>{`.rvl{opacity:0;transform:translateY(24px);transition:opacity 1s ease,transform 1s ease}.rvl.in{opacity:1;transform:none}`}</style>
+    <div>
 
       {/* HERO */}
       <section className="ed ed-hero rvl">
