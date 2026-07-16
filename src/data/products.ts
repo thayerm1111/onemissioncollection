@@ -97,6 +97,23 @@ export const staticCollections: Record<string, ShopCollection> = {
         ],
       },
       {
+        id: "gid://shopify/Product/10419606126871",
+        title: "OM Gold Hoodie",
+        handle: "om-gold-hoodie",
+        description: "Washed heavyweight OM hoodie — oversized drop-shoulder fit, hooded, 465gsm cotton blend.",
+        imageUrl: I("be8af2dc08414fd28263ee489e92b788", "1784166873"), imageAlt: "OM Gold Hoodie",
+        images: [I("be8af2dc08414fd28263ee489e92b788", "1784166873"), I("d9b8cd85c4614c069aec2262021af6c3", "1784166873")],
+        minPrice: "$125", currency: "USD", hasOptions: true,
+        badge: "🔥 New",
+        variants: [
+          V("gid://shopify/ProductVariant/53991805714711", "Purple / S", "$125"),
+          V("gid://shopify/ProductVariant/53991805747479", "Purple / M", "$125"),
+          V("gid://shopify/ProductVariant/53991805780247", "Purple / L", "$125"),
+          V("gid://shopify/ProductVariant/53991805813015", "Purple / XL", "$125"),
+          V("gid://shopify/ProductVariant/53991805845783", "Purple / 2XL", "$125"),
+        ],
+      },
+      {
         id: "gid://shopify/Product/10409785065751",
         title: "One Mission Heavyweight Hoodie — White",
         handle: "one-mission-heavyweight-hoodie-1",
@@ -1181,9 +1198,9 @@ export function featuredProducts(): ShopProduct[] {
   // Hand-picked top row so we don't stack two similar washed hoodies together:
   // the set, then a collab tee, then a crewneck (three different silhouettes).
   const HERO_ORDER = [
-    "gid://shopify/Product/bundle-the-fit", // The Fit — the full set
+    "gid://shopify/Product/bundle-the-fit", // The Fit — the full set (top left)
     "gid://shopify/Product/10410152689943", // OM x One Mission — Black (collab tee)
-    "gid://shopify/Product/10410150035735", // One Mission Heavyweight Crewneck Sweatshirt
+    "gid://shopify/Product/10419606126871", // OM Gold Hoodie — new, top right
   ];
   const heroRank = (p: ShopProduct) => {
     const i = HERO_ORDER.indexOf(p.id);
