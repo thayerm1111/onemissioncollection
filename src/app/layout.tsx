@@ -4,6 +4,7 @@ import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { IntroSplash } from "@/components/IntroSplash";
 import { CartProvider } from "@/components/cart/CartProvider";
+import { PromoPopup } from "@/components/PromoPopup";
 
 const SITE_URL = "https://onemissioncollection.com";
 
@@ -32,6 +33,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <Header />
           <main className="min-h-[70vh] pt-16">{children}</main>
           <Footer />
+          <PromoPopup />
         </CartProvider>
       </body>
     </html>
