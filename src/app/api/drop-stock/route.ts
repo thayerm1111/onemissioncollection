@@ -19,12 +19,13 @@ const HANDLES = [
   "one-mission-heavyweight-tee",
 ];
 
-export async function GET() {
-  if (!TOKEN) return NextResponse.json({ ok: false, stock: {} });
+export async function GET(req: Request) {
+  const debug = new URL(req.url).searchParams.has("debug");
+  if (!TOKEN) return NextResponse.json({ ok: false, stock: {}, reason: "no-token" });
 
   const query = `query{ ${HANDLES.map(
     (h, i) =>
-      `p${i}: productByHandle(handle:${JSON.stringify(h)}){ variants(first:60){ nodes{ id quantityAvailable } } }`,
+      `p${i}: productByHandle(handle:${JSON.stringify(h)}){ handle variants(first:60){ nodes{ id quantityAvailable } } }`,
   ).join(" ")} }`;
 
   try {
@@ -48,8 +49,11 @@ export async function GET() {
         }
       }
     }
+    if (debug) {
+      return NextResponse.json({ ok: true, stock, _status: res.status, _errors: json?.errors ?? null, _raw: json?.data ?? null });
+    }
     return NextResponse.json({ ok: true, stock });
-  } catch {
-    return NextResponse.json({ ok: false, stock: {} });
+  } catch (e) {
+    return NextResponse.json({ ok: false, stock: {}, reason: debug ? String(e) : undefined });
   }
 }
