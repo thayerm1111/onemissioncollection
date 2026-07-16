@@ -865,14 +865,14 @@ export const staticCollections: Record<string, ShopCollection> = {
       },
       {
         id: "gid://shopify/Product/bundle-the-fit",
-        title: "The Fit — Hoodie + Lounge Shorts",
+        title: "The Fit — Full Look",
         handle: "the-fit",
-        description: "The full look: the Statement Hoodie paired with the One Mission Lounge Shorts. Buy the set or either piece, in any color.",
+        description: "The full look: the Statement Hoodie, One Mission Lounge Shorts, and a heavyweight tee. Buy the whole set or any piece on its own, in any color.",
         imageUrl: I("ChatGPT_Image_Jul_15_2026_03_06_23_PM_1", "1784151755"), imageAlt: "The Fit",
         images: [I("ChatGPT_Image_Jul_15_2026_03_06_23_PM_1", "1784151755"), I("ChatGPT_Image_Jul_15_2026_03_06_23_PM_2", "1784151754"), I("778fa639e48f465da5338c463cd8b140", "1783935528"), I("499d15ba1ede4a6783e0115d2a3d8a4d", "1783881768")],
         minPrice: "$214", currency: "USD", hasOptions: true,
         badge: "The Set",
-        bundle: ["gid://shopify/Product/10410647159063", "gid://shopify/Product/10410155442455"],
+        bundle: ["gid://shopify/Product/10410647159063", "gid://shopify/Product/10410155442455", "gid://shopify/Product/10409780543767"],
         variants: [],
       },
     ],
@@ -973,24 +973,27 @@ export function getProductByPid(pid: string): ShopProduct | null {
 }
 
 /** Products filtered for a nav category. "all" returns everything. */
+/** Products kept in the catalog for "The Fit" set but hidden as their own grid tile. */
+const HIDDEN_FROM_GRID = new Set<string>([
+  "gid://shopify/Product/10410647159063", // Statement Hoodie — shown/sold via The Fit set
+]);
+const gridProducts = products.filter((p) => !HIDDEN_FROM_GRID.has(p.id));
+
 export function productsFor(cat: "all" | "men" | "women" | "accessories"): ShopProduct[] {
-  if (cat === "all") return products;
-  // Women's page shows only women's-specific pieces (not the whole unisex catalog).
-  if (cat === "women") return products.filter((p) => p.gender === "women");
-  if (cat === "accessories") return products.filter((p) => p.gender === "accessory");
-  // Men's page shows men + unisex apparel.
-  return products.filter((p) => p.gender === "men" || p.gender === "unisex");
+  if (cat === "all") return gridProducts;
+  if (cat === "women") return gridProducts.filter((p) => p.gender === "women");
+  if (cat === "accessories") return gridProducts.filter((p) => p.gender === "accessory");
+  return gridProducts.filter((p) => p.gender === "men" || p.gender === "unisex");
 }
 
-/** Featured order — the set first, then the statement hoodies, then flagged items. */
+/** Featured order — the set first, then flagged items. */
 export function featuredProducts(): ShopProduct[] {
   const score = (p: ShopProduct) => {
     if (p.bundle?.length) return 100;                       // The Fit set — top left
-    if (/^statement hoodie$/i.test(p.title)) return 90;     // washed OM statement hoodie
     if (/one mission statement hoodie/i.test(p.title)) return 80;
     return p.badge ? 50 : 0;
   };
-  return [...products].sort((a, b) => score(b) - score(a));
+  return [...gridProducts].sort((a, b) => score(b) - score(a));
 }
 
 /** Resolve a product's paired items to full product objects. */
