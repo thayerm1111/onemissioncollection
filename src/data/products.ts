@@ -674,7 +674,7 @@ export const staticCollections: Record<string, ShopCollection> = {
         handle: "one-mission-women-s-high-waisted-biker-shorts",
         description: "Women's high-waisted biker shorts in Purple, Black, Dark Gray, and Gray Blue.",
         imageUrl: I("304563efdd3b4c9ba95c25e5371759da", "1783885337"), imageAlt: "Women's Biker Shorts — black",
-        images: [I("b968bbe932554cd6b4e7af65961740bb", "1783885338"), I("304563efdd3b4c9ba95c25e5371759da", "1783885337"), I("df1c89274e0d4a809795156787eb6497", "1783885337"), I("b1bdb2b78c5846f181778b3d3a574494", "1783885337"), I("abec110615fd4f46bdb3b78fd96d4d14", "1783885338"), I("591f8045beed44fa909088a60b8cecd2", "1783885337"), I("2255430bf6464b68b335986e26696105", "1783885337"), I("917edfdcd1e647208acc35f01f5d52f0", "1783885337")],
+        images: [I("304563efdd3b4c9ba95c25e5371759da", "1783885337"), I("b968bbe932554cd6b4e7af65961740bb", "1783885338"), I("df1c89274e0d4a809795156787eb6497", "1783885337"), I("b1bdb2b78c5846f181778b3d3a574494", "1783885337"), I("abec110615fd4f46bdb3b78fd96d4d14", "1783885338"), I("591f8045beed44fa909088a60b8cecd2", "1783885337"), I("2255430bf6464b68b335986e26696105", "1783885337"), I("917edfdcd1e647208acc35f01f5d52f0", "1783885337")],
         colorImages: {
           "Purple": I("b968bbe932554cd6b4e7af65961740bb", "1783885338"),
           "Black": I("304563efdd3b4c9ba95c25e5371759da", "1783885337"),
@@ -941,7 +941,7 @@ export const staticCollections: Record<string, ShopCollection> = {
         handle: "women-s-solid-high-rise-leggings",
         description: "High-rise full-length leggings in six colors. 75% nylon / 25% spandex, second-skin fit.",
         imageUrl: I("1280bef2451747e5a4aec0a1df546ad3", "1784152263"), imageAlt: "Women's High-Rise Leggings — back",
-        images: [I("ac7f9da371ff4877b2aaee11d70a33b9", "1784152263"), I("76652d30a39d4214a52aab0e17f1ff55", "1784152263"), I("436617b2ec144c398e61690fbbee7284", "1784152263"), I("0d8cc76e50f8417e8b52ccfadc25475a", "1784152263"), I("858db184c1c84f1a8f655cf8716f5885", "1784152263"), I("f1ed156831074e81b296bb08d27730a0", "1784152263"), I("1280bef2451747e5a4aec0a1df546ad3", "1784152263")],
+        images: [I("1280bef2451747e5a4aec0a1df546ad3", "1784152263"), I("ac7f9da371ff4877b2aaee11d70a33b9", "1784152263"), I("76652d30a39d4214a52aab0e17f1ff55", "1784152263"), I("436617b2ec144c398e61690fbbee7284", "1784152263"), I("0d8cc76e50f8417e8b52ccfadc25475a", "1784152263"), I("858db184c1c84f1a8f655cf8716f5885", "1784152263"), I("f1ed156831074e81b296bb08d27730a0", "1784152263")],
         colorImages: {
           "Haze Blue": I("76652d30a39d4214a52aab0e17f1ff55", "1784152263"),
           "Pink": I("436617b2ec144c398e61690fbbee7284", "1784152263"),
