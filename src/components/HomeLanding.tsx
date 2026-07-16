@@ -48,8 +48,8 @@ export function HomeLanding() {
         </div>
       </section>
 
-      {/* BRAND BANNER */}
-      <section className="rvl" style={{ position: "relative", height: "62vh", minHeight: 420, width: "100%", overflow: "hidden", background: "#0f0d0b" }}>
+      {/* BRAND BANNER — clickable */}
+      <Link href="/product/10420061208855" className="rvl" style={{ display: "block", position: "relative", height: "62vh", minHeight: 420, width: "100%", overflow: "hidden", background: "#0f0d0b" }}>
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src={`${IMG}/ed21309b808f41a2b88978fc064bb627.png?v=1784171028`} alt="One Mission" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center 42%", opacity: 0.45 }} />
         <div style={{ position: "absolute", inset: 0, display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", textAlign: "center", color: "#f5f2ec", padding: "0 24px" }}>
@@ -57,7 +57,7 @@ export function HomeLanding() {
           <div style={{ fontSize: 11, letterSpacing: ".5em", marginTop: 14, opacity: 0.85, paddingLeft: ".5em" }}>MATTHEW 18:13</div>
           <p style={{ marginTop: 24, fontSize: 13, letterSpacing: ".06em", opacity: 0.8, fontWeight: 300, maxWidth: 460 }}>Faith-built apparel. Washed, heavyweight, and made to last — for the one worth going after.</p>
         </div>
-      </section>
+      </Link>
 
       {/* COLLAB */}
       <Editorial
@@ -83,7 +83,7 @@ export function HomeLanding() {
         </section>
         <section className="rvl" style={{ position: "relative", height: "90vh", minHeight: 560, overflow: "hidden", background: "#d9d6cf" }}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={`${IMG}/6580d1a95b6e4ff181020c414ea7c1d3.png?v=1784167477`} alt="Women" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center 18%" }} />
+          <img src={`${IMG}/9512eb002e2b49ea88a386cffce22dab.png?v=1784173507`} alt="Women" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center 12%" }} />
           <div style={{ position: "absolute", inset: 0, background: "linear-gradient(180deg,rgba(0,0,0,0) 55%,rgba(0,0,0,.45) 100%)" }} />
           <div style={{ position: "absolute", inset: 0, display: "flex", flexDirection: "column", justifyContent: "flex-end", alignItems: "center", color: "#fff", paddingBottom: "7vh" }}>
             <h3 style={{ fontSize: "clamp(24px,3vw,42px)", letterSpacing: ".16em", textTransform: "uppercase", fontWeight: 400, margin: 0 }}>Women</h3>
