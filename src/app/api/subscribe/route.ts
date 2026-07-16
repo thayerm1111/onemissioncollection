@@ -3,45 +3,66 @@ import { NextResponse } from "next/server";
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
-// Storefront domain used for the native newsletter signup.
-const SHOP = "https://1-mission-2.myshopify.com";
+// Marketing opt-in from the promo popup (email + phone + consent).
+// Persistence is layered and best-effort so the shopper ALWAYS gets their code:
+//  1. If Shopify Admin creds are set, create the customer with email-marketing
+//     consent (leads flow into Shopify + the VIP tools).
+//  2. Else if Supabase creds are set, insert into the `omc_leads` table.
+//  3. Regardless, return the code so the popup never blocks.
+const SHOP_DOMAIN = process.env.SHOPIFY_STORE_DOMAIN || "1-mission-2.myshopify.com";
+const ADMIN_TOKEN = process.env.SHOPIFY_ADMIN_TOKEN; // Admin API access token (write_customers)
+const SUPABASE_URL = process.env.SUPABASE_URL;
+const SUPABASE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABASE_ANON_KEY;
 
-// Captures a marketing opt-in (email + phone) from the promo popup and creates
-// the shopper as a Shopify customer with email-marketing consent — using the
-// storefront's native newsletter form (no API token required). New sign-ups
-// flow straight into the email list and the "VIP" customer tools.
-//
-// Persistence is best-effort: if the storefront POST fails for any reason we
-// still return the code so the shopper's experience is never blocked.
+async function createShopifyCustomer(email: string, phone: string) {
+  const mutation = `mutation($input: CustomerInput!){ customerCreate(input:$input){ customer{ id } userErrors{ message } } }`;
+  const input: Record<string, unknown> = {
+    email,
+    tags: ["popup-25", "newsletter"],
+    emailMarketingConsent: { marketingState: "SUBSCRIBED", marketingOptInLevel: "SINGLE_OPT_IN" },
+  };
+  if (phone) input.phone = phone;
+  const res = await fetch(`https://${SHOP_DOMAIN}/admin/api/2024-07/graphql.json`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "X-Shopify-Access-Token": ADMIN_TOKEN as string,
+    },
+    body: JSON.stringify({ query: mutation, variables: { input } }),
+  });
+  return res.ok;
+}
+
+async function insertSupabase(email: string, phone: string, consent: boolean, source: string) {
+  await fetch(`${SUPABASE_URL}/rest/v1/omc_leads`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      apikey: SUPABASE_KEY as string,
+      Authorization: `Bearer ${SUPABASE_KEY}`,
+      Prefer: "resolution=merge-duplicates",
+    },
+    body: JSON.stringify([{ email, phone, consent, source }]),
+  });
+}
+
 export async function POST(req: Request) {
   let body: Record<string, unknown> = {};
   try { body = await req.json(); } catch {}
 
   const email = String(body.email ?? "").trim();
   const phone = String(body.phone ?? "").trim();
+  const consent = Boolean(body.consent);
+  const source = String(body.source ?? "popup");
 
-  if (!email) {
-    return NextResponse.json({ ok: false, error: "email required" }, { status: 400 });
-  }
+  if (!email) return NextResponse.json({ ok: false, error: "email required" }, { status: 400 });
 
   try {
-    const form = new URLSearchParams();
-    form.set("form_type", "customer");
-    form.set("utf8", "✓");
-    form.set("contact[email]", email);
-    const tags = ["popup-25", "newsletter"];
-    if (phone) tags.push(`phone:${phone}`);
-    form.set("contact[tags]", tags.join(","));
-
-    await fetch(`${SHOP}/contact#contact_form`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
-        "User-Agent": "Mozilla/5.0 (compatible; OMC-Signup/1.0)",
-      },
-      body: form.toString(),
-      redirect: "manual",
-    });
+    if (ADMIN_TOKEN) {
+      await createShopifyCustomer(email, phone);
+    } else if (SUPABASE_URL && SUPABASE_KEY) {
+      await insertSupabase(email, phone, consent, source);
+    }
   } catch {
     // Never block the shopper from receiving their code.
   }
