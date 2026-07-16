@@ -4,13 +4,8 @@ export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
 // Marketing opt-in from the promo popup (email + phone + consent).
-// Persistence is layered and best-effort so the shopper ALWAYS gets their code:
-//  1. If Shopify Admin creds are set, create the customer with email-marketing
-//     consent (leads flow into Shopify + the VIP tools).
-//  2. Else if Supabase creds are set, insert into the `omc_leads` table.
-//  3. Regardless, return the code so the popup never blocks.
 const SHOP_DOMAIN = process.env.SHOPIFY_STORE_DOMAIN || "1-mission-2.myshopify.com";
-const ADMIN_TOKEN = process.env.SHOPIFY_ADMIN_TOKEN; // Admin API access token (write_customers)
+const ADMIN_TOKEN = process.env.SHOPIFY_ADMIN_TOKEN;
 const SUPABASE_URL = process.env.SUPABASE_URL;
 const SUPABASE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABASE_ANON_KEY;
 
@@ -24,29 +19,28 @@ async function createShopifyCustomer(email: string, phone: string) {
   if (phone) input.phone = phone;
   const res = await fetch(`https://${SHOP_DOMAIN}/admin/api/2024-07/graphql.json`, {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "X-Shopify-Access-Token": ADMIN_TOKEN as string,
-    },
+    headers: { "Content-Type": "application/json", "X-Shopify-Access-Token": ADMIN_TOKEN as string },
     body: JSON.stringify({ query: mutation, variables: { input } }),
   });
-  return res.ok;
+  return { status: res.status, body: await res.text() };
 }
 
 async function insertSupabase(email: string, phone: string, consent: boolean, source: string) {
-  await fetch(`${SUPABASE_URL}/rest/v1/omc_leads`, {
+  const res = await fetch(`${SUPABASE_URL}/rest/v1/omc_leads`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
       apikey: SUPABASE_KEY as string,
       Authorization: `Bearer ${SUPABASE_KEY}`,
-      Prefer: "resolution=merge-duplicates",
+      Prefer: "return=minimal",
     },
     body: JSON.stringify([{ email, phone, consent, source }]),
   });
+  return { status: res.status, body: await res.text() };
 }
 
 export async function POST(req: Request) {
+  const debug = new URL(req.url).searchParams.has("debug");
   let body: Record<string, unknown> = {};
   try { body = await req.json(); } catch {}
 
@@ -57,15 +51,28 @@ export async function POST(req: Request) {
 
   if (!email) return NextResponse.json({ ok: false, error: "email required" }, { status: 400 });
 
+  let result: unknown = null;
+  let via = "none";
   try {
     if (ADMIN_TOKEN) {
-      await createShopifyCustomer(email, phone);
+      via = "shopify";
+      result = await createShopifyCustomer(email, phone);
     } else if (SUPABASE_URL && SUPABASE_KEY) {
-      await insertSupabase(email, phone, consent, source);
+      via = "supabase";
+      result = await insertSupabase(email, phone, consent, source);
     }
-  } catch {
-    // Never block the shopper from receiving their code.
+  } catch (e) {
+    result = { error: String(e) };
   }
 
+  if (debug) {
+    return NextResponse.json({
+      ok: true, code: "WELCOME25", via,
+      hasSupabaseUrl: Boolean(SUPABASE_URL),
+      hasSupabaseKey: Boolean(SUPABASE_KEY),
+      hasAdminToken: Boolean(ADMIN_TOKEN),
+      result,
+    });
+  }
   return NextResponse.json({ ok: true, code: "WELCOME25" });
 }
