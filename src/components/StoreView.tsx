@@ -39,7 +39,7 @@ export function StoreView({
             <Link
               key={t.href}
               href={t.href}
-              className={`label ${active === t.href ? "text-ink underline underline-offset-4" : "text-mute hover:text-ink"}`}
+              className={`label ${active === t.href ? "text-ink" : "text-mute hover:text-ink"}`}
             >
               {t.label}
             </Link>
@@ -50,13 +50,12 @@ export function StoreView({
 
       {/* Drill-down: subcategory chips */}
       {types.length > 1 && (
-        <div className="-mx-5 mt-4 flex items-center gap-x-5 overflow-x-auto px-5 [-ms-overflow-style:none] [scrollbar-width:none] sm:mx-0 sm:px-0 [&::-webkit-scrollbar]:hidden">
-          <Chip label="All" count={products.length} active={type === "All"} onClick={() => setType("All")} />
+        <div className="-mx-5 mt-4 flex items-center gap-x-2 overflow-x-auto px-5 [-ms-overflow-style:none] [scrollbar-width:none] sm:mx-0 sm:px-0 [&::-webkit-scrollbar]:hidden">
+          <Chip label="All" active={type === "All"} onClick={() => setType("All")} />
           {types.map((t) => (
             <Chip
               key={t}
               label={t}
-              count={products.filter((p) => (p.type ?? "Other") === t).length}
               active={type === t}
               onClick={() => setType(t)}
             />
@@ -72,16 +71,16 @@ export function StoreView({
 }
 
 function Chip({
-  label, count, active, onClick,
-}: { label: string; count: number; active: boolean; onClick: () => void }) {
+  label, active, onClick,
+}: { label: string; active: boolean; onClick: () => void }) {
   return (
     <button
       onClick={onClick}
-      className={`flex-shrink-0 whitespace-nowrap py-1 text-[11px] uppercase tracking-[0.18em] transition-colors ${
-        active ? "text-ink underline underline-offset-[6px]" : "text-mute hover:text-ink"
+      className={`flex-shrink-0 whitespace-nowrap border px-3 py-1.5 text-[11px] uppercase tracking-[0.18em] transition-colors ${
+        active ? "border-ink text-ink" : "border-transparent text-mute hover:text-ink"
       }`}
     >
-      {label} <span className="align-super text-[9px]">{count}</span>
+      {label}
     </button>
   );
 }

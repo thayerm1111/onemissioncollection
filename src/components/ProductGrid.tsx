@@ -2,17 +2,16 @@ import Link from "next/link";
 import type { ShopProduct } from "@/lib/shopify";
 import { productPid } from "@/data/products";
 
-// Soft, muted tile backgrounds — each product sits on its own tone, like the
-// Essentials grid. Kept low-saturation so the garment always reads first.
+// Soft, warm paper tones — each product sits on its own tile shade, like the
+// Essentials grid. Product flats are shot on a white sweep, so we blend them
+// onto the tone (multiply) to pick up the color while the garment stays true.
 const TILE_BGS = [
-  "#e4dccc", // warm sand
-  "#d6dee1", // cool mist
-  "#ecdfc9", // cream
-  "#d9e0d6", // soft sage
-  "#dae4ee", // pale blue
-  "#e8dccd", // clay / oat
-  "#dbdbd3", // stone
-  "#e3dae6", // faint lilac
+  "#f0ebe3", // warm sand
+  "#eceae4", // greige
+  "#f1ece2", // cream
+  "#eae8e2", // oat
+  "#efece7", // linen
+  "#e9e7e1", // stone
 ];
 
 // Stable per-product tone so a product keeps the same background across views.
@@ -48,14 +47,22 @@ function Tile({ product }: { product: ShopProduct }) {
   const soldOut = Boolean(product.soldOut);
   const href = `/product/${productPid(product.id)}`;
 
+  // Lifestyle/model photos already have their own studio backdrop — leave them
+  // true. Flat product shots sit on a white sweep, so blend them onto the tile
+  // tone for the Essentials colored-tile look.
+  const isModel = Boolean(product.model);
+  const blend = isModel ? undefined : ("multiply" as const);
+  const bg = isModel ? "#efede9" : tileBg(product.id);
+
   return (
     <Link href={href} className="group block">
-      <div className="relative aspect-[4/5] w-full overflow-hidden" style={{ backgroundColor: tileBg(product.id) }}>
+      <div className="relative aspect-[4/5] w-full overflow-hidden" style={{ backgroundColor: bg }}>
         {front && (
           // eslint-disable-next-line @next/next/no-img-element
           <img
             src={front}
             alt={product.imageAlt ?? product.title}
+            style={{ mixBlendMode: blend }}
             className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-500 ${hover ? "group-hover:opacity-0" : ""}`}
           />
         )}
@@ -65,19 +72,12 @@ function Tile({ product }: { product: ShopProduct }) {
             src={hover}
             alt=""
             aria-hidden="true"
+            style={{ mixBlendMode: blend }}
             className="absolute inset-0 h-full w-full object-cover opacity-0 transition-opacity duration-500 group-hover:opacity-100"
           />
         )}
         {soldOut && (
-          <span className="absolute left-4 top-4 label-sm text-ink">Sold out</span>
-        )}
-        {!soldOut && product.badge && (
-          <span className="absolute left-4 top-4 label-sm text-ink">Featured</span>
-        )}
-        {!soldOut && product.badge && (
-          <span className="absolute right-4 top-4 bg-ink px-2 py-1 text-[10px] font-semibold uppercase tracking-widest2 text-paper">
-            Limited
-          </span>
+          <span className="absolute left-3 top-3 label-sm text-ink">Sold out</span>
         )}
       </div>
       <div className="mt-3 sm:mt-4">
