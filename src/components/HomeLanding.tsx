@@ -51,7 +51,7 @@ export function HomeLanding() {
       {/* BRAND BANNER — clickable */}
       <Link href="/product/10420061208855" className="rvl" style={{ display: "block", position: "relative", height: "62vh", minHeight: 420, width: "100%", overflow: "hidden", background: "#0f0d0b" }}>
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={`${IMG}/ed21309b808f41a2b88978fc064bb627.png?v=1784171028`} alt="One Mission" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center 42%", opacity: 0.45 }} />
+        <img src={`${IMG}/ed21309b808f41a2b88978fc064bb627.png?v=1784171028`} alt="One Mission" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center 42%", opacity: 0.28 }} />
         <div style={{ position: "absolute", inset: 0, display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", textAlign: "center", color: "#f5f2ec", padding: "0 24px" }}>
           <div style={{ fontSize: "clamp(38px,8vw,104px)", letterSpacing: ".3em", fontWeight: 500, lineHeight: 1, paddingLeft: ".3em" }}>ONEMISSION</div>
           <div style={{ fontSize: 11, letterSpacing: ".5em", marginTop: 14, opacity: 0.85, paddingLeft: ".5em" }}>MATTHEW 18:13</div>

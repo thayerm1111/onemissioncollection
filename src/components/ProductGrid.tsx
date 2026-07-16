@@ -21,14 +21,14 @@ function tileBg(id: string): string {
   return TILE_BGS[h % TILE_BGS.length];
 }
 
-export function ProductGrid({ products }: { products: ShopProduct[] }) {
+export function ProductGrid({ products, context }: { products: ShopProduct[]; context?: "women" }) {
   if (products.length === 0) {
     return <p className="px-5 py-24 text-center label text-mute">Nothing here yet.</p>;
   }
   return (
     <div className="grid grid-cols-2 gap-x-4 gap-y-10 sm:gap-x-6 lg:grid-cols-3 lg:gap-x-8 lg:gap-y-14">
       {products.map((p) => (
-        <Tile key={p.id} product={p} />
+        <Tile key={p.id} product={p} context={context} />
       ))}
     </div>
   );
@@ -39,18 +39,20 @@ function priceLabel(v?: string) {
   return (v ?? "").replace(/^\$\s*/, "$ ");
 }
 
-function Tile({ product }: { product: ShopProduct }) {
+function Tile({ product, context }: { product: ShopProduct; context?: "women" }) {
   const imgs = product.images?.length ? product.images : product.imageUrl ? [product.imageUrl] : [];
-  // If a lifestyle/model photo is set, lead with it and flip to the flat product on hover.
-  const front = product.model ?? imgs[0] ?? null;
-  const hover = product.model ? (imgs[0] ?? null) : (imgs[1] ?? null);
+  // A `womenModel` shows only in the Women feed; otherwise fall back to the
+  // shared model, then the flat product photo.
+  const lead = (context === "women" && product.womenModel) || product.model || null;
+  const front = lead ?? imgs[0] ?? null;
+  const hover = lead ? (imgs[0] ?? null) : (imgs[1] ?? null);
   const soldOut = Boolean(product.soldOut);
   const href = `/product/${productPid(product.id)}`;
 
   // Lifestyle/model photos already have their own studio backdrop — leave them
   // true. Flat product shots sit on a white sweep, so blend them onto the tile
   // tone for the Essentials colored-tile look.
-  const isModel = Boolean(product.model);
+  const isModel = Boolean(lead);
   const blend = isModel ? undefined : ("multiply" as const);
   const bg = isModel ? "#efede9" : tileBg(product.id);
 

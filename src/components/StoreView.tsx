@@ -121,7 +121,7 @@ export function StoreView({
       )}
 
       <div className="pt-8 sm:pt-10">
-        <ProductGrid products={shown} />
+        <ProductGrid products={shown} context={active === "/women" ? "women" : undefined} />
       </div>
     </div>
   );
