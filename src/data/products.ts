@@ -1334,9 +1334,12 @@ export const DROP_VARIANT_CAP: Record<string, number> = {
   "gid://shopify/Product/10409776873751": 100, // 1 color
 };
 export function dropProducts(): ShopProduct[] {
-  return DROP_IDS
+  const items = DROP_IDS
     .map((id) => products.find((p) => p.id === id))
     .filter((p): p is ShopProduct => Boolean(p));
+  // Lead with "The Fit" full-look set (male model) as the hero tile.
+  const theFit = products.find((p) => p.id === "gid://shopify/Product/bundle-the-fit");
+  return theFit ? [theFit, ...items] : items;
 }
 
 // Women's launch collection — shown on the Women tab during the drop.
