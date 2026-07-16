@@ -1,7 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
 import { Search, User, ShoppingBag, Menu, X } from "lucide-react";
 import { checkoutDomain } from "@/lib/shopify";
 import { Wordmark } from "./Wordmark";
@@ -15,23 +16,35 @@ const NAV = [
 
 export function Header() {
   const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const pathname = usePathname();
   const bagHref = `https://${checkoutDomain}/cart`;
 
+  // On the home page the header floats transparently over the hero, then turns
+  // solid once you scroll past it (Fear of God–style open landing).
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > window.innerHeight * 0.82);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
+    return () => window.removeEventListener("scroll", onScroll);
+  }, [pathname]);
+
+  const overlay = pathname === "/" && !scrolled;
+  const shell = overlay
+    ? "border-transparent bg-transparent text-white"
+    : "border-b border-line bg-paper/95 text-ink backdrop-blur";
+
   return (
-    <header className="sticky top-0 z-40 border-b border-line bg-paper/95 backdrop-blur">
-      <div className="mx-auto grid max-w-site grid-cols-3 items-center px-5 py-4 sm:px-8">
+    <header className={`fixed left-0 right-0 top-0 z-40 border-b transition-colors duration-300 ${shell}`}>
+      <div className="mx-auto grid h-16 max-w-site grid-cols-3 items-center px-5 sm:px-8">
         {/* Left: desktop nav / mobile menu button */}
         <div className="flex items-center gap-6">
-          <button
-            onClick={() => setOpen(true)}
-            aria-label="Menu"
-            className="sm:hidden"
-          >
+          <button onClick={() => setOpen(true)} aria-label="Menu" className="sm:hidden">
             <Menu className="h-5 w-5" />
           </button>
           <nav className="hidden items-center gap-6 sm:flex" aria-label="Primary">
             {NAV.map((n) => (
-              <Link key={n.href} href={n.href} className="label text-ink hover:opacity-60">
+              <Link key={n.href} href={n.href} className="label hover:opacity-60">
                 {n.label}
               </Link>
             ))}
@@ -39,12 +52,12 @@ export function Header() {
         </div>
 
         {/* Center: wordmark */}
-        <Link href="/" className="justify-self-center text-center text-ink" aria-label="One Mission">
+        <Link href="/" className="justify-self-center text-center" aria-label="One Mission">
           <Wordmark />
         </Link>
 
         {/* Right: utilities */}
-        <div className="flex items-center justify-end gap-4 text-ink sm:gap-5">
+        <div className="flex items-center justify-end gap-4 sm:gap-5">
           <button aria-label="Search" className="hidden hover:opacity-60 sm:block">
             <Search className="h-[18px] w-[18px]" />
           </button>
@@ -61,7 +74,7 @@ export function Header() {
       {open && (
         <div className="fixed inset-0 z-50 sm:hidden">
           <div className="absolute inset-0 bg-ink/30" onClick={() => setOpen(false)} />
-          <div className="absolute left-0 top-0 h-full w-4/5 max-w-xs bg-paper p-6">
+          <div className="absolute left-0 top-0 h-full w-4/5 max-w-xs bg-paper p-6 text-ink">
             <div className="mb-8 flex items-center justify-between">
               <span className="label text-mute">Menu</span>
               <button onClick={() => setOpen(false)} aria-label="Close">
