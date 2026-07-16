@@ -2,6 +2,26 @@ import Link from "next/link";
 import type { ShopProduct } from "@/lib/shopify";
 import { productPid } from "@/data/products";
 
+// Soft, muted tile backgrounds — each product sits on its own tone, like the
+// Essentials grid. Kept low-saturation so the garment always reads first.
+const TILE_BGS = [
+  "#e9e6e0", // warm oat
+  "#e5e7e7", // cool mist
+  "#ece7df", // sand
+  "#e3e4e2", // soft gray
+  "#e7e9ea", // pale blue-gray
+  "#eae6e0", // greige
+  "#e6e3dc", // taupe
+  "#e8e9e6", // pale sage-gray
+];
+
+// Stable per-product tone so a product keeps the same background across views.
+function tileBg(id: string): string {
+  let h = 0;
+  for (let i = 0; i < id.length; i++) h = (h * 31 + id.charCodeAt(i)) >>> 0;
+  return TILE_BGS[h % TILE_BGS.length];
+}
+
 export function ProductGrid({ products }: { products: ShopProduct[] }) {
   if (products.length === 0) {
     return <p className="px-5 py-24 text-center label text-mute">Nothing here yet.</p>;
@@ -30,7 +50,7 @@ function Tile({ product }: { product: ShopProduct }) {
 
   return (
     <Link href={href} className="group block">
-      <div className="relative aspect-[4/5] w-full overflow-hidden bg-stone">
+      <div className="relative aspect-[4/5] w-full overflow-hidden" style={{ backgroundColor: tileBg(product.id) }}>
         {front && (
           // eslint-disable-next-line @next/next/no-img-element
           <img
