@@ -1,8 +1,8 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
-import { ArrowRight, ZoomIn, X } from "lucide-react";
+import { ArrowRight, ZoomIn, X, ChevronLeft, ChevronRight } from "lucide-react";
 import type { ShopProduct } from "@/lib/shopify";
 import { checkoutDomain } from "@/lib/shopify";
 import { productPid } from "@/data/products";
@@ -19,17 +19,41 @@ function parse(v: ShopProduct["variants"][number]): Parsed {
   return { ...v, color: parts.length > 1 ? parts[0] : null, size: parts.length > 1 ? parts[1] : parts[0] };
 }
 
-/* Fullscreen zoom lightbox — click the image to toggle 2× zoom, click outside to close. */
-function Lightbox({ src, alt, onClose }: { src: string; alt: string; onClose: () => void }) {
+/* Fullscreen zoom lightbox — arrow keys page, click image toggles 2× zoom, Esc/outside closes. */
+function Lightbox({
+  images, index, alt, onIndex, onClose,
+}: {
+  images: string[]; index: number; alt: string; onIndex: (i: number) => void; onClose: () => void;
+}) {
   const [zoomed, setZoomed] = useState(false);
+  const n = images.length;
+  const go = (d: number) => { setZoomed(false); onIndex((index + d + n) % n); };
+  useEffect(() => {
+    const h = (e: KeyboardEvent) => {
+      if (e.key === "Escape") onClose();
+      else if (e.key === "ArrowLeft") go(-1);
+      else if (e.key === "ArrowRight") go(1);
+    };
+    window.addEventListener("keydown", h);
+    return () => window.removeEventListener("keydown", h);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [index, n]);
+
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-ink/90 p-4" onClick={onClose}>
-      <button onClick={onClose} aria-label="Close" className="absolute right-5 top-5 text-paper/80 hover:text-paper">
+      <button onClick={onClose} aria-label="Close" className="absolute right-5 top-5 z-10 text-paper/80 hover:text-paper">
         <X className="h-6 w-6" />
       </button>
+      {n > 1 && (
+        <>
+          <button onClick={(e) => { e.stopPropagation(); go(-1); }} aria-label="Previous" className="absolute left-3 top-1/2 z-10 grid h-11 w-11 -translate-y-1/2 place-items-center rounded-full bg-paper/15 text-paper hover:bg-paper/25 sm:left-6"><ChevronLeft className="h-6 w-6" /></button>
+          <button onClick={(e) => { e.stopPropagation(); go(1); }} aria-label="Next" className="absolute right-3 top-1/2 z-10 grid h-11 w-11 -translate-y-1/2 place-items-center rounded-full bg-paper/15 text-paper hover:bg-paper/25 sm:right-6"><ChevronRight className="h-6 w-6" /></button>
+          <span className="absolute bottom-5 left-1/2 -translate-x-1/2 text-[11px] uppercase tracking-widest2 text-paper/70">{index + 1} / {n}</span>
+        </>
+      )}
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
-        src={src}
+        src={images[index]}
         alt={alt}
         onClick={(e) => { e.stopPropagation(); setZoomed((z) => !z); }}
         className={`max-h-[92vh] max-w-full select-none object-contain transition-transform duration-300 ${zoomed ? "scale-[1.9] cursor-zoom-out" : "cursor-zoom-in"}`}
@@ -38,15 +62,68 @@ function Lightbox({ src, alt, onClose }: { src: string; alt: string; onClose: ()
   );
 }
 
+/* Main image + thumbnails, with arrow-key paging, on-screen prev/next, and zoom. */
+function Gallery({
+  images, alt, index, onIndex,
+}: {
+  images: string[]; alt: string; index: number; onIndex: (i: number) => void;
+}) {
+  const [zoom, setZoom] = useState(false);
+  const n = images.length;
+  const go = (d: number) => onIndex((index + d + n) % n);
+  useEffect(() => {
+    const h = (e: KeyboardEvent) => {
+      if (zoom) return; // lightbox handles its own keys
+      if (e.key === "ArrowLeft") go(-1);
+      else if (e.key === "ArrowRight") go(1);
+    };
+    window.addEventListener("keydown", h);
+    return () => window.removeEventListener("keydown", h);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [index, n, zoom]);
+
+  const cur = images[index] ?? null;
+  return (
+    <div>
+      <div className="group relative aspect-[4/5] w-full overflow-hidden bg-stone">
+        <button type="button" onClick={() => cur && setZoom(true)} className="block h-full w-full cursor-zoom-in" aria-label="Zoom image">
+          {cur && (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img src={cur} alt={alt} className="h-full w-full object-cover" />
+          )}
+        </button>
+        {n > 1 && (
+          <>
+            <button onClick={() => go(-1)} aria-label="Previous photo" className="absolute left-2 top-1/2 grid h-9 w-9 -translate-y-1/2 place-items-center rounded-full bg-paper/85 text-ink opacity-0 transition-opacity group-hover:opacity-100"><ChevronLeft className="h-4 w-4" /></button>
+            <button onClick={() => go(1)} aria-label="Next photo" className="absolute right-2 top-1/2 grid h-9 w-9 -translate-y-1/2 place-items-center rounded-full bg-paper/85 text-ink opacity-0 transition-opacity group-hover:opacity-100"><ChevronRight className="h-4 w-4" /></button>
+          </>
+        )}
+        <span className="pointer-events-none absolute bottom-3 right-3 grid h-9 w-9 place-items-center rounded-full bg-paper/85 text-ink opacity-0 transition-opacity group-hover:opacity-100"><ZoomIn className="h-4 w-4" /></span>
+      </div>
+      {n > 1 && (
+        <div className="mt-3 flex flex-wrap gap-2">
+          {images.map((u, i) => (
+            <button key={`${u}-${i}`} onClick={() => onIndex(i)} aria-label={`Photo ${i + 1}`}
+              className={`h-16 w-16 overflow-hidden bg-stone ${index === i ? "ring-1 ring-ink" : "ring-1 ring-line"}`}>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={u} alt="" className="h-full w-full object-cover" />
+            </button>
+          ))}
+        </div>
+      )}
+      {zoom && cur && <Lightbox images={images} index={index} alt={alt} onIndex={onIndex} onClose={() => setZoom(false)} />}
+    </div>
+  );
+}
+
 export function ProductDetail({ product, pairs = [], bundleItems = [] }: { product: ShopProduct; pairs?: ShopProduct[]; bundleItems?: ShopProduct[] }) {
   if (product.bundle?.length && bundleItems.length >= 2) {
-    return <BundleDetail bundle={product} hoodie={bundleItems[0]} shorts={bundleItems[1]} />;
+    return <BundleDetail bundle={product} items={bundleItems} />;
   }
   return <SingleProductDetail product={product} pairs={pairs} />;
 }
 
 function SingleProductDetail({ product, pairs = [] }: { product: ShopProduct; pairs?: ShopProduct[] }) {
-  const [zoom, setZoom] = useState(false);
   const imgs = product.images?.length ? product.images : product.imageUrl ? [product.imageUrl] : [];
   const parsed = useMemo(() => product.variants.map(parse), [product]);
   const colors = useMemo(() => [...new Set(parsed.map((v) => v.color).filter(Boolean))] as string[], [parsed]);
@@ -78,15 +155,18 @@ function SingleProductDetail({ product, pairs = [] }: { product: ShopProduct; pa
   }, [product]);
   const galleryImgs = gallery.list;
   const colorOf = gallery.colorOf;
-  const [img, setImg] = useState<string | null>((color && colorImgMap[color]) || galleryImgs[0] || null);
+
+  const initialIdx = Math.max(0, galleryImgs.indexOf((color && colorImgMap[color]) || galleryImgs[0]));
+  const [imgIndex, setImgIndex] = useState(initialIdx);
 
   function pickColor(c: string) {
     setColor(c);
-    if (colorImgMap[c]) setImg(colorImgMap[c]);
+    const front = colorImgMap[c];
+    if (front) { const i = galleryImgs.indexOf(front); if (i >= 0) setImgIndex(i); }
   }
-  function pickImg(u: string) {
-    setImg(u);
-    const c = colorOf[u];
+  function pickIndex(i: number) {
+    setImgIndex(i);
+    const c = colorOf[galleryImgs[i]];
     if (c) setColor(c);
   }
 
@@ -105,39 +185,7 @@ function SingleProductDetail({ product, pairs = [] }: { product: ShopProduct; pa
       <Link href="/" className="label text-mute hover:text-ink">← Shop</Link>
 
       <div className="mt-6 grid gap-10 lg:grid-cols-2 lg:gap-16">
-        {/* Gallery */}
-        <div>
-          <button
-            type="button"
-            onClick={() => img && setZoom(true)}
-            className="group relative block aspect-[4/5] w-full cursor-zoom-in overflow-hidden bg-stone"
-            aria-label="Zoom image"
-          >
-            {img && (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img src={img} alt={product.imageAlt ?? product.title} className="h-full w-full object-cover" />
-            )}
-            <span className="absolute bottom-3 right-3 grid h-9 w-9 place-items-center rounded-full bg-paper/85 text-ink opacity-0 transition-opacity group-hover:opacity-100">
-              <ZoomIn className="h-4 w-4" />
-            </span>
-          </button>
-          {zoom && img && <Lightbox src={img} alt={product.imageAlt ?? product.title} onClose={() => setZoom(false)} />}
-          {galleryImgs.length > 1 && (
-            <div className="mt-3 flex flex-wrap gap-2">
-              {galleryImgs.map((u, i) => (
-                <button
-                  key={i}
-                  onClick={() => pickImg(u)}
-                  aria-label={`Photo ${i + 1}`}
-                  className={`h-16 w-16 overflow-hidden bg-stone ${img === u ? "ring-1 ring-ink" : "ring-1 ring-line"}`}
-                >
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={u} alt="" className="h-full w-full object-cover" />
-                </button>
-              ))}
-            </div>
-          )}
-        </div>
+        <Gallery images={galleryImgs} alt={product.imageAlt ?? product.title} index={Math.min(imgIndex, galleryImgs.length - 1)} onIndex={pickIndex} />
 
         {/* Details */}
         <div className="lg:pt-2">
@@ -235,24 +283,36 @@ function SingleProductDetail({ product, pairs = [] }: { product: ShopProduct; pa
 
 /* ---------------- Bundle ("The Fit") ---------------- */
 
-function useConfigurator(product: ShopProduct) {
-  const parsed = useMemo(() => product.variants.map(parse), [product]);
+function useConfigurator(product?: ShopProduct) {
+  const variants = product?.variants ?? [];
+  const parsed = useMemo(() => variants.map(parse), [product]);
   const colors = useMemo(() => [...new Set(parsed.map((v) => v.color).filter(Boolean))] as string[], [parsed]);
   const sizes = useMemo(() => [...new Set(parsed.map((v) => v.size).filter(Boolean))] as string[], [parsed]);
   const [color, setColor] = useState<string | null>(colors[0] ?? null);
   const [size, setSize] = useState<string | null>(null);
-  const colorImages = product.colorImages ?? {};
-  const image = (color && colorImages[color]) || product.imageUrl || product.images?.[0] || null;
+  const colorImages = product?.colorImages ?? {};
+  const image = (color && colorImages[color]) || product?.imageUrl || product?.images?.[0] || null;
   const variant = parsed.find((v) => (colors.length ? v.color === color : true) && v.size === size) ?? null;
   return { product, parsed, colors, sizes, color, setColor, size, setSize, image, variant };
 }
+type Cfg = ReturnType<typeof useConfigurator>;
 
-function Config({ cfg, label }: { cfg: ReturnType<typeof useConfigurator>; label: string }) {
+function shortName(p?: ShopProduct) {
+  switch (p?.type) {
+    case "Hoodies": return "Hoodie";
+    case "Shorts": return "Shorts";
+    case "T-Shirts": return "Tee";
+    case "Sweatshirts": return "Sweatshirt";
+    default: return p?.title ?? "Item";
+  }
+}
+
+function Config({ cfg }: { cfg: Cfg }) {
   return (
     <div>
       <div className="flex items-baseline justify-between">
-        <p className="text-sm font-medium text-ink">{label} · <span className="text-mute">{cfg.product.title}</span></p>
-        <p className="label text-mute">{cfg.product.minPrice}</p>
+        <p className="text-sm font-medium text-ink">{shortName(cfg.product)} · <span className="text-mute">{cfg.product?.title}</span></p>
+        <p className="label text-mute">{cfg.product?.minPrice}</p>
       </div>
       {cfg.colors.length > 0 && (
         <div className="mt-3">
@@ -283,71 +343,59 @@ function Config({ cfg, label }: { cfg: ReturnType<typeof useConfigurator>; label
   );
 }
 
-function BundleDetail({ bundle, hoodie, shorts }: { bundle: ShopProduct; hoodie: ShopProduct; shorts: ShopProduct }) {
-  const h = useConfigurator(hoodie);
-  const s = useConfigurator(shorts);
-  const heroList = bundle.images?.length ? bundle.images : bundle.imageUrl ? [bundle.imageUrl] : [];
-  const [hero, setHero] = useState<string | null>(heroList[0] ?? null);
-  const [zoomSrc, setZoomSrc] = useState<string | null>(null);
+function BundleDetail({ bundle, items }: { bundle: ShopProduct; items: ShopProduct[] }) {
+  // Hooks must be called unconditionally — support up to 4 pieces in a set.
+  const c0 = useConfigurator(items[0]);
+  const c1 = useConfigurator(items[1]);
+  const c2 = useConfigurator(items[2]);
+  const c3 = useConfigurator(items[3]);
+  const cfgs = [c0, c1, c2, c3].filter((c) => c.product);
 
-  const both = priceNum(hoodie.minPrice) + priceNum(shorts.minPrice);
-  const bothReady = Boolean(h.variant && s.variant);
+  const heroList = bundle.images?.length ? bundle.images : bundle.imageUrl ? [bundle.imageUrl] : [];
+  const thumbs = [...heroList, ...cfgs.map((c) => c.image).filter(Boolean)] as string[];
+  const [heroIndex, setHeroIndex] = useState(0);
+  const idx = Math.min(heroIndex, thumbs.length - 1);
+
+  const total = cfgs.reduce((sum, c) => sum + priceNum(c.product?.minPrice), 0);
+  const allReady = cfgs.every((c) => c.variant);
   const buy = (ids: (string | undefined)[]) => {
     const v = ids.filter(Boolean) as string[];
     if (v.length) window.location.href = cartUrl(v);
   };
-  const thumbs = [...heroList, h.image, s.image].filter(Boolean) as string[];
 
   return (
     <div className="mx-auto max-w-site px-5 py-8 sm:px-8 sm:py-12">
       <Link href="/" className="label text-mute hover:text-ink">← Shop</Link>
       <div className="mt-6 grid gap-10 lg:grid-cols-2 lg:gap-16">
-        {/* Gallery */}
-        <div>
-          <button type="button" onClick={() => hero && setZoomSrc(hero)} className="group relative block aspect-[4/5] w-full cursor-zoom-in overflow-hidden bg-stone" aria-label="Zoom image">
-            {hero && (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img src={hero} alt={bundle.title} className="h-full w-full object-cover" />
-            )}
-            <span className="absolute bottom-3 right-3 grid h-9 w-9 place-items-center rounded-full bg-paper/85 text-ink opacity-0 transition-opacity group-hover:opacity-100"><ZoomIn className="h-4 w-4" /></span>
-          </button>
-          <div className="mt-3 flex flex-wrap gap-2">
-            {thumbs.map((u, i) => (
-              <button key={`${u}-${i}`} onClick={() => setHero(u)} aria-label={`Photo ${i + 1}`}
-                className={`h-16 w-16 overflow-hidden bg-stone ${hero === u ? "ring-1 ring-ink" : "ring-1 ring-line"}`}>
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={u} alt="" className="h-full w-full object-cover" />
-              </button>
-            ))}
-          </div>
-        </div>
+        <Gallery images={thumbs} alt={bundle.title} index={idx} onIndex={setHeroIndex} />
 
         {/* Details */}
         <div className="lg:pt-2">
           <p className="label text-mute">One Mission · The Set</p>
           <h1 className="mt-2 text-xl font-medium text-ink sm:text-2xl">{bundle.title}</h1>
-          <p className="mt-3 text-base text-ink">Set {money(both)} <span className="text-mute">· or buy either piece</span></p>
+          <p className="mt-3 text-base text-ink">Set {money(total)} <span className="text-mute">· or buy any piece</span></p>
 
           <div className="mt-8 space-y-7">
-            <Config cfg={h} label="Hoodie" />
-            <div className="border-t border-line" />
-            <Config cfg={s} label="Shorts" />
+            {cfgs.map((c, i) => (
+              <div key={c.product?.id ?? i}>
+                {i > 0 && <div className="mb-7 border-t border-line" />}
+                <Config cfg={c} />
+              </div>
+            ))}
           </div>
 
           <div className="mt-8 space-y-2.5">
-            <button onClick={() => buy([h.variant?.id, s.variant?.id])} disabled={!bothReady}
+            <button onClick={() => buy(cfgs.map((c) => c.variant?.id))} disabled={!allReady}
               className="flex w-full items-center justify-center gap-2 bg-ink px-6 py-4 text-xs uppercase tracking-widest2 text-paper transition-opacity hover:opacity-90 disabled:opacity-40">
-              {bothReady ? <>Add both to bag — {money(both)} <ArrowRight className="h-4 w-4" /></> : "Select a size for both"}
+              {allReady ? <>Add the set — {money(total)} <ArrowRight className="h-4 w-4" /></> : "Select a size for each piece"}
             </button>
-            <div className="grid grid-cols-2 gap-2.5">
-              <button onClick={() => buy([h.variant?.id])} disabled={!h.variant}
-                className="border border-ink px-4 py-3 text-[11px] uppercase tracking-widest2 text-ink transition-colors hover:bg-ink hover:text-paper disabled:opacity-30">
-                Hoodie · {hoodie.minPrice}
-              </button>
-              <button onClick={() => buy([s.variant?.id])} disabled={!s.variant}
-                className="border border-ink px-4 py-3 text-[11px] uppercase tracking-widest2 text-ink transition-colors hover:bg-ink hover:text-paper disabled:opacity-30">
-                Shorts · {shorts.minPrice}
-              </button>
+            <div className="grid grid-cols-3 gap-2.5">
+              {cfgs.map((c, i) => (
+                <button key={c.product?.id ?? i} onClick={() => buy([c.variant?.id])} disabled={!c.variant}
+                  className="border border-ink px-2 py-3 text-[11px] uppercase tracking-widest2 text-ink transition-colors hover:bg-ink hover:text-paper disabled:opacity-30">
+                  {shortName(c.product)} · {c.product?.minPrice}
+                </button>
+              ))}
             </div>
           </div>
           <p className="mt-3 text-center label-sm text-mute">Secure checkout via Shopify</p>
@@ -360,7 +408,6 @@ function BundleDetail({ bundle, hoodie, shorts }: { bundle: ShopProduct; hoodie:
           )}
         </div>
       </div>
-      {zoomSrc && <Lightbox src={zoomSrc} alt={bundle.title} onClose={() => setZoomSrc(null)} />}
     </div>
   );
 }
