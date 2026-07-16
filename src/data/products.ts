@@ -1159,6 +1159,8 @@ export function getProductByPid(pid: string): ShopProduct | null {
 /** Products kept in the catalog for "The Fit" set but hidden as their own grid tile. */
 const HIDDEN_FROM_GRID = new Set<string>([
   "gid://shopify/Product/10410647159063", // Statement Hoodie — shown/sold via The Fit set
+  "gid://shopify/Product/10410153083159", // OM Heavyweight Hoodie — Black — removed from listing
+  "gid://shopify/Product/10410154852631", // One Mission Lounge Shorts ($49.99 duplicate) — removed from listing
 ]);
 const gridProducts = products.filter((p) => !HIDDEN_FROM_GRID.has(p.id));
 
@@ -1169,14 +1171,33 @@ export function productsFor(cat: "all" | "men" | "women" | "accessories"): ShopP
   return gridProducts.filter((p) => p.gender === "men" || p.gender === "unisex");
 }
 
-/** Featured order — the set first, then flagged items. */
+/** Featured order — curated hero row first, then flagged items. */
 export function featuredProducts(): ShopProduct[] {
-  const score = (p: ShopProduct) => {
-    if (p.bundle?.length) return 100;                       // The Fit set — top left
-    if (/one mission statement hoodie/i.test(p.title)) return 80;
-    return p.badge ? 50 : 0;
+  // Hand-picked top row so we don't stack two similar washed hoodies together:
+  // the set, then a collab tee, then a crewneck (three different silhouettes).
+  const HERO_ORDER = [
+    "gid://shopify/Product/bundle-the-fit", // The Fit — the full set
+    "gid://shopify/Product/10410152689943", // OM x One Mission — Black (collab tee)
+    "gid://shopify/Product/10410150035735", // One Mission Heavyweight Crewneck Sweatshirt
+  ];
+  const heroRank = (p: ShopProduct) => {
+    const i = HERO_ORDER.indexOf(p.id);
+    return i === -1 ? Infinity : i;
   };
-  return [...gridProducts].sort((a, b) => score(b) - score(a));
+  const score = (p: ShopProduct) => (p.badge ? 50 : 0);
+  const sorted = [...gridProducts].sort((a, b) => {
+    const ha = heroRank(a), hb = heroRank(b);
+    if (ha !== hb) return ha - hb;          // hero items first, in listed order
+    return score(b) - score(a);             // then badged, then the rest
+  });
+  // The Statement Hoodie read as repetitive right next to The Fit — drop it a
+  // few tiles down so it's still featured but out of the hero row.
+  const idx = sorted.findIndex((p) => /one mission statement hoodie/i.test(p.title));
+  if (idx > -1 && idx < 6) {
+    const [sh] = sorted.splice(idx, 1);
+    sorted.splice(6, 0, sh);
+  }
+  return sorted;
 }
 
 /** Resolve a product's paired items to full product objects. */
