@@ -114,6 +114,117 @@ export const staticCollections: Record<string, ShopCollection> = {
         ],
       },
       {
+        id: "gid://shopify/Product/10420061208855",
+        title: "Heavy Disturbed One Mission Hoodie",
+        handle: "heavy-disturbed-one-mission-hoodie",
+        description: "Heavyweight distressed hoodie — washed black with the One Mission script on the chest and a bold One Mission print across the back.",
+        imageUrl: I("172d03b7dfab4c9aa883402d4fff2f61", "1784171028"), imageAlt: "Heavy Disturbed One Mission Hoodie",
+        images: [I("172d03b7dfab4c9aa883402d4fff2f61", "1784171028"), I("ed21309b808f41a2b88978fc064bb627", "1784171028")],
+        minPrice: "$125", currency: "USD", hasOptions: true,
+        variants: [
+          V("gid://shopify/ProductVariant/53998888386839", "Black / S", "$125"),
+          V("gid://shopify/ProductVariant/53998888419607", "Black / M", "$125"),
+          V("gid://shopify/ProductVariant/53998888452375", "Black / L", "$125"),
+          V("gid://shopify/ProductVariant/53998888485143", "Black / XL", "$125"),
+          V("gid://shopify/ProductVariant/53998888517911", "Black / 2XL", "$125"),
+        ],
+      },
+      {
+        id: "gid://shopify/Product/10420058063127",
+        title: "The 1 Hoodie",
+        handle: "the-1-hoodie",
+        description: "Heavyweight hoodie with the One Mission baseball script across the chest. Unisex, oversized fit. In Flower Gray, Black, and Dark Gray.",
+        imageUrl: I("b26da4d1a2f840c79f0f1da5b948e9a7", "1784170773"), imageAlt: "The 1 Hoodie",
+        images: [I("b26da4d1a2f840c79f0f1da5b948e9a7", "1784170773"), I("15c504e1f2e549e0b4d2b56ccd08ce80", "1784170773"), I("3ac0d8807b11492c9e65514d9b0ddeb5", "1784170773"), I("1b9b447dd21a49a685776c974644a6fd", "1784170773"), I("c7ccd52e644e463dbdda9a1c5fb989e7", "1784170773"), I("a137bbabb23c44fab9d58ee2eef45d19", "1784170773")],
+        minPrice: "$110", currency: "USD", hasOptions: true,
+        variants: [
+          V("gid://shopify/ProductVariant/53998488551703", "Flower Gray / S", "$110"),
+          V("gid://shopify/ProductVariant/53998488584471", "Flower Gray / M", "$110"),
+          V("gid://shopify/ProductVariant/53998488617239", "Flower Gray / L", "$110"),
+          V("gid://shopify/ProductVariant/53998488650007", "Flower Gray / XL", "$110"),
+          V("gid://shopify/ProductVariant/53998488682775", "Flower Gray / 2XL", "$110"),
+          V("gid://shopify/ProductVariant/53998488715543", "Black / S", "$110"),
+          V("gid://shopify/ProductVariant/53998488748311", "Black / M", "$110"),
+          V("gid://shopify/ProductVariant/53998488781079", "Black / L", "$110"),
+          V("gid://shopify/ProductVariant/53998488813847", "Black / XL", "$110"),
+          V("gid://shopify/ProductVariant/53998488846615", "Black / 2XL", "$110"),
+          V("gid://shopify/ProductVariant/53998488879383", "Dark Gray / S", "$110"),
+          V("gid://shopify/ProductVariant/53998488912151", "Dark Gray / M", "$110"),
+          V("gid://shopify/ProductVariant/53998488944919", "Dark Gray / L", "$110"),
+          V("gid://shopify/ProductVariant/53998488977687", "Dark Gray / XL", "$110"),
+          V("gid://shopify/ProductVariant/53998489010455", "Dark Gray / 2XL", "$110"),
+        ],
+      },
+      {
+        id: "gid://shopify/Product/10420052394263",
+        title: "One Mission Hoodie — Vibin",
+        handle: "one-mission-hoodie-vibin",
+        description: "Washed hoodie with the One Mission script. In White, Light Gray, and Dark Gray.",
+        imageUrl: I("784f9e67546448d0b8954c82dee3d462", "1784170173"), imageAlt: "One Mission Hoodie Vibin",
+        images: [I("784f9e67546448d0b8954c82dee3d462", "1784170173"), I("2273de7f17bb40f38e7c1a0ae06a8609", "1784170173"), I("16074877479f4c018e10a08e55213105", "1784170173"), I("4dcd972c731648d7b59d1d46043a1244", "1784170173"), I("44ed45f21d3b4a03905f996e9cf7908f", "1784170173"), I("5a02aa4c97554af781e06744e172da06", "1784170173")],
+        minPrice: "$99", currency: "USD", hasOptions: true,
+        variants: [
+          V("gid://shopify/ProductVariant/53997443318039", "White / S", "$99"),
+          V("gid://shopify/ProductVariant/53997443350807", "White / M", "$99"),
+          V("gid://shopify/ProductVariant/53997443383575", "White / L", "$99"),
+          V("gid://shopify/ProductVariant/53997443416343", "White / XL", "$99"),
+          V("gid://shopify/ProductVariant/53997443449111", "White / 2XL", "$99"),
+          V("gid://shopify/ProductVariant/53997443481879", "Light Gray / S", "$99"),
+          V("gid://shopify/ProductVariant/53997443514647", "Light Gray / M", "$99"),
+          V("gid://shopify/ProductVariant/53997443547415", "Light Gray / L", "$99"),
+          V("gid://shopify/ProductVariant/53997443580183", "Light Gray / XL", "$99"),
+          V("gid://shopify/ProductVariant/53997443612951", "Light Gray / 2XL", "$99"),
+          V("gid://shopify/ProductVariant/53997443645719", "Dark Gray / S", "$99"),
+          V("gid://shopify/ProductVariant/53997443678487", "Dark Gray / M", "$99"),
+          V("gid://shopify/ProductVariant/53997443711255", "Dark Gray / L", "$99"),
+          V("gid://shopify/ProductVariant/53997443744023", "Dark Gray / XL", "$99"),
+          V("gid://shopify/ProductVariant/53997443776791", "Dark Gray / 2XL", "$99"),
+        ],
+      },
+      {
+        id: "gid://shopify/Product/10420010123543",
+        title: "OM Heavyweight Sweatshirt",
+        handle: "om-heavyweight-sweatshirt",
+        description: "Heavyweight crewneck sweatshirt with an OM chest print. In White, Black, and Navy Blue.",
+        imageUrl: I("aa462380056a4531bc601e8e0c0a8b5b", "1784169872"), imageAlt: "OM Heavyweight Sweatshirt",
+        images: [I("aa462380056a4531bc601e8e0c0a8b5b", "1784169872"), I("a388e367bf874fba8967a154e7822a8f", "1784169873"), I("b87e45fd290845a4b62edb381f28420c", "1784169872"), I("fcb924051821459aac3735236d331e24", "1784169873"), I("90745998da3f4cc3a4a8d1198edf54d2", "1784169872"), I("0581446878e24525bb7487e53b610894", "1784169873")],
+        minPrice: "$99", currency: "USD", hasOptions: true,
+        variants: [
+          V("gid://shopify/ProductVariant/53996912771351", "White / S", "$99"),
+          V("gid://shopify/ProductVariant/53996912804119", "White / M", "$99"),
+          V("gid://shopify/ProductVariant/53996912836887", "White / L", "$99"),
+          V("gid://shopify/ProductVariant/53996912869655", "White / XL", "$99"),
+          V("gid://shopify/ProductVariant/53996912902423", "White / 2XL", "$99"),
+          V("gid://shopify/ProductVariant/53996912935191", "Black / S", "$99"),
+          V("gid://shopify/ProductVariant/53996912967959", "Black / M", "$99"),
+          V("gid://shopify/ProductVariant/53996913000727", "Black / L", "$99"),
+          V("gid://shopify/ProductVariant/53996913033495", "Black / XL", "$99"),
+          V("gid://shopify/ProductVariant/53996913066263", "Black / 2XL", "$99"),
+          V("gid://shopify/ProductVariant/53996913099031", "Navy Blue / S", "$99"),
+          V("gid://shopify/ProductVariant/53996913131799", "Navy Blue / M", "$99"),
+          V("gid://shopify/ProductVariant/53996913164567", "Navy Blue / L", "$99"),
+          V("gid://shopify/ProductVariant/53996913197335", "Navy Blue / XL", "$99"),
+          V("gid://shopify/ProductVariant/53996913230103", "Navy Blue / 2XL", "$99"),
+        ],
+      },
+      {
+        id: "gid://shopify/Product/10420053967127",
+        title: "Snow Washed Loose Cotton Hoodie",
+        handle: "snow-washed-loose-cotton-hoodie",
+        description: "Snow-washed loose cotton hoodie with a small One Mission chest script, in Black Beauty.",
+        imageUrl: I("de097b0879004619bffa107cb62305fa_9930b193-a03b-440d-ac4a-358f56a3ce4b", "1784170308"), imageAlt: "Snow Washed Loose Cotton Hoodie",
+        images: [I("de097b0879004619bffa107cb62305fa_9930b193-a03b-440d-ac4a-358f56a3ce4b", "1784170308"), I("616fe1fbf05445bab5514271a2c2a0f2_718478d7-e4cc-4147-8493-78a6503cf6c7", "1784170308")],
+        minPrice: "$99", currency: "USD", hasOptions: true,
+        variants: [
+          V("gid://shopify/ProductVariant/53997650575639", "Black Beauty / S", "$99"),
+          V("gid://shopify/ProductVariant/53997650608407", "Black Beauty / M", "$99"),
+          V("gid://shopify/ProductVariant/53997650641175", "Black Beauty / L", "$99"),
+          V("gid://shopify/ProductVariant/53997650673943", "Black Beauty / XL", "$99"),
+          V("gid://shopify/ProductVariant/53997650706711", "Black Beauty / 2XL", "$99"),
+          V("gid://shopify/ProductVariant/53997650739479", "Black Beauty / 3XL", "$99"),
+        ],
+      },
+      {
         id: "gid://shopify/Product/10409785065751",
         title: "One Mission Heavyweight Hoodie — White",
         handle: "one-mission-heavyweight-hoodie-1",
@@ -1191,16 +1302,27 @@ const FEATURED_IDS = [
   "gid://shopify/Product/bundle-the-fit",          // The Fit — Full Look
   "gid://shopify/Product/10410152689943",          // OM x One Mission — Black
   "gid://shopify/Product/10419606126871",          // OM Gold Hoodie
+  "gid://shopify/Product/10420061208855",          // Heavy Disturbed One Mission Hoodie
+  "gid://shopify/Product/10420058063127",          // The 1 Hoodie
+  "gid://shopify/Product/10420052394263",          // One Mission Hoodie — Vibin
+  "gid://shopify/Product/10420010123543",          // OM Heavyweight Sweatshirt
+  "gid://shopify/Product/10420053967127",          // Snow Washed Loose Cotton Hoodie
   "gid://shopify/Product/10409783132439-charcoal", // Heavyweight Hoodie — Charcoal (back print)
   "gid://shopify/Product/10410220814615",          // One Mission Script Dad Hat
 ];
+
+// Unisex products that should also appear in the Women's feed (in addition to
+// the Men's feed), e.g. unisex hoodies the shopper wants merchandised on both.
+const WOMENS_EXTRA = new Set<string>([
+  "gid://shopify/Product/10420061208855", // Heavy Disturbed One Mission Hoodie
+]);
 
 export function productsFor(cat: "all" | "men" | "women" | "accessories"): ShopProduct[] {
   // Use the curated hero order so the set stays at the top of every feed
   // (Men / Women / Accessories).
   const ordered = orderedGrid();
   if (cat === "all") return ordered;
-  if (cat === "women") return ordered.filter((p) => p.gender === "women");
+  if (cat === "women") return ordered.filter((p) => p.gender === "women" || WOMENS_EXTRA.has(p.id));
   if (cat === "accessories") return ordered.filter((p) => p.gender === "accessory");
   return ordered.filter((p) => p.gender === "men" || p.gender === "unisex");
 }
