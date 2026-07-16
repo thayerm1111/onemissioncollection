@@ -59,6 +59,7 @@ export interface ShopProduct {
   gender?: "men" | "women" | "unisex" | "accessory";  // used for the Men / Women / Accessories nav
   type?: string;            // subcategory for drill-down nav, e.g. "Hoodies", "Shorts", "T-Shirts"
   model?: string;           // optional lifestyle/model photo shown as the grid lead (flips to flat on hover)
+  womenModel?: string;      // model photo shown as the grid lead ONLY in the Women feed (Men stays flat)
   bundle?: string[];        // for a "set" product: the component product ids (e.g. [hoodieId, shortsId])
 }
 export interface ShopCollection {
