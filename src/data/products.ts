@@ -444,9 +444,10 @@ export const staticCollections: Record<string, ShopCollection> = {
         id: "gid://shopify/Product/10410150330647",
         title: "One Mission Tank Top — White",
         handle: "one-mission-tank-top-1",
-        description: "Lightweight tank top in White.",
-        imageUrl: I("34323b8425c94294ae580b4bdc158d5d", "1783879817"), imageAlt: "One Mission Tank Top White",
-        images: [I("34323b8425c94294ae580b4bdc158d5d", "1783879817"), I("806aec4bdabe4c97a626cb2d07bec42f", "1783879818")],
+        description: "Lightweight sleeveless cutoff tank in White.",
+        imageUrl: I("34323b8425c94294ae580b4bdc158d5d", "1784167476"), imageAlt: "One Mission Tank Top White",
+        model: I("eb484e8afb7942a0b4ccfb88268d035b", "1784167477"),
+        images: [I("34323b8425c94294ae580b4bdc158d5d", "1784167476"), I("eb484e8afb7942a0b4ccfb88268d035b", "1784167477"), I("6580d1a95b6e4ff181020c414ea7c1d3", "1784167477"), I("62e4f8dbdbcb41fa9e73650459551e48", "1784167477"), I("806aec4bdabe4c97a626cb2d07bec42f", "1784167476")],
         minPrice: "$49.99", currency: "USD", hasOptions: true,
         variants: [
           V("gid://shopify/ProductVariant/53664759644439", "White / S", "$49.99"),
@@ -881,7 +882,7 @@ export const staticCollections: Record<string, ShopCollection> = {
         handle: "one-mission-tm-heavy-tee",
         description: "Boxy 330gsm heavyweight tee with a drop shoulder. 100% cotton, in Apricot, Black, Navy Blue, and Dark Apricot.",
         imageUrl: I("a57f4b7b56c84a0e8ff474e999b47450", "1783935813"), imageAlt: "One Mission TM Heavy Tee",
-        images: [I("a57f4b7b56c84a0e8ff474e999b47450", "1783935813"), I("3fb48495f68940de83343e9c6478b502", "1783935813"), I("55a95c07c842460d86dc062e911106ff", "1783935813"), I("bfa192ccd8434685bce38e0b9b828ec4", "1783935813")],
+        images: [I("a57f4b7b56c84a0e8ff474e999b47450", "1783935813"), I("85ff8c87b76645058a81dcf693ee7d36", "1783935814"), I("3fb48495f68940de83343e9c6478b502", "1783935813"), I("55a95c07c842460d86dc062e911106ff", "1783935813"), I("bfa192ccd8434685bce38e0b9b828ec4", "1783935813")],
         colorImages: {
           "Apricot": I("3fb48495f68940de83343e9c6478b502", "1783935813"),
           "Black": I("a57f4b7b56c84a0e8ff474e999b47450", "1783935813"),
@@ -1218,6 +1219,12 @@ export function featuredProducts(): ShopProduct[] {
   if (idx > -1 && idx < 6) {
     const [sh] = sorted.splice(idx, 1);
     sorted.splice(6, 0, sh);
+  }
+  // Pull the white cutoff tank up toward the top (row 2) — not a hero slot.
+  const tankIdx = sorted.findIndex((p) => p.id === "gid://shopify/Product/10410150330647");
+  if (tankIdx > 4) {
+    const [tk] = sorted.splice(tankIdx, 1);
+    sorted.splice(4, 0, tk);
   }
   return sorted;
 }
