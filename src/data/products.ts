@@ -35,8 +35,8 @@ export const staticCollections: Record<string, ShopCollection> = {
         description: "Our boldest hoodie yet — a heavyweight statement piece in six colors: Dark Green, Mild Apricot, Lake Blue, Royal Blue, Light Gray, and Black.",
         imageUrl: I("2128897d801b418b955435b13a588528", "1783882713"), imageAlt: "One Mission Statement Hoodie",
         images: [I("2128897d801b418b955435b13a588528", "1783882713"), I("b33898df1248414cad49616278c14a02", "1783882713"), I("b7d8740a95e6452fa10a926f52aed80f", "1783882713"), I("5a969afbcedc4459a0231a48451b197a", "1783882713"), I("ba844c2c993a4650b666ad4fb5a3496d", "1783882713"), I("366b2fdb17934ba39978734f2acf7dec", "1783882713"), I("a0f354975e8a45f1b5a3a87efbb8016e", "1783882713"), I("d5da18a2481d493fb5edff8bc513db0a", "1783882713"), I("0685e5493af843439950bc8bf0a74fcf", "1783882713"), I("1e41a2814156463c9a10e0b5c088661d", "1783882713"), I("8adde8d2926b49d596b63657527e2f19", "1783882713"), I("be7f8446edde44da91a5139da4ffa175", "1783882713")],
-        minPrice: "$125", currency: "USD", hasOptions: true,
-        badge: "🔥 Hottest Item",
+        minPrice: "$79.99", currency: "USD", hasOptions: true,
+        badge: "Limited Drop",
         colorImages: {
           "Dark Green": I("ba844c2c993a4650b666ad4fb5a3496d", "1783882713"),
           "Mild Apricot": I("8adde8d2926b49d596b63657527e2f19", "1783882713"),
@@ -46,36 +46,36 @@ export const staticCollections: Record<string, ShopCollection> = {
           "Black": I("2128897d801b418b955435b13a588528", "1783882713"),
         },
         variants: [
-          V("gid://shopify/ProductVariant/53664876069143", "Dark Green / S", "$125"),
-          V("gid://shopify/ProductVariant/53664876101911", "Dark Green / M", "$125"),
-          V("gid://shopify/ProductVariant/53664876134679", "Dark Green / L", "$125"),
-          V("gid://shopify/ProductVariant/53664876167447", "Dark Green / XL", "$125"),
-          V("gid://shopify/ProductVariant/53664876200215", "Dark Green / 2XL", "$125"),
-          V("gid://shopify/ProductVariant/53664876232983", "Mild Apricot / S", "$125"),
-          V("gid://shopify/ProductVariant/53664876265751", "Mild Apricot / M", "$125"),
-          V("gid://shopify/ProductVariant/53664876298519", "Mild Apricot / L", "$125"),
-          V("gid://shopify/ProductVariant/53664876331287", "Mild Apricot / XL", "$125"),
-          V("gid://shopify/ProductVariant/53664876364055", "Mild Apricot / 2XL", "$125"),
-          V("gid://shopify/ProductVariant/53664876396823", "Lake Blue / S", "$125"),
-          V("gid://shopify/ProductVariant/53664876429591", "Lake Blue / M", "$125"),
-          V("gid://shopify/ProductVariant/53664876462359", "Lake Blue / L", "$125"),
-          V("gid://shopify/ProductVariant/53664876495127", "Lake Blue / XL", "$125"),
-          V("gid://shopify/ProductVariant/53664876527895", "Lake Blue / 2XL", "$125"),
-          V("gid://shopify/ProductVariant/53664876560663", "Royal Blue / S", "$125"),
-          V("gid://shopify/ProductVariant/53664876593431", "Royal Blue / M", "$125"),
-          V("gid://shopify/ProductVariant/53664876626199", "Royal Blue / L", "$125"),
-          V("gid://shopify/ProductVariant/53664876658967", "Royal Blue / XL", "$125"),
-          V("gid://shopify/ProductVariant/53664876691735", "Royal Blue / 2XL", "$125"),
-          V("gid://shopify/ProductVariant/53664876724503", "Light Gray / S", "$125"),
-          V("gid://shopify/ProductVariant/53664876757271", "Light Gray / M", "$125"),
-          V("gid://shopify/ProductVariant/53664876790039", "Light Gray / L", "$125"),
-          V("gid://shopify/ProductVariant/53664876822807", "Light Gray / XL", "$125"),
-          V("gid://shopify/ProductVariant/53664876855575", "Light Gray / 2XL", "$125"),
-          V("gid://shopify/ProductVariant/53664876888343", "Black / S", "$125"),
-          V("gid://shopify/ProductVariant/53664876921111", "Black / M", "$125"),
-          V("gid://shopify/ProductVariant/53664876953879", "Black / L", "$125"),
-          V("gid://shopify/ProductVariant/53664876986647", "Black / XL", "$125"),
-          V("gid://shopify/ProductVariant/53664877019415", "Black / 2XL", "$125"),
+          V("gid://shopify/ProductVariant/53664876069143", "Dark Green / S", "$79.99"),
+          V("gid://shopify/ProductVariant/53664876101911", "Dark Green / M", "$79.99"),
+          V("gid://shopify/ProductVariant/53664876134679", "Dark Green / L", "$79.99"),
+          V("gid://shopify/ProductVariant/53664876167447", "Dark Green / XL", "$79.99"),
+          V("gid://shopify/ProductVariant/53664876200215", "Dark Green / 2XL", "$79.99"),
+          V("gid://shopify/ProductVariant/53664876232983", "Mild Apricot / S", "$79.99"),
+          V("gid://shopify/ProductVariant/53664876265751", "Mild Apricot / M", "$79.99"),
+          V("gid://shopify/ProductVariant/53664876298519", "Mild Apricot / L", "$79.99"),
+          V("gid://shopify/ProductVariant/53664876331287", "Mild Apricot / XL", "$79.99"),
+          V("gid://shopify/ProductVariant/53664876364055", "Mild Apricot / 2XL", "$79.99"),
+          V("gid://shopify/ProductVariant/53664876396823", "Lake Blue / S", "$79.99"),
+          V("gid://shopify/ProductVariant/53664876429591", "Lake Blue / M", "$79.99"),
+          V("gid://shopify/ProductVariant/53664876462359", "Lake Blue / L", "$79.99"),
+          V("gid://shopify/ProductVariant/53664876495127", "Lake Blue / XL", "$79.99"),
+          V("gid://shopify/ProductVariant/53664876527895", "Lake Blue / 2XL", "$79.99"),
+          V("gid://shopify/ProductVariant/53664876560663", "Royal Blue / S", "$79.99"),
+          V("gid://shopify/ProductVariant/53664876593431", "Royal Blue / M", "$79.99"),
+          V("gid://shopify/ProductVariant/53664876626199", "Royal Blue / L", "$79.99"),
+          V("gid://shopify/ProductVariant/53664876658967", "Royal Blue / XL", "$79.99"),
+          V("gid://shopify/ProductVariant/53664876691735", "Royal Blue / 2XL", "$79.99"),
+          V("gid://shopify/ProductVariant/53664876724503", "Light Gray / S", "$79.99"),
+          V("gid://shopify/ProductVariant/53664876757271", "Light Gray / M", "$79.99"),
+          V("gid://shopify/ProductVariant/53664876790039", "Light Gray / L", "$79.99"),
+          V("gid://shopify/ProductVariant/53664876822807", "Light Gray / XL", "$79.99"),
+          V("gid://shopify/ProductVariant/53664876855575", "Light Gray / 2XL", "$79.99"),
+          V("gid://shopify/ProductVariant/53664876888343", "Black / S", "$79.99"),
+          V("gid://shopify/ProductVariant/53664876921111", "Black / M", "$79.99"),
+          V("gid://shopify/ProductVariant/53664876953879", "Black / L", "$79.99"),
+          V("gid://shopify/ProductVariant/53664876986647", "Black / XL", "$79.99"),
+          V("gid://shopify/ProductVariant/53664877019415", "Black / 2XL", "$79.99"),
         ],
       },
       {
@@ -104,14 +104,14 @@ export const staticCollections: Record<string, ShopCollection> = {
         imageUrl: I("be8af2dc08414fd28263ee489e92b788", "1784175591"), imageAlt: "OM Gold Hoodie",
         model: I("783fc7d36c6b48809f570028e8e3fc18", "1784175591"),
         images: [I("be8af2dc08414fd28263ee489e92b788", "1784175591"), I("783fc7d36c6b48809f570028e8e3fc18", "1784175591"), I("9db734d24d2a4295911978abb501c658", "1784175591"), I("2790b82a45c64316bf21df3243b21e0c", "1784175592"), I("d9b8cd85c4614c069aec2262021af6c3", "1784175591")],
-        minPrice: "$125", currency: "USD", hasOptions: true,
-        badge: "🔥 New",
+        minPrice: "$79.99", currency: "USD", hasOptions: true,
+        badge: "Limited Drop",
         variants: [
-          V("gid://shopify/ProductVariant/53991805714711", "Purple / S", "$125"),
-          V("gid://shopify/ProductVariant/53991805747479", "Purple / M", "$125"),
-          V("gid://shopify/ProductVariant/53991805780247", "Purple / L", "$125"),
-          V("gid://shopify/ProductVariant/53991805813015", "Purple / XL", "$125"),
-          V("gid://shopify/ProductVariant/53991805845783", "Purple / 2XL", "$125"),
+          V("gid://shopify/ProductVariant/53991805714711", "Purple / S", "$79.99"),
+          V("gid://shopify/ProductVariant/53991805747479", "Purple / M", "$79.99"),
+          V("gid://shopify/ProductVariant/53991805780247", "Purple / L", "$79.99"),
+          V("gid://shopify/ProductVariant/53991805813015", "Purple / XL", "$79.99"),
+          V("gid://shopify/ProductVariant/53991805845783", "Purple / 2XL", "$79.99"),
         ],
       },
       {
@@ -1309,6 +1309,36 @@ const HIDDEN_FROM_GRID = new Set<string>([
 ]);
 const gridProducts = products.filter((p) => !HIDDEN_FROM_GRID.has(p.id));
 
+/* ---------------- DROP MODE ----------------
+   While DROP_MODE is on, the store shows ONLY the drop products (everything
+   else is hidden). Each piece is a limited run of 100 units per size; the
+   per-variant cap below (100 ÷ number of colors) drives the "X of N left"
+   live counter. Flip DROP_MODE to false to reveal the full catalog again. */
+export const DROP_MODE = true;
+export const DROP_IDS: string[] = [
+  "gid://shopify/Product/10410168287511", // One Mission Statement Hoodie (6 colors)
+  "gid://shopify/Product/10419606126871", // OM Gold Hoodie
+  "gid://shopify/Product/10410152689943", // OM x One Mission — Black
+  "gid://shopify/Product/10409780904215", // Heavyweight Tee — Gray
+  "gid://shopify/Product/10409780543767", // Heavyweight Tee — White
+  "gid://shopify/Product/10409776873751", // Heavyweight Tee — Black
+];
+export const DROP_SET = new Set(DROP_IDS);
+// Units stocked per size/color variant (100 per size, split across colors).
+export const DROP_VARIANT_CAP: Record<string, number> = {
+  "gid://shopify/Product/10410168287511": 17,  // 6 colors → ~17 each
+  "gid://shopify/Product/10419606126871": 100, // 1 color
+  "gid://shopify/Product/10410152689943": 100, // 1 color
+  "gid://shopify/Product/10409780904215": 100, // 1 color
+  "gid://shopify/Product/10409780543767": 100, // 1 color
+  "gid://shopify/Product/10409776873751": 100, // 1 color
+};
+export function dropProducts(): ShopProduct[] {
+  return DROP_IDS
+    .map((id) => products.find((p) => p.id === id))
+    .filter((p): p is ShopProduct => Boolean(p));
+}
+
 // The curated "Featured" landing selection (home page) — a hand-picked showcase,
 // not the whole catalog. The full catalog stays browsable via Men / Women /
 // Accessories.
@@ -1334,6 +1364,8 @@ const WOMENS_EXTRA = new Set<string>([
 ]);
 
 export function productsFor(cat: "all" | "men" | "women" | "accessories"): ShopProduct[] {
+  // Drop mode: every feed shows only the drop products.
+  if (DROP_MODE) return dropProducts();
   // Use the curated hero order so the set stays at the top of every feed
   // (Men / Women / Accessories).
   const ordered = orderedGrid();
@@ -1345,6 +1377,7 @@ export function productsFor(cat: "all" | "men" | "women" | "accessories"): ShopP
 
 /** Curated Featured selection shown on the home page. */
 export function featuredProducts(): ShopProduct[] {
+  if (DROP_MODE) return dropProducts();
   return FEATURED_IDS
     .map((id) => products.find((p) => p.id === id))
     .filter((p): p is ShopProduct => Boolean(p));
