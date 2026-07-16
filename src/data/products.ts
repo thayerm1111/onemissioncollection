@@ -114,6 +114,22 @@ export const staticCollections: Record<string, ShopCollection> = {
         ],
       },
       {
+        id: "gid://shopify/Product/10420068581655",
+        title: "Matthew 18:13 Hoodie",
+        handle: "matthew-1813-the-1-hoodie",
+        description: "Washed heavyweight hoodie — arched One Mission across the chest and the full Matthew 18:13 verse printed across the back. Distressed finish.",
+        imageUrl: I("8f8f3edcad46458f86622dc56268f0a6", "1784172077"), imageAlt: "Matthew 18:13 Hoodie",
+        images: [I("8f8f3edcad46458f86622dc56268f0a6", "1784172077"), I("431d9468162248e48e35390499ed77fd", "1784172078")],
+        minPrice: "$249.99", currency: "USD", hasOptions: true,
+        variants: [
+          V("gid://shopify/ProductVariant/54000126624023", "Black / S", "$249.99"),
+          V("gid://shopify/ProductVariant/54000126656791", "Black / M", "$249.99"),
+          V("gid://shopify/ProductVariant/54000126689559", "Black / L", "$249.99"),
+          V("gid://shopify/ProductVariant/54000126722327", "Black / XL", "$249.99"),
+          V("gid://shopify/ProductVariant/54000126755095", "Black / 2XL", "$249.99"),
+        ],
+      },
+      {
         id: "gid://shopify/Product/10420061208855",
         title: "Heavy Disturbed One Mission Hoodie",
         handle: "heavy-disturbed-one-mission-hoodie",
@@ -1302,6 +1318,7 @@ const FEATURED_IDS = [
   "gid://shopify/Product/bundle-the-fit",          // The Fit — Full Look
   "gid://shopify/Product/10410152689943",          // OM x One Mission — Black
   "gid://shopify/Product/10419606126871",          // OM Gold Hoodie
+  "gid://shopify/Product/10420068581655",          // Matthew 18:13 Hoodie
   "gid://shopify/Product/10420061208855",          // Heavy Disturbed One Mission Hoodie
   "gid://shopify/Product/10420058063127",          // The 1 Hoodie
   "gid://shopify/Product/10420052394263",          // One Mission Hoodie — Vibin
