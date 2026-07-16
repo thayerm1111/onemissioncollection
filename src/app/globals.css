@@ -37,3 +37,13 @@ body {
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
+
+/* Home landing: Men/Women split stacks on mobile */
+@media (max-width: 720px) {
+  .om-split {
+    grid-template-columns: 1fr !important;
+  }
+  .om-split > section {
+    height: 74vh !important;
+  }
+}

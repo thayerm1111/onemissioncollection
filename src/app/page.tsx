@@ -1,6 +1,5 @@
-import { StoreView } from "@/components/StoreView";
-import { featuredProducts } from "@/data/products";
+import { HomeLanding } from "@/components/HomeLanding";
 
 export default function HomePage() {
-  return <StoreView products={featuredProducts()} active="/" />;
+  return <HomeLanding />;
 }

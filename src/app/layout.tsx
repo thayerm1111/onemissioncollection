@@ -28,7 +28,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className="font-sans antialiased">
         <IntroSplash />
         <Header />
-        <main className="min-h-[70vh]">{children}</main>
+        <main className="min-h-[70vh] pt-16">{children}</main>
         <Footer />
       </body>
     </html>
