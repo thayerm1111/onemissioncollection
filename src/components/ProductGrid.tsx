@@ -5,14 +5,14 @@ import { productPid } from "@/data/products";
 // Soft, muted tile backgrounds — each product sits on its own tone, like the
 // Essentials grid. Kept low-saturation so the garment always reads first.
 const TILE_BGS = [
-  "#e9e6e0", // warm oat
-  "#e5e7e7", // cool mist
-  "#ece7df", // sand
-  "#e3e4e2", // soft gray
-  "#e7e9ea", // pale blue-gray
-  "#eae6e0", // greige
-  "#e6e3dc", // taupe
-  "#e8e9e6", // pale sage-gray
+  "#e4dccc", // warm sand
+  "#d6dee1", // cool mist
+  "#ecdfc9", // cream
+  "#d9e0d6", // soft sage
+  "#dae4ee", // pale blue
+  "#e8dccd", // clay / oat
+  "#dbdbd3", // stone
+  "#e3dae6", // faint lilac
 ];
 
 // Stable per-product tone so a product keeps the same background across views.
