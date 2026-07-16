@@ -395,12 +395,17 @@ function BundleDetail({ bundle, items }: { bundle: ShopProduct; items: ShopProdu
           <p className="mt-3 text-base text-ink">Set {money(total)} <span className="text-mute">· or buy any piece</span></p>
 
           <div className="mt-8 space-y-7">
-            {cfgs.map((c, i) => (
-              <div key={c.product?.id ?? i}>
-                {i > 0 && <div className="mb-7 border-t border-line" />}
-                <Config cfg={c} />
-              </div>
-            ))}
+            {cfgs.map((c, i) => {
+              // Picking a piece's color jumps the main image to that piece so the
+              // shopper immediately sees the color they selected.
+              const bound: Cfg = { ...c, setColor: (v) => { c.setColor(v); setHeroIndex(heroList.length + i); } };
+              return (
+                <div key={c.product?.id ?? i}>
+                  {i > 0 && <div className="mb-7 border-t border-line" />}
+                  <Config cfg={bound} />
+                </div>
+              );
+            })}
           </div>
 
           <div className="mt-8 space-y-2.5">
