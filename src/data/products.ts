@@ -1337,7 +1337,7 @@ export function dropProducts(): ShopProduct[] {
   const items = DROP_IDS
     .map((id) => products.find((p) => p.id === id))
     .filter((p): p is ShopProduct => Boolean(p));
-  // Lead with "The Fit" full-look set (male model) as the hero tile.
+  // Lead with "The Fit" full-look set (male model) as the hero tile of the drop.
   const theFit = products.find((p) => p.id === "gid://shopify/Product/bundle-the-fit");
   return theFit ? [theFit, ...items] : items;
 }
