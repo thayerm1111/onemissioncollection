@@ -1339,6 +1339,23 @@ export function dropProducts(): ShopProduct[] {
     .filter((p): p is ShopProduct => Boolean(p));
 }
 
+// Women's launch collection — shown on the Women tab during the drop.
+export const WOMEN_DROP_IDS: string[] = [
+  "gid://shopify/Product/10419151339799", // Women's High-Rise Yoga Shorts (female model)
+  "gid://shopify/Product/10419153633559", // Women's Solid High-Rise Leggings
+  "gid://shopify/Product/10410242113815", // Women's High-Waisted Yoga Leggings
+  "gid://shopify/Product/10410184114455", // Women's High-Waisted Biker Shorts
+  "gid://shopify/Product/10410220159255", // Women's Snow Washed Crop Top
+  "gid://shopify/Product/10410180837655", // Women's Crop Tank Top
+  "gid://shopify/Product/10410239754519", // Women's Cropped Half-Zip Sweatshirt
+  "gid://shopify/Product/10410239262999", // Women's Essential Cropped Hoodie
+];
+export function womenDropProducts(): ShopProduct[] {
+  return WOMEN_DROP_IDS
+    .map((id) => products.find((p) => p.id === id))
+    .filter((p): p is ShopProduct => Boolean(p));
+}
+
 // The curated "Featured" landing selection (home page) — a hand-picked showcase,
 // not the whole catalog. The full catalog stays browsable via Men / Women /
 // Accessories.
@@ -1364,8 +1381,9 @@ const WOMENS_EXTRA = new Set<string>([
 ]);
 
 export function productsFor(cat: "all" | "men" | "women" | "accessories"): ShopProduct[] {
-  // Drop mode: every feed shows only the drop products.
-  if (DROP_MODE) return dropProducts();
+  // Drop mode: Men/Accessories/All show the unisex drop; Women shows the
+  // women's launch collection.
+  if (DROP_MODE) return cat === "women" ? womenDropProducts() : dropProducts();
   // Use the curated hero order so the set stays at the top of every feed
   // (Men / Women / Accessories).
   const ordered = orderedGrid();
