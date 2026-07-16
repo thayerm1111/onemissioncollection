@@ -1395,7 +1395,7 @@ export function productsFor(cat: "all" | "men" | "women" | "accessories"): ShopP
 
 /** Curated Featured selection shown on the home page. */
 export function featuredProducts(): ShopProduct[] {
-  if (DROP_MODE) return dropProducts();
+  if (DROP_MODE) return [...dropProducts(), ...womenDropProducts()];
   return FEATURED_IDS
     .map((id) => products.find((p) => p.id === id))
     .filter((p): p is ShopProduct => Boolean(p));
