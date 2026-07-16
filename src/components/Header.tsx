@@ -8,7 +8,7 @@ import { checkoutDomain } from "@/lib/shopify";
 import { Wordmark } from "./Wordmark";
 
 const NAV = [
-  { label: "Featured", href: "/" },
+  { label: "Featured", href: "/featured" },
   { label: "Men", href: "/men" },
   { label: "Women", href: "/women" },
   { label: "Accessories", href: "/accessories" },
@@ -17,19 +17,28 @@ const NAV = [
 export function Header() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [mobile, setMobile] = useState(false);
   const pathname = usePathname();
   const bagHref = `https://${checkoutDomain}/cart`;
 
-  // On the home page the header floats transparently over the hero, then turns
-  // solid once you scroll past it (Fear of God–style open landing).
+  // On mobile the home hero is a full-bleed image, so the header floats
+  // transparently over it and turns solid on scroll. On desktop the hero is a
+  // light image/text split, so the header stays solid there.
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > window.innerHeight * 0.82);
     window.addEventListener("scroll", onScroll, { passive: true });
     onScroll();
-    return () => window.removeEventListener("scroll", onScroll);
+    const mq = window.matchMedia("(max-width: 899px)");
+    const onMq = () => setMobile(mq.matches);
+    onMq();
+    mq.addEventListener("change", onMq);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      mq.removeEventListener("change", onMq);
+    };
   }, [pathname]);
 
-  const overlay = pathname === "/" && !scrolled;
+  const overlay = pathname === "/" && !scrolled && mobile;
   const shell = overlay
     ? "border-transparent bg-transparent text-white"
     : "border-b border-line bg-paper/95 text-ink backdrop-blur";

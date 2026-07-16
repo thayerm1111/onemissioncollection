@@ -7,24 +7,24 @@ import { ProductGrid } from "./ProductGrid";
 
 const IMG = "https://cdn.shopify.com/s/files/1/1016/0406/5559/files";
 
-function Panel({
-  image, position = "center 30%", overline, title, sub, cta, href, dark = true, contain = false, bg = "#e7e4de",
+function Editorial({
+  image, alt, over, title, sub, cta, href, rev = false, contain = false,
 }: {
-  image: string; position?: string; overline?: string; title: string; sub?: string;
-  cta: string; href: string; dark?: boolean; contain?: boolean; bg?: string;
+  image: string; alt: string; over: string; title: string; sub?: string;
+  cta: string; href: string; rev?: boolean; contain?: boolean;
 }) {
-  const color = dark ? "#ffffff" : "#17140f";
-  const border = dark ? "rgba(255,255,255,.55)" : "rgba(0,0,0,.4)";
   return (
-    <section className="rvl" style={{ position: "relative", height: "100vh", minHeight: 600, width: "100%", overflow: "hidden", background: bg }}>
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img src={image} alt={title} style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: contain ? "contain" : "cover", objectPosition: position }} />
-      {dark && <div style={{ position: "absolute", inset: 0, background: "linear-gradient(180deg,rgba(0,0,0,.34) 0%,rgba(0,0,0,.05) 24%,rgba(0,0,0,0) 52%,rgba(0,0,0,.5) 100%)" }} />}
-      <div style={{ position: "absolute", inset: 0, display: "flex", flexDirection: "column", justifyContent: contain ? "center" : "flex-end", alignItems: "center", textAlign: "center", color, padding: "0 24px 9vh" }}>
-        {overline && <div style={{ fontSize: 11, letterSpacing: ".34em", textTransform: "uppercase", opacity: dark ? .9 : .65, marginBottom: 16 }}>{overline}</div>}
-        <h2 style={{ fontSize: "clamp(32px,5.4vw,76px)", letterSpacing: ".13em", textTransform: "uppercase", fontWeight: 400, lineHeight: 1, margin: 0 }}>{title}</h2>
-        {sub && <p style={{ marginTop: 15, fontSize: 13, letterSpacing: ".05em", opacity: .92, fontWeight: 300, maxWidth: 420 }}>{sub}</p>}
-        <Link href={href} style={{ display: "inline-block", marginTop: 24, fontSize: 11, letterSpacing: ".24em", textTransform: "uppercase", color, borderBottom: `1px solid ${border}`, paddingBottom: 5, textDecoration: "none" }}>{cta}</Link>
+    <section className={`ed rvl${rev ? " ed-rev" : ""}`}>
+      <div className="ed-media">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img className={`ed-img${contain ? " contain" : ""}`} src={image} alt={alt} />
+      </div>
+      <div className="ed-scrim" />
+      <div className="ed-copy">
+        <div className="ed-over">{over}</div>
+        <h2 className="ed-title">{title}</h2>
+        {sub && <p className="ed-sub">{sub}</p>}
+        <Link className="ed-cta" href={href}>{cta}</Link>
       </div>
     </section>
   );
@@ -35,7 +35,7 @@ export function HomeLanding() {
   useEffect(() => {
     const io = new IntersectionObserver((es) => {
       es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } });
-    }, { threshold: 0.18 });
+    }, { threshold: 0.16 });
     ref.current?.querySelectorAll(".rvl").forEach((el) => io.observe(el));
     return () => io.disconnect();
   }, []);
@@ -44,36 +44,37 @@ export function HomeLanding() {
     <div ref={ref}>
       <style>{`.rvl{opacity:0;transform:translateY(24px);transition:opacity 1s ease,transform 1s ease}.rvl.in{opacity:1;transform:none}`}</style>
 
-      {/* HERO — pulled under the transparent header */}
-      <section className="rvl" style={{ position: "relative", height: "100vh", minHeight: 640, width: "100%", overflow: "hidden", marginTop: -64, background: "#dedbd4" }}>
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={`${IMG}/ChatGPT_Image_Jul_15_2026_03_06_23_PM_1.png?v=1784151755`} alt="One Mission — The Fit" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center 28%" }} />
-        <div style={{ position: "absolute", inset: 0, background: "linear-gradient(180deg,rgba(0,0,0,.42) 0%,rgba(0,0,0,.08) 22%,rgba(0,0,0,0) 50%,rgba(0,0,0,.55) 100%)" }} />
-        <div style={{ position: "absolute", inset: 0, display: "flex", flexDirection: "column", justifyContent: "flex-end", alignItems: "center", textAlign: "center", color: "#fff", padding: "0 24px 9vh" }}>
-          <div style={{ fontSize: 11, letterSpacing: ".36em", textTransform: "uppercase", opacity: .92, marginBottom: 18 }}>One Mission — Fall / Winter &apos;26</div>
-          <h1 style={{ fontSize: "clamp(40px,7vw,96px)", letterSpacing: ".13em", textTransform: "uppercase", fontWeight: 400, lineHeight: .96, margin: 0 }}>Built for More</h1>
-          <p style={{ marginTop: 16, fontSize: 13, letterSpacing: ".05em", opacity: .92, fontWeight: 300, maxWidth: 440 }}>Washed heavyweight staples for the ones who carry the mission.</p>
-          <a href="#featured" style={{ display: "inline-block", marginTop: 26, fontSize: 11, letterSpacing: ".24em", textTransform: "uppercase", color: "#fff", borderBottom: "1px solid rgba(255,255,255,.6)", paddingBottom: 5, textDecoration: "none" }}>Shop the Collection</a>
+      {/* HERO */}
+      <section className="ed ed-hero rvl">
+        <div className="ed-media">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img className="ed-img" src={`${IMG}/ChatGPT_Image_Jul_15_2026_03_06_23_PM_1.png?v=1784151755`} alt="One Mission — The Fit" />
+        </div>
+        <div className="ed-scrim" />
+        <div className="ed-copy">
+          <div className="ed-over">One Mission — Fall / Winter &apos;26</div>
+          <h1 className="ed-title">Built for More</h1>
+          <p className="ed-sub">Washed heavyweight staples for the ones who carry the mission.</p>
+          <a className="ed-cta" href="#featured">Shop the Collection</a>
         </div>
       </section>
 
-      {/* BRAND BANNER — image-led brand moment */}
-      <section className="rvl" style={{ position: "relative", height: "68vh", minHeight: 440, width: "100%", overflow: "hidden", background: "#0f0d0b" }}>
+      {/* BRAND BANNER */}
+      <section className="rvl" style={{ position: "relative", height: "62vh", minHeight: 420, width: "100%", overflow: "hidden", background: "#0f0d0b" }}>
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={`${IMG}/ed21309b808f41a2b88978fc064bb627.png?v=1784171028`} alt="One Mission" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center 42%", opacity: .5 }} />
-        <div style={{ position: "absolute", inset: 0, background: "rgba(15,13,11,.35)" }} />
+        <img src={`${IMG}/ed21309b808f41a2b88978fc064bb627.png?v=1784171028`} alt="One Mission" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center 42%", opacity: 0.45 }} />
         <div style={{ position: "absolute", inset: 0, display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", textAlign: "center", color: "#f5f2ec", padding: "0 24px" }}>
-          <div style={{ fontSize: "clamp(40px,9vw,120px)", letterSpacing: ".3em", fontWeight: 500, lineHeight: 1, paddingLeft: ".3em" }}>ONEMISSION</div>
-          <div style={{ fontSize: 11, letterSpacing: ".5em", marginTop: 14, opacity: .85, paddingLeft: ".5em" }}>MATTHEW 18:13</div>
-          <p style={{ marginTop: 26, fontSize: 13, letterSpacing: ".06em", opacity: .8, fontWeight: 300, maxWidth: 460 }}>Faith-built apparel. Washed, heavyweight, and made to last — for the one worth going after.</p>
+          <div style={{ fontSize: "clamp(38px,8vw,104px)", letterSpacing: ".3em", fontWeight: 500, lineHeight: 1, paddingLeft: ".3em" }}>ONEMISSION</div>
+          <div style={{ fontSize: 11, letterSpacing: ".5em", marginTop: 14, opacity: 0.85, paddingLeft: ".5em" }}>MATTHEW 18:13</div>
+          <p style={{ marginTop: 24, fontSize: 13, letterSpacing: ".06em", opacity: 0.8, fontWeight: 300, maxWidth: 460 }}>Faith-built apparel. Washed, heavyweight, and made to last — for the one worth going after.</p>
         </div>
       </section>
 
       {/* COLLAB */}
-      <Panel
+      <Editorial
         image={`${IMG}/c586999976a045fb935481add78bbc2f.png?v=1784163502`}
-        position="center 20%"
-        overline="Collaboration"
+        alt="OM x One Mission"
+        over="Collaboration"
         title="OM × One Mission"
         sub="A washed, hand-painted capsule. Limited run."
         cta="Shop the Drop"
@@ -82,18 +83,18 @@ export function HomeLanding() {
 
       {/* MEN / WOMEN SPLIT */}
       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr" }} className="om-split">
-        <section className="rvl" style={{ position: "relative", height: "90vh", minHeight: 560, overflow: "hidden", background: "#dedbd4" }}>
+        <section className="rvl" style={{ position: "relative", height: "90vh", minHeight: 560, overflow: "hidden", background: "#d9d6cf" }}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={`${IMG}/ChatGPT_Image_Jul_15_2026_03_06_23_PM_2.png?v=1784151754`} alt="Men" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center 26%" }} />
+          <img src={`${IMG}/ChatGPT_Image_Jul_15_2026_03_06_23_PM_2.png?v=1784151754`} alt="Men" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center 20%" }} />
           <div style={{ position: "absolute", inset: 0, background: "linear-gradient(180deg,rgba(0,0,0,0) 55%,rgba(0,0,0,.45) 100%)" }} />
           <div style={{ position: "absolute", inset: 0, display: "flex", flexDirection: "column", justifyContent: "flex-end", alignItems: "center", color: "#fff", paddingBottom: "7vh" }}>
             <h3 style={{ fontSize: "clamp(24px,3vw,42px)", letterSpacing: ".16em", textTransform: "uppercase", fontWeight: 400, margin: 0 }}>Men</h3>
             <Link href="/men" style={{ marginTop: 16, fontSize: 11, letterSpacing: ".24em", textTransform: "uppercase", color: "#fff", borderBottom: "1px solid rgba(255,255,255,.6)", paddingBottom: 5, textDecoration: "none" }}>Shop Men</Link>
           </div>
         </section>
-        <section className="rvl" style={{ position: "relative", height: "90vh", minHeight: 560, overflow: "hidden", background: "#dedbd4" }}>
+        <section className="rvl" style={{ position: "relative", height: "90vh", minHeight: 560, overflow: "hidden", background: "#d9d6cf" }}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={`${IMG}/6580d1a95b6e4ff181020c414ea7c1d3.png?v=1784167477`} alt="Women" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center 22%" }} />
+          <img src={`${IMG}/6580d1a95b6e4ff181020c414ea7c1d3.png?v=1784167477`} alt="Women" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center 18%" }} />
           <div style={{ position: "absolute", inset: 0, background: "linear-gradient(180deg,rgba(0,0,0,0) 55%,rgba(0,0,0,.45) 100%)" }} />
           <div style={{ position: "absolute", inset: 0, display: "flex", flexDirection: "column", justifyContent: "flex-end", alignItems: "center", color: "#fff", paddingBottom: "7vh" }}>
             <h3 style={{ fontSize: "clamp(24px,3vw,42px)", letterSpacing: ".16em", textTransform: "uppercase", fontWeight: 400, margin: 0 }}>Women</h3>
@@ -102,24 +103,14 @@ export function HomeLanding() {
         </section>
       </div>
 
-      {/* STATEMENT — back print on light */}
-      <Panel
-        image={`${IMG}/d01900bff2944a9995885855714bd08d.png?v=1783828340`}
-        contain
-        bg="#e7e4de"
-        dark={false}
-        overline="The Statement"
-        title="Wear the Verse"
-        cta="Shop Hoodies"
-        href="/men"
-      />
-
       {/* SUMMER */}
-      <Panel
+      <Editorial
+        rev
         image={`${IMG}/ChatGPT_Image_Jul_15_2026_03_27_24_PM.png?v=1784151787`}
-        position="center 28%"
-        overline="The Warm Weather Edit"
+        alt="Summer"
+        over="The Warm Weather Edit"
         title="Summer &apos;26"
+        sub="Quick-dry swim and lightweight layers."
         cta="Shop Swim"
         href="/product/10410367385879"
       />

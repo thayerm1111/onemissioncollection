@@ -13,7 +13,7 @@ export function Footer() {
         </div>
         <nav className="flex flex-col gap-2.5">
           <span className="label text-mute">Shop</span>
-          <Link href="/" className="text-sm text-ink hover:opacity-60">Featured</Link>
+          <Link href="/featured" className="text-sm text-ink hover:opacity-60">Featured</Link>
           <Link href="/men" className="text-sm text-ink hover:opacity-60">Men</Link>
           <Link href="/women" className="text-sm text-ink hover:opacity-60">Women</Link>
         </nav>

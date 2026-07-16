@@ -7,7 +7,7 @@ import { TYPE_ORDER } from "@/data/products";
 import { ProductGrid } from "./ProductGrid";
 
 const TABS = [
-  { label: "Featured", href: "/" },
+  { label: "Featured", href: "/featured" },
   { label: "Men", href: "/men" },
   { label: "Women", href: "/women" },
   { label: "Accessories", href: "/accessories" },
