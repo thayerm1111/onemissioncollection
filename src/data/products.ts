@@ -154,7 +154,7 @@ export const staticCollections: Record<string, ShopCollection> = {
         title: "One Mission Heavyweight Hoodie — Charcoal",
         handle: "one-mission-heavyweight-hoodie",
         description: "Heavyweight 460gsm fleece hoodie. Unisex, loose fit, 85% cotton.",
-        imageUrl: HOOD_CHARCOAL[0], imageAlt: "One Mission Hoodie Charcoal", images: HOOD_CHARCOAL,
+        imageUrl: HOOD_CHARCOAL[1], imageAlt: "One Mission Hoodie Charcoal", images: [HOOD_CHARCOAL[1], HOOD_CHARCOAL[0]],
         minPrice: "$100", currency: "USD", hasOptions: true,
         variants: [
           V("gid://shopify/ProductVariant/53663642091799", "Charcoal / XS", "$100"),
@@ -1184,24 +1184,40 @@ const HIDDEN_FROM_GRID = new Set<string>([
 ]);
 const gridProducts = products.filter((p) => !HIDDEN_FROM_GRID.has(p.id));
 
+// The curated "Featured" landing selection (home page) — a hand-picked showcase,
+// not the whole catalog. The full catalog stays browsable via Men / Women /
+// Accessories.
+const FEATURED_IDS = [
+  "gid://shopify/Product/bundle-the-fit",          // The Fit — Full Look
+  "gid://shopify/Product/10410152689943",          // OM x One Mission — Black
+  "gid://shopify/Product/10419606126871",          // OM Gold Hoodie
+  "gid://shopify/Product/10409783132439-charcoal", // Heavyweight Hoodie — Charcoal (back print)
+  "gid://shopify/Product/10410220814615",          // One Mission Script Dad Hat
+];
+
 export function productsFor(cat: "all" | "men" | "women" | "accessories"): ShopProduct[] {
-  // Use the curated hero order so the featured set stays at the top of every
-  // feed (Men / Women / Accessories), not just the homepage.
-  const ordered = featuredProducts();
+  // Use the curated hero order so the set stays at the top of every feed
+  // (Men / Women / Accessories).
+  const ordered = orderedGrid();
   if (cat === "all") return ordered;
   if (cat === "women") return ordered.filter((p) => p.gender === "women");
   if (cat === "accessories") return ordered.filter((p) => p.gender === "accessory");
   return ordered.filter((p) => p.gender === "men" || p.gender === "unisex");
 }
 
-/** Featured order — curated hero row first, then flagged items. */
+/** Curated Featured selection shown on the home page. */
 export function featuredProducts(): ShopProduct[] {
-  // Hand-picked top row so we don't stack two similar washed hoodies together:
-  // the set, then a collab tee, then a crewneck (three different silhouettes).
+  return FEATURED_IDS
+    .map((id) => products.find((p) => p.id === id))
+    .filter((p): p is ShopProduct => Boolean(p));
+}
+
+/** Full grid in hero order — used by the Men / Women / Accessories feeds. */
+function orderedGrid(): ShopProduct[] {
   const HERO_ORDER = [
     "gid://shopify/Product/bundle-the-fit", // The Fit — the full set (top left)
     "gid://shopify/Product/10410152689943", // OM x One Mission — Black (collab tee)
-    "gid://shopify/Product/10419606126871", // OM Gold Hoodie — new, top right
+    "gid://shopify/Product/10419606126871", // OM Gold Hoodie
   ];
   const heroRank = (p: ShopProduct) => {
     const i = HERO_ORDER.indexOf(p.id);
@@ -1210,17 +1226,16 @@ export function featuredProducts(): ShopProduct[] {
   const score = (p: ShopProduct) => (p.badge ? 50 : 0);
   const sorted = [...gridProducts].sort((a, b) => {
     const ha = heroRank(a), hb = heroRank(b);
-    if (ha !== hb) return ha - hb;          // hero items first, in listed order
-    return score(b) - score(a);             // then badged, then the rest
+    if (ha !== hb) return ha - hb;
+    return score(b) - score(a);
   });
-  // The Statement Hoodie read as repetitive right next to The Fit — drop it a
-  // few tiles down so it's still featured but out of the hero row.
+  // Keep the Statement Hoodie out of the hero row.
   const idx = sorted.findIndex((p) => /one mission statement hoodie/i.test(p.title));
   if (idx > -1 && idx < 6) {
     const [sh] = sorted.splice(idx, 1);
     sorted.splice(6, 0, sh);
   }
-  // Pull the white cutoff tank up toward the top (row 2) — not a hero slot.
+  // Pull the white cutoff tank up toward the top (row 2).
   const tankIdx = sorted.findIndex((p) => p.id === "gid://shopify/Product/10410150330647");
   if (tankIdx > 4) {
     const [tk] = sorted.splice(tankIdx, 1);
