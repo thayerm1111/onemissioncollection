@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import type { ShopProduct } from "@/lib/shopify";
 import { TYPE_ORDER } from "@/data/products";
@@ -13,6 +13,16 @@ const TABS = [
   { label: "Accessories", href: "/accessories" },
 ];
 
+// Clear a route's saved filter + scroll so a *deliberate* tab click starts
+// fresh at the top. Browser Back (and "← Shop") keep the saved state, so the
+// shopper returns exactly where they were.
+function clearSaved(href: string) {
+  try {
+    sessionStorage.removeItem(`omc:store:${href}:type`);
+    sessionStorage.removeItem(`omc:store:${href}:y`);
+  } catch {}
+}
+
 export function StoreView({
   products,
   active,
@@ -20,7 +30,53 @@ export function StoreView({
   products: ShopProduct[];
   active: string;
 }) {
+  const key = `omc:store:${active}`;
   const [type, setType] = useState("All");
+
+  // Restore the last-used subcategory + scroll position when returning to this
+  // listing (e.g. after opening a product and hitting Back), so the shopper
+  // lands right where they left off instead of at the top of the grid.
+  const restored = useRef(false);
+  useEffect(() => {
+    if (restored.current) return;
+    restored.current = true;
+    try {
+      const savedType = sessionStorage.getItem(`${key}:type`);
+      if (savedType) setType(savedType);
+      const savedY = sessionStorage.getItem(`${key}:y`);
+      if (savedY) {
+        const y = parseInt(savedY, 10);
+        // Wait for the filtered grid to lay out, then jump back to the spot.
+        requestAnimationFrame(() => requestAnimationFrame(() => window.scrollTo(0, y)));
+      }
+    } catch {}
+  }, [key]);
+
+  // Persist the active subcategory as it changes.
+  useEffect(() => {
+    try {
+      sessionStorage.setItem(`${key}:type`, type);
+    } catch {}
+  }, [key, type]);
+
+  // Persist scroll position while the shopper browses (throttled to a frame).
+  useEffect(() => {
+    let raf = 0;
+    const onScroll = () => {
+      if (raf) return;
+      raf = requestAnimationFrame(() => {
+        raf = 0;
+        try {
+          sessionStorage.setItem(`${key}:y`, String(window.scrollY));
+        } catch {}
+      });
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      if (raf) cancelAnimationFrame(raf);
+    };
+  }, [key]);
 
   // Subcategories present in this view, in preferred order.
   const types = useMemo(() => {
@@ -39,6 +95,7 @@ export function StoreView({
             <Link
               key={t.href}
               href={t.href}
+              onClick={() => clearSaved(t.href)}
               className={`label ${active === t.href ? "text-ink" : "text-mute hover:text-ink"}`}
             >
               {t.label}

@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { ArrowRight, ZoomIn, X, ChevronLeft, ChevronRight } from "lucide-react";
 import type { ShopProduct } from "@/lib/shopify";
 import { checkoutDomain } from "@/lib/shopify";
@@ -12,6 +13,24 @@ const cartUrl = (ids: string[]) =>
   `https://${checkoutDomain}/cart/${ids.map((i) => `${numeric(i)}:1`).join(",")}`;
 const priceNum = (v?: string) => Number((v ?? "").replace(/[^0-9.]/g, "")) || 0;
 const money = (n: number) => "$" + (Number.isInteger(n) ? n : n.toFixed(2));
+
+// "← Shop" returns to the exact listing (and scroll spot) the shopper came
+// from — Men / Women / a subcategory — instead of resetting to the All grid.
+function BackToShop() {
+  const router = useRouter();
+  return (
+    <button
+      type="button"
+      onClick={() => {
+        if (typeof window !== "undefined" && window.history.length > 1) router.back();
+        else router.push("/");
+      }}
+      className="label text-mute hover:text-ink"
+    >
+      ← Shop
+    </button>
+  );
+}
 
 type Parsed = ShopProduct["variants"][number] & { color: string | null; size: string | null };
 function parse(v: ShopProduct["variants"][number]): Parsed {
@@ -182,7 +201,7 @@ function SingleProductDetail({ product, pairs = [] }: { product: ShopProduct; pa
 
   return (
     <div className="mx-auto max-w-site px-5 py-8 sm:px-8 sm:py-12">
-      <Link href="/" className="label text-mute hover:text-ink">← Shop</Link>
+      <BackToShop />
 
       <div className="mt-6 grid gap-10 lg:grid-cols-2 lg:gap-16">
         <Gallery images={galleryImgs} alt={product.imageAlt ?? product.title} index={Math.min(imgIndex, galleryImgs.length - 1)} onIndex={pickIndex} />
@@ -365,7 +384,7 @@ function BundleDetail({ bundle, items }: { bundle: ShopProduct; items: ShopProdu
 
   return (
     <div className="mx-auto max-w-site px-5 py-8 sm:px-8 sm:py-12">
-      <Link href="/" className="label text-mute hover:text-ink">← Shop</Link>
+      <BackToShop />
       <div className="mt-6 grid gap-10 lg:grid-cols-2 lg:gap-16">
         <Gallery images={thumbs} alt={bundle.title} index={idx} onIndex={setHeroIndex} />
 
