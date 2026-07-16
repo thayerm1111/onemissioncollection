@@ -59,19 +59,7 @@ export function HomeLanding() {
         </div>
       </Link>
 
-      {!DROP_MODE && (<>
-      {/* COLLAB */}
-      <Editorial
-        image={`${IMG}/c586999976a045fb935481add78bbc2f.png?v=1784163502`}
-        alt="OM x One Mission"
-        over="Collaboration"
-        title="OM × One Mission"
-        sub="A washed, hand-painted capsule. Limited run."
-        cta="Shop the Drop"
-        href="/product/10410152689943"
-      />
-
-      {/* MEN / WOMEN SPLIT */}
+      {/* MEN / WOMEN SPLIT — always shown */}
       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr" }} className="om-split">
         <section className="rvl" style={{ position: "relative", height: "90vh", minHeight: 560, overflow: "hidden", background: "#d9d6cf" }}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -92,6 +80,18 @@ export function HomeLanding() {
           </div>
         </section>
       </div>
+
+      {!DROP_MODE && (<>
+      {/* COLLAB */}
+      <Editorial
+        image={`${IMG}/c586999976a045fb935481add78bbc2f.png?v=1784163502`}
+        alt="OM x One Mission"
+        over="Collaboration"
+        title="OM × One Mission"
+        sub="A washed, hand-painted capsule. Limited run."
+        cta="Shop the Drop"
+        href="/product/10410152689943"
+      />
 
       {/* SUMMER */}
       <Editorial
