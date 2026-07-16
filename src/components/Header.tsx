@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { Search, User, ShoppingBag, Menu, X } from "lucide-react";
 import { checkoutDomain } from "@/lib/shopify";
 import { Wordmark } from "./Wordmark";
+import { useCart } from "./cart/CartProvider";
 
 const NAV = [
   { label: "Featured", href: "/featured" },
@@ -19,7 +20,8 @@ export function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [mobile, setMobile] = useState(false);
   const pathname = usePathname();
-  const bagHref = `https://${checkoutDomain}/cart`;
+  const cart = useCart();
+  const accountHref = `https://${checkoutDomain}/account`;
 
   // On mobile the home hero is a full-bleed image, so the header floats
   // transparently over it and turns solid on scroll. On desktop the hero is a
@@ -70,12 +72,17 @@ export function Header() {
           <button aria-label="Search" className="hidden hover:opacity-60 sm:block">
             <Search className="h-[18px] w-[18px]" />
           </button>
-          <a href={bagHref} aria-label="Account" className="hover:opacity-60">
+          <a href={accountHref} aria-label="Account" className="hover:opacity-60">
             <User className="h-[18px] w-[18px]" />
           </a>
-          <a href={bagHref} aria-label="Bag" className="hover:opacity-60">
+          <button onClick={cart.open} aria-label="Bag" className="relative hover:opacity-60">
             <ShoppingBag className="h-[18px] w-[18px]" />
-          </a>
+            {cart.count > 0 && (
+              <span className="absolute -right-2 -top-2 grid h-4 min-w-[16px] place-items-center rounded-full bg-ink px-1 text-[10px] font-medium leading-none text-paper">
+                {cart.count}
+              </span>
+            )}
+          </button>
         </div>
       </div>
 

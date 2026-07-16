@@ -5,12 +5,8 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { ArrowRight, ZoomIn, X, ChevronLeft, ChevronRight } from "lucide-react";
 import type { ShopProduct } from "@/lib/shopify";
-import { checkoutDomain } from "@/lib/shopify";
 import { productPid } from "@/data/products";
-
-const numeric = (id: string) => id.split("/").pop();
-const cartUrl = (ids: string[]) =>
-  `https://${checkoutDomain}/cart/${ids.map((i) => `${numeric(i)}:1`).join(",")}`;
+import { useCart } from "./cart/CartProvider";
 const priceNum = (v?: string) => Number((v ?? "").replace(/[^0-9.]/g, "")) || 0;
 const money = (n: number) => "$" + (Number.isInteger(n) ? n : n.toFixed(2));
 
@@ -193,10 +189,23 @@ function SingleProductDetail({ product, pairs = [] }: { product: ShopProduct; pa
     ? product.variants[0]
     : parsed.find((v) => (colors.length ? v.color === color : true) && v.size === size) ?? null;
   const soldOut = Boolean(product.soldOut);
+  const cart = useCart();
 
   function addToBag() {
     if (soldOut || !selected) return;
-    window.location.href = cartUrl([selected.id]);
+    const variantLabel = [color, size].filter(Boolean).join(" · ");
+    const image =
+      (color && colorImgMap[color]) ||
+      galleryImgs[Math.min(imgIndex, galleryImgs.length - 1)] ||
+      product.imageUrl;
+    cart.add({
+      variantId: selected.id,
+      productId: product.id,
+      title: product.title,
+      variantLabel: variantLabel || undefined,
+      price: priceNum(selected.price ?? product.minPrice),
+      image: image ?? undefined,
+    });
   }
 
   return (
@@ -377,9 +386,19 @@ function BundleDetail({ bundle, items }: { bundle: ShopProduct; items: ShopProdu
 
   const total = cfgs.reduce((sum, c) => sum + priceNum(c.product?.minPrice), 0);
   const allReady = cfgs.every((c) => c.variant);
-  const buy = (ids: (string | undefined)[]) => {
-    const v = ids.filter(Boolean) as string[];
-    if (v.length) window.location.href = cartUrl(v);
+  const cart = useCart();
+  const addToBag = (list: Cfg[]) => {
+    list.forEach((c) => {
+      if (!c.variant || !c.product) return;
+      cart.add({
+        variantId: c.variant.id,
+        productId: c.product.id,
+        title: c.product.title,
+        variantLabel: [c.color, c.size].filter(Boolean).join(" · ") || undefined,
+        price: priceNum(c.product.minPrice),
+        image: c.image ?? c.product.imageUrl ?? undefined,
+      });
+    });
   };
 
   return (
@@ -409,13 +428,13 @@ function BundleDetail({ bundle, items }: { bundle: ShopProduct; items: ShopProdu
           </div>
 
           <div className="mt-8 space-y-2.5">
-            <button onClick={() => buy(cfgs.map((c) => c.variant?.id))} disabled={!allReady}
+            <button onClick={() => addToBag(cfgs)} disabled={!allReady}
               className="flex w-full items-center justify-center gap-2 bg-ink px-6 py-4 text-xs uppercase tracking-widest2 text-paper transition-opacity hover:opacity-90 disabled:opacity-40">
               {allReady ? <>Add the set — {money(total)} <ArrowRight className="h-4 w-4" /></> : "Select a size for each piece"}
             </button>
             <div className="grid grid-cols-3 gap-2.5">
               {cfgs.map((c, i) => (
-                <button key={c.product?.id ?? i} onClick={() => buy([c.variant?.id])} disabled={!c.variant}
+                <button key={c.product?.id ?? i} onClick={() => addToBag([c])} disabled={!c.variant}
                   className="border border-ink px-2 py-3 text-[11px] uppercase tracking-widest2 text-ink transition-colors hover:bg-ink hover:text-paper disabled:opacity-30">
                   {shortName(c.product)} · {c.product?.minPrice}
                 </button>
