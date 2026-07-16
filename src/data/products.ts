@@ -137,7 +137,10 @@ export const staticCollections: Record<string, ShopCollection> = {
         description: "Heavyweight distressed hoodie — washed black with the One Mission script on the chest and a bold One Mission print across the back.",
         imageUrl: I("172d03b7dfab4c9aa883402d4fff2f61", "1784171028"), imageAlt: "Heavy Disturbed One Mission Hoodie",
         womenModel: I("ef0a731216794d43bbad777d8c7178aa", "1784175066"),
-        images: [I("172d03b7dfab4c9aa883402d4fff2f61", "1784171028"), I("ef0a731216794d43bbad777d8c7178aa", "1784175066"), I("c4237c0d9e444660bf3424c17dab3710", "1784175067"), I("ed21309b808f41a2b88978fc064bb627", "1784171028")],
+        // Flat front + flat back print first so the Men grid hover stays on the
+        // garment; the female model shots sit at the end (surfaced via womenModel
+        // in the Women feed only).
+        images: [I("172d03b7dfab4c9aa883402d4fff2f61", "1784171028"), I("ed21309b808f41a2b88978fc064bb627", "1784171028"), I("ef0a731216794d43bbad777d8c7178aa", "1784175066"), I("c4237c0d9e444660bf3424c17dab3710", "1784175067")],
         minPrice: "$125", currency: "USD", hasOptions: true,
         variants: [
           V("gid://shopify/ProductVariant/53998888386839", "Black / S", "$125"),
@@ -154,6 +157,11 @@ export const staticCollections: Record<string, ShopCollection> = {
         description: "Heavyweight hoodie with the One Mission baseball script across the chest. Unisex, oversized fit. In Flower Gray, Black, and Dark Gray.",
         imageUrl: I("b26da4d1a2f840c79f0f1da5b948e9a7", "1784170773"), imageAlt: "The 1 Hoodie",
         images: [I("b26da4d1a2f840c79f0f1da5b948e9a7", "1784170773"), I("15c504e1f2e549e0b4d2b56ccd08ce80", "1784170773"), I("3ac0d8807b11492c9e65514d9b0ddeb5", "1784170773"), I("1b9b447dd21a49a685776c974644a6fd", "1784170773"), I("c7ccd52e644e463dbdda9a1c5fb989e7", "1784170773"), I("a137bbabb23c44fab9d58ee2eef45d19", "1784170773")],
+        colorImages: {
+          "Flower Gray": I("3ac0d8807b11492c9e65514d9b0ddeb5", "1784170773"),
+          "Black": I("b26da4d1a2f840c79f0f1da5b948e9a7", "1784170773"),
+          "Dark Gray": I("c7ccd52e644e463dbdda9a1c5fb989e7", "1784170773"),
+        },
         minPrice: "$110", currency: "USD", hasOptions: true,
         variants: [
           V("gid://shopify/ProductVariant/53998488551703", "Flower Gray / S", "$110"),
@@ -180,6 +188,11 @@ export const staticCollections: Record<string, ShopCollection> = {
         description: "Washed hoodie with the One Mission script. In White, Light Gray, and Dark Gray.",
         imageUrl: I("784f9e67546448d0b8954c82dee3d462", "1784170173"), imageAlt: "One Mission Hoodie Vibin",
         images: [I("784f9e67546448d0b8954c82dee3d462", "1784170173"), I("2273de7f17bb40f38e7c1a0ae06a8609", "1784170173"), I("16074877479f4c018e10a08e55213105", "1784170173"), I("4dcd972c731648d7b59d1d46043a1244", "1784170173"), I("44ed45f21d3b4a03905f996e9cf7908f", "1784170173"), I("5a02aa4c97554af781e06744e172da06", "1784170173")],
+        colorImages: {
+          "White": I("44ed45f21d3b4a03905f996e9cf7908f", "1784170173"),
+          "Light Gray": I("16074877479f4c018e10a08e55213105", "1784170173"),
+          "Dark Gray": I("784f9e67546448d0b8954c82dee3d462", "1784170173"),
+        },
         minPrice: "$99", currency: "USD", hasOptions: true,
         variants: [
           V("gid://shopify/ProductVariant/53997443318039", "White / S", "$99"),
@@ -206,6 +219,11 @@ export const staticCollections: Record<string, ShopCollection> = {
         description: "Heavyweight crewneck sweatshirt with an OM chest print. In White, Black, and Navy Blue.",
         imageUrl: I("aa462380056a4531bc601e8e0c0a8b5b", "1784169872"), imageAlt: "OM Heavyweight Sweatshirt",
         images: [I("aa462380056a4531bc601e8e0c0a8b5b", "1784169872"), I("a388e367bf874fba8967a154e7822a8f", "1784169873"), I("b87e45fd290845a4b62edb381f28420c", "1784169872"), I("fcb924051821459aac3735236d331e24", "1784169873"), I("90745998da3f4cc3a4a8d1198edf54d2", "1784169872"), I("0581446878e24525bb7487e53b610894", "1784169873")],
+        colorImages: {
+          "White": I("90745998da3f4cc3a4a8d1198edf54d2", "1784169872"),
+          "Black": I("aa462380056a4531bc601e8e0c0a8b5b", "1784169872"),
+          "Navy Blue": I("b87e45fd290845a4b62edb381f28420c", "1784169872"),
+        },
         minPrice: "$99", currency: "USD", hasOptions: true,
         variants: [
           V("gid://shopify/ProductVariant/53996912771351", "White / S", "$99"),
@@ -887,6 +905,12 @@ export const staticCollections: Record<string, ShopCollection> = {
         imageUrl: I("a64ab71bc4374000b1d03d5f68ee8953", "1784173506"), imageAlt: "Women's High-Rise Yoga Shorts",
         model: I("9512eb002e2b49ea88a386cffce22dab", "1784173507"),
         images: [I("a64ab71bc4374000b1d03d5f68ee8953", "1784173506"), I("9512eb002e2b49ea88a386cffce22dab", "1784173507"), I("0e3734a0d64841ee8fc9f516a6af0279", "1784173507"), I("be2bb1ff9b7941598025ddcad8a8f8d3", "1784173507"), I("814c2a8bcd2945bdac2bec8068fb6a31", "1784173506"), I("99c61105b2c5492da2d8933f37397a12", "1784173506"), I("43333202d4634be9b474eacdcd4dedf4", "1784173506"), I("1decb06648af4079bf52f06fca13bbf1", "1784173506"), I("675b050d8b7840068cb38d63fdd5a9c9", "1784173507")],
+        colorImages: {
+          "Gray": I("814c2a8bcd2945bdac2bec8068fb6a31", "1784173506"),
+          "Light Gray": I("99c61105b2c5492da2d8933f37397a12", "1784173506"),
+          "Black": I("1decb06648af4079bf52f06fca13bbf1", "1784173506"),
+          "Dark Gray": I("43333202d4634be9b474eacdcd4dedf4", "1784173506"),
+        },
         minPrice: "$23.96", currency: "USD", hasOptions: true,
         variants: [
           V("gid://shopify/ProductVariant/53967367831831", "Gray / 4", "$23.96"),
@@ -1299,6 +1323,7 @@ const FEATURED_IDS = [
   "gid://shopify/Product/10420010123543",          // OM Heavyweight Sweatshirt
   "gid://shopify/Product/10420053967127",          // Snow Washed Loose Cotton Hoodie
   "gid://shopify/Product/10409783132439-charcoal", // Heavyweight Hoodie — Charcoal (back print)
+  "gid://shopify/Product/10419151339799",          // Women's High-Rise Yoga Shorts (female model)
   "gid://shopify/Product/10410220814615",          // One Mission Script Dad Hat
 ];
 
