@@ -83,8 +83,9 @@ export const staticCollections: Record<string, ShopCollection> = {
         title: "OM x One Mission — Black",
         handle: "om-x-one-mission",
         description: "OM x One Mission collaboration piece in Black.",
-        imageUrl: I("a06753c0c0434740971495a4a13f52ed", "1783880628"), imageAlt: "OM x One Mission Black",
-        images: [I("a06753c0c0434740971495a4a13f52ed", "1783880628"), I("bf6083f56628472bb2b4ac88501b7260", "1783880628")],
+        imageUrl: I("a06753c0c0434740971495a4a13f52ed", "1784163500"), imageAlt: "OM x One Mission Black",
+        model: I("c586999976a045fb935481add78bbc2f", "1784163502"),
+        images: [I("a06753c0c0434740971495a4a13f52ed", "1784163500"), I("c586999976a045fb935481add78bbc2f", "1784163502"), I("7928ad6f574a47db8cd45fd488a5b437", "1784163501"), I("c94af126f0e541619055c342799025b5", "1784163502"), I("bf6083f56628472bb2b4ac88501b7260", "1784163501")],
         minPrice: "$125", currency: "USD", hasOptions: true,
         badge: "🔥 Hottest Item",
         variants: [
@@ -212,10 +213,11 @@ export const staticCollections: Record<string, ShopCollection> = {
         title: "One Mission Sweatpants",
         handle: "one-mission-sweats",
         description: "Heavyweight sweatpants in Black and Dark Gray. The perfect match for your hoodie.",
-        imageUrl: I("0da5ec9b86f2486caf34e0b5054d0ce0", "1783881933"), imageAlt: "One Mission Sweatpants",
-        images: [I("0da5ec9b86f2486caf34e0b5054d0ce0", "1783881933"), I("557d2cba2a404fd388614d382cdd50d7", "1783881932"), I("bccd0fbe6fb7400191d2ca412cc53094", "1783881932"), I("8c8351a084424fd9a541b1e206a067aa", "1783881933")],
+        imageUrl: I("bccd0fbe6fb7400191d2ca412cc53094", "1784163486"), imageAlt: "One Mission Sweatpants",
+        model: I("620a009dcf0b4256b9b7ac2be0fad0e0", "1784163486"),
+        images: [I("bccd0fbe6fb7400191d2ca412cc53094", "1784163486"), I("620a009dcf0b4256b9b7ac2be0fad0e0", "1784163486"), I("264ced66062e4861bd0604f3160f3740", "1784163487"), I("d04fbbc4be0d4edb82c58a4efccd478a", "1784163486"), I("8c8351a084424fd9a541b1e206a067aa", "1784163485")],
         colorImages: {
-          "Black": I("bccd0fbe6fb7400191d2ca412cc53094", "1783881932"),
+          "Black": I("bccd0fbe6fb7400191d2ca412cc53094", "1784163486"),
           "Dark Gray": I("0da5ec9b86f2486caf34e0b5054d0ce0", "1783881933"),
         },
         minPrice: "$99", currency: "USD", hasOptions: true,
@@ -1165,10 +1167,13 @@ const HIDDEN_FROM_GRID = new Set<string>([
 const gridProducts = products.filter((p) => !HIDDEN_FROM_GRID.has(p.id));
 
 export function productsFor(cat: "all" | "men" | "women" | "accessories"): ShopProduct[] {
-  if (cat === "all") return gridProducts;
-  if (cat === "women") return gridProducts.filter((p) => p.gender === "women");
-  if (cat === "accessories") return gridProducts.filter((p) => p.gender === "accessory");
-  return gridProducts.filter((p) => p.gender === "men" || p.gender === "unisex");
+  // Use the curated hero order so the featured set stays at the top of every
+  // feed (Men / Women / Accessories), not just the homepage.
+  const ordered = featuredProducts();
+  if (cat === "all") return ordered;
+  if (cat === "women") return ordered.filter((p) => p.gender === "women");
+  if (cat === "accessories") return ordered.filter((p) => p.gender === "accessory");
+  return ordered.filter((p) => p.gender === "men" || p.gender === "unisex");
 }
 
 /** Featured order — curated hero row first, then flagged items. */
