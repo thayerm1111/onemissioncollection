@@ -1355,6 +1355,18 @@ export function womenDropProducts(): ShopProduct[] {
     .filter((p): p is ShopProduct => Boolean(p));
 }
 
+// Accessories — shown on the Accessories tab during the drop.
+export const ACCESSORY_DROP_IDS: string[] = [
+  "gid://shopify/Product/10410220814615", // One Mission Script Dad Hat
+  "gid://shopify/Product/10410220912919", // One Mission Tough Phone Case
+  "gid://shopify/Product/10410364698903", // OneMission Vegan Leather Journal
+];
+export function accessoryDropProducts(): ShopProduct[] {
+  return ACCESSORY_DROP_IDS
+    .map((id) => products.find((p) => p.id === id))
+    .filter((p): p is ShopProduct => Boolean(p));
+}
+
 // The curated "Featured" landing selection (home page) — a hand-picked showcase,
 // not the whole catalog. The full catalog stays browsable via Men / Women /
 // Accessories.
@@ -1380,9 +1392,13 @@ const WOMENS_EXTRA = new Set<string>([
 ]);
 
 export function productsFor(cat: "all" | "men" | "women" | "accessories"): ShopProduct[] {
-  // Drop mode: Men/Accessories/All show the unisex drop; Women shows the
-  // women's launch collection.
-  if (DROP_MODE) return cat === "women" ? womenDropProducts() : dropProducts();
+  // Drop mode: Men/All show the unisex drop; Women shows the women's launch
+  // collection; Accessories shows the accessory line.
+  if (DROP_MODE) {
+    if (cat === "women") return womenDropProducts();
+    if (cat === "accessories") return accessoryDropProducts();
+    return dropProducts();
+  }
   // Use the curated hero order so the set stays at the top of every feed
   // (Men / Women / Accessories).
   const ordered = orderedGrid();
