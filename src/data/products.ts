@@ -136,11 +136,11 @@ export const staticCollections: Record<string, ShopCollection> = {
         handle: "heavy-disturbed-one-mission-hoodie",
         description: "Heavyweight distressed hoodie — washed black with the One Mission script on the chest and a bold One Mission print across the back.",
         imageUrl: I("172d03b7dfab4c9aa883402d4fff2f61", "1784171028"), imageAlt: "Heavy Disturbed One Mission Hoodie",
+        // womenModel leads the Women feed tile only. The PDP gallery uses
+        // `images`, so it holds ONLY flat garment shots — no female model on the
+        // product page (which is reached from both Men and Women).
         womenModel: I("ef0a731216794d43bbad777d8c7178aa", "1784175066"),
-        // Flat front + flat back print first so the Men grid hover stays on the
-        // garment; the female model shots sit at the end (surfaced via womenModel
-        // in the Women feed only).
-        images: [I("172d03b7dfab4c9aa883402d4fff2f61", "1784171028"), I("ed21309b808f41a2b88978fc064bb627", "1784171028"), I("ef0a731216794d43bbad777d8c7178aa", "1784175066"), I("c4237c0d9e444660bf3424c17dab3710", "1784175067")],
+        images: [I("172d03b7dfab4c9aa883402d4fff2f61", "1784171028"), I("ed21309b808f41a2b88978fc064bb627", "1784171028")],
         minPrice: "$125", currency: "USD", hasOptions: true,
         variants: [
           V("gid://shopify/ProductVariant/53998888386839", "Black / S", "$125"),
