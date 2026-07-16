@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { featuredProducts } from "@/data/products";
+import { featuredProducts, DROP_MODE } from "@/data/products";
 import { ProductGrid } from "./ProductGrid";
 
 const IMG = "https://cdn.shopify.com/s/files/1/1016/0406/5559/files";
@@ -49,7 +49,7 @@ export function HomeLanding() {
       </section>
 
       {/* BRAND BANNER — clickable */}
-      <Link href="/product/10420061208855" className="rvl" style={{ display: "block", position: "relative", height: "62vh", minHeight: 420, width: "100%", overflow: "hidden", background: "#0f0d0b" }}>
+      <Link href="#featured" className="rvl" style={{ display: "block", position: "relative", height: "62vh", minHeight: 420, width: "100%", overflow: "hidden", background: "#0f0d0b" }}>
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src={`${IMG}/ed21309b808f41a2b88978fc064bb627.png?v=1784171028`} alt="One Mission" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center 42%", opacity: 0.28 }} />
         <div style={{ position: "absolute", inset: 0, display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", textAlign: "center", color: "#f5f2ec", padding: "0 24px" }}>
@@ -59,6 +59,7 @@ export function HomeLanding() {
         </div>
       </Link>
 
+      {!DROP_MODE && (<>
       {/* COLLAB */}
       <Editorial
         image={`${IMG}/c586999976a045fb935481add78bbc2f.png?v=1784163502`}
@@ -103,6 +104,7 @@ export function HomeLanding() {
         cta="Shop Swim"
         href="/product/10410367385879"
       />
+      </>)}
 
       {/* FEATURED PRODUCTS */}
       <section id="featured" className="rvl mx-auto max-w-site px-5 py-20 sm:px-8 sm:py-28">
