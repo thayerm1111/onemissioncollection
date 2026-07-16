@@ -101,8 +101,9 @@ export const staticCollections: Record<string, ShopCollection> = {
         title: "OM Gold Hoodie",
         handle: "om-gold-hoodie",
         description: "Washed heavyweight OM hoodie — oversized drop-shoulder fit, hooded, 465gsm cotton blend.",
-        imageUrl: I("be8af2dc08414fd28263ee489e92b788", "1784166873"), imageAlt: "OM Gold Hoodie",
-        images: [I("be8af2dc08414fd28263ee489e92b788", "1784166873"), I("d9b8cd85c4614c069aec2262021af6c3", "1784166873")],
+        imageUrl: I("be8af2dc08414fd28263ee489e92b788", "1784175591"), imageAlt: "OM Gold Hoodie",
+        model: I("783fc7d36c6b48809f570028e8e3fc18", "1784175591"),
+        images: [I("be8af2dc08414fd28263ee489e92b788", "1784175591"), I("783fc7d36c6b48809f570028e8e3fc18", "1784175591"), I("9db734d24d2a4295911978abb501c658", "1784175591"), I("2790b82a45c64316bf21df3243b21e0c", "1784175592"), I("d9b8cd85c4614c069aec2262021af6c3", "1784175591")],
         minPrice: "$125", currency: "USD", hasOptions: true,
         badge: "🔥 New",
         variants: [
@@ -135,7 +136,8 @@ export const staticCollections: Record<string, ShopCollection> = {
         handle: "heavy-disturbed-one-mission-hoodie",
         description: "Heavyweight distressed hoodie — washed black with the One Mission script on the chest and a bold One Mission print across the back.",
         imageUrl: I("172d03b7dfab4c9aa883402d4fff2f61", "1784171028"), imageAlt: "Heavy Disturbed One Mission Hoodie",
-        images: [I("172d03b7dfab4c9aa883402d4fff2f61", "1784171028"), I("ed21309b808f41a2b88978fc064bb627", "1784171028")],
+        womenModel: I("ef0a731216794d43bbad777d8c7178aa", "1784175066"),
+        images: [I("172d03b7dfab4c9aa883402d4fff2f61", "1784171028"), I("ef0a731216794d43bbad777d8c7178aa", "1784175066"), I("c4237c0d9e444660bf3424c17dab3710", "1784175067"), I("ed21309b808f41a2b88978fc064bb627", "1784171028")],
         minPrice: "$125", currency: "USD", hasOptions: true,
         variants: [
           V("gid://shopify/ProductVariant/53998888386839", "Black / S", "$125"),
@@ -1171,9 +1173,10 @@ export const staticCollections: Record<string, ShopCollection> = {
         description: "The full look: the Statement Hoodie, One Mission Lounge Shorts, and a heavyweight tee. Buy the whole set or any piece on its own, in any color.",
         imageUrl: I("ChatGPT_Image_Jul_15_2026_03_06_23_PM_1", "1784151755"), imageAlt: "The Fit",
         images: [I("ChatGPT_Image_Jul_15_2026_03_06_23_PM_1", "1784151755"), I("ChatGPT_Image_Jul_15_2026_03_06_23_PM_2", "1784151754"), I("778fa639e48f465da5338c463cd8b140", "1783935528"), I("499d15ba1ede4a6783e0115d2a3d8a4d", "1783881768")],
-        minPrice: "$214", currency: "USD", hasOptions: true,
+        minPrice: "$263.99", currency: "USD", hasOptions: true,
         badge: "The Set",
         bundle: ["gid://shopify/Product/10410647159063", "gid://shopify/Product/10410155442455", "gid://shopify/Product/10409780543767"],
+        // set total = $125 hoodie + $89 shorts + $49.99 tee
         variants: [],
       },
     ],
