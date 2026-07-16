@@ -5,8 +5,25 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { ArrowRight, ZoomIn, X, ChevronLeft, ChevronRight } from "lucide-react";
 import type { ShopProduct } from "@/lib/shopify";
-import { productPid } from "@/data/products";
+import { productPid, DROP_SET } from "@/data/products";
 import { useCart } from "./cart/CartProvider";
+
+const vidNum = (id: string) => id.split("/").pop() ?? "";
+
+// Live per-variant stock for drop products (empty until a Storefront token is set).
+function useDropStock(enabled: boolean): Record<string, number> | null {
+  const [stock, setStock] = useState<Record<string, number> | null>(null);
+  useEffect(() => {
+    if (!enabled) return;
+    let alive = true;
+    fetch("/api/drop-stock")
+      .then((r) => r.json())
+      .then((d) => { if (alive && d?.ok) setStock(d.stock ?? {}); })
+      .catch(() => {});
+    return () => { alive = false; };
+  }, [enabled]);
+  return stock;
+}
 const priceNum = (v?: string) => Number((v ?? "").replace(/[^0-9.]/g, "")) || 0;
 const money = (n: number) => "$" + (Number.isInteger(n) ? n : n.toFixed(2));
 
@@ -191,8 +208,18 @@ function SingleProductDetail({ product, pairs = [] }: { product: ShopProduct; pa
   const soldOut = Boolean(product.soldOut);
   const cart = useCart();
 
+  // Drop scarcity: live per-variant stock (if a Storefront token is configured).
+  const isDrop = DROP_SET.has(product.id);
+  const stock = useDropStock(isDrop);
+  const stockOf = (id?: string) => (id && stock ? stock[vidNum(id)] : undefined);
+  const selLeft = stockOf(selected?.id);
+  const allSoldOut = Boolean(
+    isDrop && stock && parsed.length > 0 && parsed.every((v) => (stock[vidNum(v.id)] ?? 1) <= 0),
+  );
+
   function addToBag() {
-    if (soldOut || !selected) return;
+    if (soldOut || allSoldOut || !selected) return;
+    if (typeof selLeft === "number" && selLeft <= 0) return;
     const variantLabel = [color, size].filter(Boolean).join(" · ");
     const image =
       (color && colorImgMap[color]) ||
@@ -221,13 +248,19 @@ function SingleProductDetail({ product, pairs = [] }: { product: ShopProduct; pa
           <h1 className="mt-2 text-xl font-medium text-ink sm:text-2xl">{product.title}</h1>
           <p className="mt-3 text-base text-ink">{product.hasOptions ? "From " : ""}{product.minPrice}</p>
 
-          {product.badge && (
+          {(product.badge || isDrop) && (
             <div className="mt-4 inline-flex items-center gap-2 border border-ink px-3 py-1.5">
               <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-ink" />
               <span className="text-[11px] font-semibold uppercase tracking-widest2 text-ink">
-                Limited availability — once it&apos;s gone, it&apos;s gone
+                {isDrop ? "Limited drop — 100 per size · once it’s gone, it’s gone" : "Limited availability — once it’s gone, it’s gone"}
               </span>
             </div>
+          )}
+
+          {isDrop && selected && typeof selLeft === "number" && (
+            <p className="mt-3 text-[12px] uppercase tracking-widest2 text-ink">
+              {selLeft > 0 ? `Only ${selLeft} left in ${size}` : `${size} — sold out`}
+            </p>
           )}
 
           {!single && colors.length > 0 && (
@@ -252,13 +285,16 @@ function SingleProductDetail({ product, pairs = [] }: { product: ShopProduct; pa
               <p className="label text-mute">{product.optionName ?? "Size"}</p>
               <div className="mt-3 flex flex-wrap gap-2">
                 {sizes.map((s) => {
-                  const exists = parsed.some((v) => v.size === s && (colors.length ? v.color === color : true) && v.availableForSale);
+                  const variant = parsed.find((v) => v.size === s && (colors.length ? v.color === color : true));
+                  const left = variant ? stockOf(variant.id) : undefined;
+                  const soldOutSize = isDrop && typeof left === "number" && left <= 0;
+                  const exists = Boolean(variant?.availableForSale) && !soldOutSize;
                   return (
                     <button
                       key={s}
                       disabled={!exists}
                       onClick={() => setSize(s)}
-                      className={`min-w-[3rem] border px-3 py-2 text-xs uppercase tracking-wider2 transition-colors disabled:opacity-30 ${size === s ? "border-ink bg-ink text-paper" : "border-line text-ink hover:border-ink"}`}
+                      className={`min-w-[3rem] border px-3 py-2 text-xs uppercase tracking-wider2 transition-colors disabled:opacity-30 ${size === s ? "border-ink bg-ink text-paper" : "border-line text-ink hover:border-ink"} ${soldOutSize ? "line-through" : ""}`}
                     >
                       {s}
                     </button>
@@ -270,10 +306,13 @@ function SingleProductDetail({ product, pairs = [] }: { product: ShopProduct; pa
 
           <button
             onClick={addToBag}
-            disabled={soldOut || (!single && !selected)}
+            disabled={soldOut || allSoldOut || (!single && !selected) || (typeof selLeft === "number" && selLeft <= 0)}
             className="mt-8 flex w-full items-center justify-center gap-2 bg-ink px-6 py-4 text-xs uppercase tracking-widest2 text-paper transition-opacity hover:opacity-90 disabled:opacity-40"
           >
-            {soldOut ? "Sold out" : !single && !selected ? `Select a ${(product.optionName ?? "size").toLowerCase()}` : <>Add to bag <ArrowRight className="h-4 w-4" /></>}
+            {soldOut || allSoldOut ? "Sold out"
+              : !single && !selected ? `Select a ${(product.optionName ?? "size").toLowerCase()}`
+              : (typeof selLeft === "number" && selLeft <= 0) ? "Sold out"
+              : <>Add to bag <ArrowRight className="h-4 w-4" /></>}
           </button>
           <p className="mt-3 text-center label-sm text-mute">Secure checkout via Shopify</p>
 
