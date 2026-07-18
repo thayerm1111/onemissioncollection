@@ -1,10 +1,11 @@
 "use client";
 
 import {
-  createContext, useCallback, useContext, useEffect, useMemo, useState,
+  createContext, useCallback, useContext, useEffect, useMemo, useRef, useState,
 } from "react";
 import { ArrowRight, X } from "lucide-react";
 import { checkoutDomain } from "@/lib/shopify";
+import { getSupabase } from "@/lib/supabaseClient";
 
 export type CartLine = {
   key: string;         // productId::variantId
@@ -45,10 +46,23 @@ export function useCart() {
   return c;
 }
 
+function mergeCarts(a: CartLine[], b: CartLine[]): CartLine[] {
+  const map = new Map<string, CartLine>();
+  for (const l of a) map.set(l.key, { ...l });
+  for (const l of b) {
+    const ex = map.get(l.key);
+    if (ex) ex.qty += l.qty;
+    else map.set(l.key, { ...l });
+  }
+  return [...map.values()];
+}
+
 export function CartProvider({ children }: { children: React.ReactNode }) {
   const [items, setItems] = useState<CartLine[]>([]);
   const [isOpen, setIsOpen] = useState(false);
   const [hydrated, setHydrated] = useState(false);
+  const [userId, setUserId] = useState<string | null>(null);
+  const mergedFor = useRef<string | null>(null);
 
   // Load saved bag once, on mount.
   useEffect(() => {
@@ -59,13 +73,46 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     setHydrated(true);
   }, []);
 
-  // Persist the bag as it changes.
+  // Persist the bag to the browser as it changes.
   useEffect(() => {
     if (!hydrated) return;
     try {
       localStorage.setItem(STORAGE, JSON.stringify(items));
     } catch {}
   }, [items, hydrated]);
+
+  // When signed in, load the saved cart and keep it in sync with the profile.
+  useEffect(() => {
+    const sb = getSupabase();
+    if (!sb) return;
+    let active = true;
+    async function loadFor(uid: string | null) {
+      if (!active) return;
+      setUserId(uid);
+      if (!uid) { mergedFor.current = null; return; }
+      if (mergedFor.current === uid) return; // already merged this session
+      mergedFor.current = uid;
+      const { data } = await sb!
+        .from("omc_saved_carts").select("items").eq("user_id", uid).maybeSingle();
+      const saved: CartLine[] = Array.isArray(data?.items) ? (data!.items as CartLine[]) : [];
+      if (active && saved.length) setItems((local) => mergeCarts(local, saved));
+    }
+    sb.auth.getUser().then(({ data }) => loadFor(data.user?.id ?? null));
+    const { data: sub } = sb.auth.onAuthStateChange((_e, s) => loadFor(s?.user?.id ?? null));
+    return () => { active = false; sub.subscription.unsubscribe(); };
+  }, []);
+
+  // Push cart changes to the signed-in profile (debounced).
+  useEffect(() => {
+    const sb = getSupabase();
+    if (!sb || !userId || !hydrated) return;
+    const t = setTimeout(() => {
+      sb.from("omc_saved_carts")
+        .upsert({ user_id: userId, items, updated_at: new Date().toISOString() })
+        .then(() => {});
+    }, 700);
+    return () => clearTimeout(t);
+  }, [items, userId, hydrated]);
 
   const add = useCallback<CartCtx["add"]>((line, qty = 1) => {
     const key = `${line.productId}::${line.variantId}`;
