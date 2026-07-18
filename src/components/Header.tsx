@@ -4,7 +4,6 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Search, User, ShoppingBag, Menu, X } from "lucide-react";
-import { checkoutDomain } from "@/lib/shopify";
 import { Wordmark } from "./Wordmark";
 import { useCart } from "./cart/CartProvider";
 
@@ -21,7 +20,6 @@ export function Header() {
   const [mobile, setMobile] = useState(false);
   const pathname = usePathname();
   const cart = useCart();
-  const accountHref = `https://${checkoutDomain}/account`;
 
   // On mobile the home hero is a full-bleed image, so the header floats
   // transparently over it and turns solid on scroll. On desktop the hero is a
@@ -72,9 +70,9 @@ export function Header() {
           <button aria-label="Search" className="hidden hover:opacity-60 sm:block">
             <Search className="h-[18px] w-[18px]" />
           </button>
-          <a href={accountHref} aria-label="Account" className="hover:opacity-60">
+          <Link href="/account" aria-label="Account" className="hover:opacity-60">
             <User className="h-[18px] w-[18px]" />
-          </a>
+          </Link>
           <button onClick={cart.open} aria-label="Bag" className="relative hover:opacity-60">
             <ShoppingBag className="h-[18px] w-[18px]" />
             {cart.count > 0 && (
