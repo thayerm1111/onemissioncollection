@@ -4,6 +4,7 @@ import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { IntroSplash } from "@/components/IntroSplash";
 import { CartProvider } from "@/components/cart/CartProvider";
+import { AuthProvider } from "@/components/auth/AuthProvider";
 import { PromoPopup } from "@/components/PromoPopup";
 
 const SITE_URL = "https://onemissioncollection.com";
@@ -28,13 +29,15 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en">
       <body className="font-sans antialiased">
-        <CartProvider>
-          <IntroSplash />
-          <Header />
-          <main className="min-h-[70vh] pt-16">{children}</main>
-          <Footer />
-          <PromoPopup />
-        </CartProvider>
+        <AuthProvider>
+          <CartProvider>
+            <IntroSplash />
+            <Header />
+            <main className="min-h-[70vh] pt-16">{children}</main>
+            <Footer />
+            <PromoPopup />
+          </CartProvider>
+        </AuthProvider>
       </body>
     </html>
   );
