@@ -22,6 +22,11 @@ export function Footer() {
           <a href="https://weare1mission.com" className="text-sm text-ink hover:opacity-60">1 Mission Community</a>
           <a href="https://weare1mission.com/experiences" className="text-sm text-ink hover:opacity-60">1M Experiences</a>
         </nav>
+        <nav className="flex flex-col gap-2.5">
+          <span className="label text-mute">Partner</span>
+          <Link href="/affiliate" className="text-sm text-ink hover:opacity-60">Become an Affiliate</Link>
+          <a href="https://af.uppromote.com/k3vbq8-x0" target="_blank" rel="noopener noreferrer" className="text-sm text-ink hover:opacity-60">Affiliate Login</a>
+        </nav>
       </div>
       <div className="border-t border-line">
         <div className="mx-auto max-w-site px-5 py-6 sm:px-8">
