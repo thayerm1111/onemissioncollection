@@ -44,12 +44,12 @@ const FOUNDERS = [
       "[PLACEHOLDER — replace with your real story.] There was a stretch where I had everything that was supposed to add up and none of it did. I kept moving so I wouldn't have to sit still with myself. What found me wasn't a program or a plan — it was somebody who refused to stop looking for me. That's the only reason I'm here. One Mission exists because I know what it costs to be the one nobody came back for, and I know what it's worth when somebody does.",
   },
   {
-    name: "[Partner Name]",
+    name: "Joey Wilson",
     role: "Co-Founder",
     photo: "",
     pull: "Somebody came back for me. So I go back for others.",
     story:
-      "[PLACEHOLDER — replace with your partner's real story.] I spent years believing I was too far gone to be worth the trip. I had built a version of myself that could function while being completely lost. The turning point wasn't dramatic — it was one person who kept showing up after I gave them every reason not to. This brand is me going back out. Every piece we make is a way of saying: you're not too far out. Somebody is still looking.",
+      "[PLACEHOLDER — replace with Joey's real story.] I spent years believing I was too far gone to be worth the trip. I had built a version of myself that could function while being completely lost. The turning point wasn't dramatic — it was one person who kept showing up after I gave them every reason not to. This brand is me going back out. Every piece we make is a way of saying: you're not too far out. Somebody is still looking.",
   },
 ];
 
