@@ -26,6 +26,9 @@ function useDropStock(enabled: boolean): Record<string, number> | null {
 }
 const priceNum = (v?: string) => Number((v ?? "").replace(/[^0-9.]/g, "")) || 0;
 const money = (n: number) => "$" + (Number.isInteger(n) ? n : n.toFixed(2));
+/** Numeric price from a product's display price ("$79.99" → 79.99). */
+const priceOf = (p: ShopProduct) =>
+  Number(String(p.minPrice ?? "").replace(/[^0-9.]/g, "")) || 0;
 
 // "← Shop" returns to the exact listing (and scroll spot) the shopper came
 // from — Men / Women / a subcategory — instead of resetting to the All grid.
@@ -327,7 +330,18 @@ function SingleProductDetail({ product, pairs = [] }: { product: ShopProduct; pa
 
       {pairs.length > 0 && (
         <div className="mt-16 border-t border-line pt-10">
-          <p className="label text-mute">Complete the set</p>
+          <div className="flex items-end justify-between gap-4">
+            <div>
+              <p className="label text-ink">Style With</p>
+              <p className="mt-1 text-[13px] text-mute">Build the full look.</p>
+            </div>
+            <p className="shrink-0 text-[13px] text-mute">
+              Full look{" "}
+              <span className="text-ink">
+                {money(priceOf(product) + pairs.reduce((n, p) => n + priceOf(p), 0))}
+              </span>
+            </p>
+          </div>
           <div className="mt-6 grid grid-cols-2 gap-x-4 gap-y-8 lg:grid-cols-4 lg:gap-x-8">
             {pairs.map((p) => (
               <Link key={p.id} href={`/product/${productPid(p.id)}`} className="group block">
