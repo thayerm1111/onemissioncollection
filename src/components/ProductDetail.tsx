@@ -25,6 +25,7 @@ function useDropStock(enabled: boolean): Record<string, number> | null {
   return stock;
 }
 const priceNum = (v?: string) => Number((v ?? "").replace(/[^0-9.]/g, "")) || 0;
+// Style With / outfit pairings — v2
 const money = (n: number) => "$" + (Number.isInteger(n) ? n : n.toFixed(2));
 /** Numeric price from a product's display price ("$79.99" → 79.99). */
 const priceOf = (p: ShopProduct) =>
