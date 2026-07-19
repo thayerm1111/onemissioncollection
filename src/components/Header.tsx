@@ -3,12 +3,19 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import { Search, User, ShoppingBag, Menu, X } from "lucide-react";
+import { Search, User, ShoppingBag, Menu, X, ChevronDown } from "lucide-react";
 import { Wordmark } from "./Wordmark";
 import { useCart } from "./cart/CartProvider";
 
+/**
+ * "Featured" is a collections dropdown. Each drop becomes a chapter here —
+ * The Founders is the first. Add future drops to this list as they launch.
+ */
+const COLLECTIONS = [
+  { label: "The Founders", href: "/featured", note: "Drop 01 · July 27" },
+];
+
 const NAV = [
-  { label: "Featured", href: "/featured" },
   { label: "Men", href: "/men" },
   { label: "Women", href: "/women" },
   { label: "Accessories", href: "/accessories" },
@@ -17,6 +24,7 @@ const NAV = [
 
 export function Header() {
   const [open, setOpen] = useState(false);
+  const [shopOpen, setShopOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [mobile, setMobile] = useState(false);
   const pathname = usePathname();
@@ -53,6 +61,48 @@ export function Header() {
             <Menu className="h-5 w-5" />
           </button>
           <nav className="hidden items-center gap-6 sm:flex" aria-label="Primary">
+            {/* Featured — collections dropdown */}
+            <div
+              className="relative"
+              onMouseEnter={() => setShopOpen(true)}
+              onMouseLeave={() => setShopOpen(false)}
+            >
+              <button
+                type="button"
+                onClick={() => setShopOpen((v) => !v)}
+                aria-expanded={shopOpen}
+                aria-haspopup="true"
+                className="label flex items-center gap-1 hover:opacity-60"
+              >
+                Featured
+                <ChevronDown className={`h-3 w-3 transition-transform ${shopOpen ? "rotate-180" : ""}`} />
+              </button>
+
+              {shopOpen && (
+                <div className="absolute left-0 top-full z-50 pt-3">
+                  <div className="min-w-[248px] border border-line bg-paper py-2 shadow-lg">
+                    {COLLECTIONS.map((c) => (
+                      <Link
+                        key={c.href}
+                        href={c.href}
+                        onClick={() => setShopOpen(false)}
+                        className="block px-5 py-3 transition-colors hover:bg-stone"
+                      >
+                        <span className="block text-[13px] uppercase tracking-wider2 text-ink">
+                          {c.label}
+                        </span>
+                        {c.note && (
+                          <span className="mt-1 block text-[11px] tracking-wide text-mute">
+                            {c.note}
+                          </span>
+                        )}
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+
             {NAV.map((n) => (
               <Link key={n.href} href={n.href} className="label hover:opacity-60">
                 {n.label}
@@ -97,6 +147,28 @@ export function Header() {
               </button>
             </div>
             <nav className="flex flex-col gap-5">
+              {/* Collections first */}
+              <div>
+                <span className="label text-mute">Featured</span>
+                <div className="mt-3 flex flex-col gap-3 pl-3">
+                  {COLLECTIONS.map((c) => (
+                    <Link
+                      key={c.href}
+                      href={c.href}
+                      onClick={() => setOpen(false)}
+                      className="text-lg uppercase tracking-wider2 text-ink"
+                    >
+                      {c.label}
+                      {c.note && (
+                        <span className="mt-0.5 block text-[11px] normal-case tracking-wide text-mute">
+                          {c.note}
+                        </span>
+                      )}
+                    </Link>
+                  ))}
+                </div>
+              </div>
+
               {NAV.map((n) => (
                 <Link
                   key={n.href}

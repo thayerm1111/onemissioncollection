@@ -70,7 +70,7 @@ export function HomeLanding() {
         <div style={{ textAlign: "center", marginBottom: 40 }}>
           <div className="label" style={{ color: "#8c857a" }}>The Drop</div>
           <h2 style={{ marginTop: 12, fontSize: "clamp(24px,3vw,38px)", letterSpacing: ".14em", textTransform: "uppercase", fontWeight: 400 }}>The Founders Collection</h2>
-          <p style={{ marginTop: 14, fontSize: 14, color: "#8c857a", letterSpacing: ".02em" }}>Five pieces. 500 of each. Launching July 27.</p>
+          <p style={{ marginTop: 14, fontSize: 14, color: "#8c857a", letterSpacing: ".02em" }}>Six pieces. 500 of each. Launching July 27.</p>
         </div>
         <ProductGrid products={featuredProducts()} />
       </section>

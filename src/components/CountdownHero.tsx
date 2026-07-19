@@ -67,7 +67,7 @@ export function CountdownHero() {
         {live ? (
           <>
             <p className="mx-auto mt-7 max-w-md text-[15px] leading-relaxed text-paper/70">
-              2,500 pieces. Once they&apos;re gone, they&apos;re gone.
+              3,000 pieces. Once they&apos;re gone, they&apos;re gone.
             </p>
             <Link
               href="/featured"
