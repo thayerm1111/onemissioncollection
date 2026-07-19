@@ -1,7 +1,7 @@
 /**
  * THE FOUNDERS COLLECTION — first drop.
  *
- * Five pieces, 500 units each (2,500 total), capped in Shopify so they can
+ * Six pieces, 500 units each (3,000 total), capped in Shopify so they can
  * genuinely sell out. Images are pulled live from the Shopify CDN — the hoodie
  * and lounge shorts lead with the model shots.
  *
@@ -55,6 +55,14 @@ const YOGA_IMGS = [
   img("724aa83cdeba4b9f9afc7b9d6880147c", "1784495885"),
 ];
 
+const CROP_IMGS = [
+  img("a441e178cf4c4440b3113974151721aa", "1784497132"),
+  img("181aefaaf78a4960aa94041fa69801b5", "1784497132"),
+  img("0e437808e4cf4468883c6a445c3bee8f", "1784497131"),
+  img("ef7dfec0a9e64aa09bfeb89f47d7caa8", "1784497132"),
+  img("d14dffce45af40d7a7a079f201b387d3", "1784497131"),
+];
+
 const SIZES = ["S", "M", "L", "XL", "2XL"];
 
 /** Ordered ids — drives the collection layout. */
@@ -63,11 +71,12 @@ export const FOUNDERS_SWEATPANTS = "gid://shopify/Product/10426916471063";
 export const FOUNDERS_SHORTS = "gid://shopify/Product/10426914996503";
 export const FOUNDERS_TEE = "gid://shopify/Product/10410648699159";
 export const FOUNDERS_YOGA = "gid://shopify/Product/10419151339799";
+export const FOUNDERS_CROP = "gid://shopify/Product/10410220159255";
 
 export const FOUNDERS_MENS_IDS = [
   FOUNDERS_HOODIE, FOUNDERS_SWEATPANTS, FOUNDERS_SHORTS, FOUNDERS_TEE,
 ];
-export const FOUNDERS_WOMENS_IDS = [FOUNDERS_YOGA];
+export const FOUNDERS_WOMENS_IDS = [FOUNDERS_CROP, FOUNDERS_YOGA];
 export const FOUNDERS_ALL_IDS = [...FOUNDERS_MENS_IDS, ...FOUNDERS_WOMENS_IDS];
 
 /* ---------- new products (not previously in the catalog) ---------- */
@@ -127,6 +136,29 @@ export const FOUNDERS_OVERRIDES: Array<Partial<ShopProduct> & { id: string }> = 
     images: TEE_IMGS,
     minPrice: "$49.99",
     badge: "Founders Collection",
+  },
+  {
+    id: FOUNDERS_CROP,
+    title: "Founders Club Crop Tee",
+    description:
+      "Snow-washed cropped tee, boxy fit. Sky Blue, Pink, Khaki and Black. Limited to 500.",
+    imageUrl: CROP_IMGS[0], imageAlt: "Founders Club Crop Tee",
+    images: CROP_IMGS,
+    // Old per-color swatches pointed at the previous photo shoot — drop them
+    // so the gallery stays consistent with the new set.
+    colorImages: undefined,
+    minPrice: "$49.99",
+    badge: "Founders Collection",
+    variants: [
+      ["53665140637975", "Sky Blue / S"], ["53665140670743", "Sky Blue / M"],
+      ["53665140703511", "Sky Blue / L"], ["53665140736279", "Sky Blue / XL"],
+      ["53665140769047", "Pink / S"], ["53665140801815", "Pink / M"],
+      ["53665140834583", "Pink / L"], ["53665140867351", "Pink / XL"],
+      ["53665140900119", "Khaki / S"], ["53665140932887", "Khaki / M"],
+      ["53665140965655", "Khaki / L"], ["53665140998423", "Khaki / XL"],
+      ["53665141031191", "Black / S"], ["53665141063959", "Black / M"],
+      ["53665141096727", "Black / L"], ["53665141129495", "Black / XL"],
+    ].map(([id, title]) => V(id, title, "$49.99")),
   },
   {
     id: FOUNDERS_YOGA,
