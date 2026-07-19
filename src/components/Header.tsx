@@ -25,32 +25,19 @@ const NAV = [
 export function Header() {
   const [open, setOpen] = useState(false);
   const [shopOpen, setShopOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
-  const [mobile, setMobile] = useState(false);
   const pathname = usePathname();
   const cart = useCart();
 
-  // On mobile the home hero is a full-bleed image, so the header floats
-  // transparently over it and turns solid on scroll. On desktop the hero is a
-  // light image/text split, so the header stays solid there.
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > window.innerHeight * 0.82);
-    window.addEventListener("scroll", onScroll, { passive: true });
-    onScroll();
-    const mq = window.matchMedia("(max-width: 899px)");
-    const onMq = () => setMobile(mq.matches);
-    onMq();
-    mq.addEventListener("change", onMq);
-    return () => {
-      window.removeEventListener("scroll", onScroll);
-      mq.removeEventListener("change", onMq);
-    };
-  }, [pathname]);
+  // The header used to float transparently over a full-bleed mobile hero. The
+  // Founders hero is its own dark section sitting below the header, so the
+  // transparent mode left white-on-white nav on mobile. Header is always solid.
+  const shell = "border-b border-line bg-paper/95 text-ink backdrop-blur";
 
-  const overlay = pathname === "/" && !scrolled && mobile;
-  const shell = overlay
-    ? "border-transparent bg-transparent text-white"
-    : "border-b border-line bg-paper/95 text-ink backdrop-blur";
+  // Close the menus on navigation.
+  useEffect(() => {
+    setOpen(false);
+    setShopOpen(false);
+  }, [pathname]);
 
   return (
     <header className={`fixed left-0 right-0 top-0 z-40 border-b transition-colors duration-300 ${shell}`}>

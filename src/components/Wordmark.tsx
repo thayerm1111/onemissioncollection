@@ -1,11 +1,14 @@
 /**
- * ONEMISSION brand wordmark (with "Matthew 18:13" line).
+ * ONE MISSION brand wordmark.
  * Rendered in a geometric sans so it scales crisply and inherits the
  * current text color — black on the light header, white on the dark intro.
+ *
+ * The verse lockup is off by default; Matthew 18:13 lives on the mission
+ * section of the homepage rather than in the header logo.
  */
 export function Wordmark({
   size = "md",
-  showVerse = true,
+  showVerse = false,
   className = "",
 }: {
   size?: "md" | "lg";
@@ -27,7 +30,7 @@ export function Wordmark({
       style={{ fontFamily: "'Poppins', system-ui, sans-serif" }}
     >
       <span className={`${main} font-semibold`} style={{ letterSpacing: "0.1em" }}>
-        ONEMISSION
+        ONE MISSION
       </span>
       {showVerse && (
         <span
