@@ -5,8 +5,25 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { ArrowRight, ZoomIn, X, ChevronLeft, ChevronRight } from "lucide-react";
 import type { ShopProduct } from "@/lib/shopify";
-import { productPid, DROP_SET, PRE_LAUNCH } from "@/data/products";
+import { productPid, DROP_SET } from "@/data/products";
+import { isPreLaunch } from "@/data/launch";
 import { useCart } from "./cart/CartProvider";
+
+/**
+ * Live pre-launch gate. Starts locked (so the server render and first paint
+ * never flash a buyable state), then ticks — the store opens itself the
+ * second the launch clock hits zero.
+ */
+function usePreLaunch(): boolean {
+  const [locked, setLocked] = useState(true);
+  useEffect(() => {
+    const tick = () => setLocked(isPreLaunch());
+    tick();
+    const t = setInterval(tick, 1000);
+    return () => clearInterval(t);
+  }, []);
+  return locked;
+}
 
 const vidNum = (id: string) => id.split("/").pop() ?? "";
 
@@ -160,6 +177,7 @@ export function ProductDetail({ product, pairs = [], bundleItems = [] }: { produ
 }
 
 function SingleProductDetail({ product, pairs = [] }: { product: ShopProduct; pairs?: ShopProduct[] }) {
+  const preLaunch = usePreLaunch();
   const imgs = product.images?.length ? product.images : product.imageUrl ? [product.imageUrl] : [];
   const parsed = useMemo(() => product.variants.map(parse), [product]);
   const colors = useMemo(() => [...new Set(parsed.map((v) => v.color).filter(Boolean))] as string[], [parsed]);
@@ -308,7 +326,7 @@ function SingleProductDetail({ product, pairs = [] }: { product: ShopProduct; pa
             </div>
           )}
 
-          {PRE_LAUNCH ? (
+          {preLaunch ? (
             /* Pre-launch: the drop is visible but not yet purchasable. */
             <>
               <Link
@@ -443,6 +461,7 @@ function Config({ cfg }: { cfg: Cfg }) {
 }
 
 function BundleDetail({ bundle, items }: { bundle: ShopProduct; items: ShopProduct[] }) {
+  const preLaunch = usePreLaunch();
   // Hooks must be called unconditionally — support up to 4 pieces in a set.
   const c0 = useConfigurator(items[0]);
   const c1 = useConfigurator(items[1]);
@@ -498,7 +517,7 @@ function BundleDetail({ bundle, items }: { bundle: ShopProduct; items: ShopProdu
             })}
           </div>
 
-          {PRE_LAUNCH ? (
+          {preLaunch ? (
             <div className="mt-8">
               <Link href="/founders"
                 className="flex w-full items-center justify-center gap-2 bg-ink px-6 py-4 text-xs uppercase tracking-widest2 text-paper transition-opacity hover:opacity-90">

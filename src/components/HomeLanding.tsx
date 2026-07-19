@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { featuredProducts, DROP_MODE } from "@/data/products";
 import { ProductGrid } from "./ProductGrid";
+import { CountdownHero } from "./CountdownHero";
 
 const IMG = "https://cdn.shopify.com/s/files/1/1016/0406/5559/files";
 
@@ -33,20 +34,8 @@ export function HomeLanding() {
   return (
     <div>
 
-      {/* HERO */}
-      <section className="ed ed-hero rvl">
-        <div className="ed-media">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img className="ed-img" src={`${IMG}/ChatGPT_Image_Jul_15_2026_03_06_23_PM_1.png?v=1784151755`} alt="One Mission — The Fit" />
-        </div>
-        <div className="ed-scrim" />
-        <div className="ed-copy">
-          <div className="ed-over">One Mission — Fall / Winter &apos;26</div>
-          <h1 className="ed-title">Built for More</h1>
-          <p className="ed-sub">Washed heavyweight staples for the ones who carry the mission.</p>
-          <a className="ed-cta" href="#featured">Shop the Collection</a>
-        </div>
-      </section>
+      {/* HERO — Founders Collection countdown (auto-opens at launch) */}
+      <CountdownHero />
 
       {/* BRAND BANNER — clickable */}
       <Link href="#featured" className="rvl" style={{ display: "block", position: "relative", height: "62vh", minHeight: 420, width: "100%", overflow: "hidden", background: "#0f0d0b" }}>
