@@ -38,29 +38,25 @@ const SHORTS_IMGS = [
   img("de50186913cf4fcb9243c887611542f8", "1784493711"),
   img("471fcd8eda6b49fabb55e82a2c945d8b", "1784493711"),
 ];
+// Tee / yoga / crop were re-cut to Black-only in Tapstitch with new pricing —
+// these image sets and variants match that final state.
 const TEE_IMGS = [
-  img("89de5daff21c427e846acd19550cf818", "1784495766"),
-  img("cbf578799000443a8324b6bcfdb10a32", "1784495767"),
-  img("a83a4117a1ba47c19e5b14ca8d14b106", "1784495767"),
-  img("f9c02bd0970a43ef9224cab2ce98a22e", "1784495767"),
+  img("89de5daff21c427e846acd19550cf818", "1784498690"),
+  img("cbf578799000443a8324b6bcfdb10a32", "1784498690"),
+  img("a83a4117a1ba47c19e5b14ca8d14b106", "1784498690"),
+  img("f9c02bd0970a43ef9224cab2ce98a22e", "1784498690"),
 ];
 const YOGA_IMGS = [
-  img("99bd8a39eb79489882f2605d6dd8e548", "1784495886"),
-  img("46629454b6d04a53ba01b912dc64119c", "1784495886"),
-  img("64fdb499742740d0904200c63e7b745f", "1784495886"),
-  img("b994fe914c33427e9e1c06ea7d1da38f", "1784495886"),
-  img("cb1b6501855e46d7a1b14c0292a58ae7", "1784495886"),
-  img("1bf766bec1054621993f4ea3af9389f7", "1784495886"),
-  img("d69b5ec7305848d88ce72d43bbf45115", "1784495886"),
-  img("724aa83cdeba4b9f9afc7b9d6880147c", "1784495885"),
+  img("99bd8a39eb79489882f2605d6dd8e548", "1784498646"),
+  img("46629454b6d04a53ba01b912dc64119c", "1784498647"),
+  img("64fdb499742740d0904200c63e7b745f", "1784498646"),
 ];
 
 const CROP_IMGS = [
-  img("a441e178cf4c4440b3113974151721aa", "1784497132"),
-  img("181aefaaf78a4960aa94041fa69801b5", "1784497132"),
-  img("0e437808e4cf4468883c6a445c3bee8f", "1784497131"),
-  img("ef7dfec0a9e64aa09bfeb89f47d7caa8", "1784497132"),
-  img("d14dffce45af40d7a7a079f201b387d3", "1784497131"),
+  img("c72cf32126be4927981e19e360a7e35e", "1784498781"),
+  img("56422955b4e242b3be54183023410948", "1784498781"),
+  img("c52d6d8796d8477c88ee8c83728eea18", "1784498781"),
+  img("0e437808e4cf4468883c6a445c3bee8f", "1784498782"),
 ];
 
 const SIZES = ["S", "M", "L", "XL", "2XL"];
@@ -131,11 +127,17 @@ export const FOUNDERS_OVERRIDES: Array<Partial<ShopProduct> & { id: string }> = 
     id: FOUNDERS_TEE,
     title: "Founders Club Tee",
     description:
-      "Essential heavyweight cotton tee, 9.7 oz, drop shoulder. Four colorways. Limited to 500.",
+      "Essential heavyweight cotton tee, 9.7 oz, drop shoulder. Black. XS–2XL. Limited to 500.",
     imageUrl: TEE_IMGS[0], imageAlt: "Founders Club Tee",
     images: TEE_IMGS,
-    minPrice: "$49.99",
+    colorImages: undefined,
+    minPrice: "$59.99",
     badge: "Founders Collection",
+    variants: [
+      ["53669577097495", "Black / XS"], ["53669577130263", "Black / S"],
+      ["53669577163031", "Black / M"], ["53669577195799", "Black / L"],
+      ["53669577228567", "Black / XL"], ["53669577261335", "Black / 2XL"],
+    ].map(([id, title]) => V(id, title, "$59.99")),
   },
   {
     id: FOUNDERS_CROP,
@@ -150,12 +152,6 @@ export const FOUNDERS_OVERRIDES: Array<Partial<ShopProduct> & { id: string }> = 
     minPrice: "$49.99",
     badge: "Founders Collection",
     variants: [
-      ["53665140637975", "Sky Blue / S"], ["53665140670743", "Sky Blue / M"],
-      ["53665140703511", "Sky Blue / L"], ["53665140736279", "Sky Blue / XL"],
-      ["53665140769047", "Pink / S"], ["53665140801815", "Pink / M"],
-      ["53665140834583", "Pink / L"], ["53665140867351", "Pink / XL"],
-      ["53665140900119", "Khaki / S"], ["53665140932887", "Khaki / M"],
-      ["53665140965655", "Khaki / L"], ["53665140998423", "Khaki / XL"],
       ["53665141031191", "Black / S"], ["53665141063959", "Black / M"],
       ["53665141096727", "Black / L"], ["53665141129495", "Black / XL"],
     ].map(([id, title]) => V(id, title, "$49.99")),
@@ -164,10 +160,16 @@ export const FOUNDERS_OVERRIDES: Array<Partial<ShopProduct> & { id: string }> = 
     id: FOUNDERS_YOGA,
     title: "Founders Club Yoga Shorts",
     description:
-      "High-rise, second-skin nylon/spandex short. Four colorways. Limited to 500.",
+      "High-rise, second-skin nylon/spandex short. Black. Sizes 4–12. Limited to 500.",
     imageUrl: YOGA_IMGS[0], imageAlt: "Founders Club Yoga Shorts",
     images: YOGA_IMGS,
-    minPrice: "$39.99",
+    colorImages: undefined,
+    minPrice: "$49.99",
     badge: "Founders Collection",
+    variants: [
+      ["53967368487191", "Black / 4"], ["53967368519959", "Black / 6"],
+      ["53967368552727", "Black / 8"], ["53967368585495", "Black / 10"],
+      ["53967368618263", "Black / 12"],
+    ].map(([id, title]) => V(id, title, "$49.99")),
   },
 ];
