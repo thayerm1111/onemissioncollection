@@ -1,6 +1,6 @@
 "use client";
 
-/**
+/** v2 — founders waitlist route
  * FOUNDERS COLLECTION — WAITLIST  (Drop Strategy, Phase 1)
  *
  * The destination for paid ads. One job: capture Name + Email + Phone.
