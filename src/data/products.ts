@@ -1452,11 +1452,50 @@ function orderedGrid(): ShopProduct[] {
 }
 
 /** Resolve a product's paired items to full product objects. */
+/**
+ * "STYLE WITH" — outfit pairings.
+ * Which garment types complete an outfit for a given type. Curated `pairsWith`
+ * always wins; this fills the rest so EVERY product suggests a full look
+ * (top → bottom → layer → accessory), the way a stylist would build it.
+ */
+const STYLE_COMPLEMENTS: Record<string, string[]> = {
+  Hoodies:        ["Sweatpants", "Shorts", "T-Shirts", "Hats"],
+  Sweatshirts:    ["Sweatpants", "Shorts", "T-Shirts", "Hats"],
+  "T-Shirts":     ["Shorts", "Sweatpants", "Hoodies", "Hats"],
+  "Long Sleeves": ["Sweatpants", "Shorts", "Hats", "Hoodies"],
+  Tanks:          ["Shorts", "Leggings", "Hats", "Hoodies"],
+  "Crop Tops":    ["Leggings", "Shorts", "Hoodies", "Hats"],
+  Shorts:         ["T-Shirts", "Hoodies", "Tanks", "Hats"],
+  Sweatpants:     ["Hoodies", "T-Shirts", "Sweatshirts", "Hats"],
+  Leggings:       ["Crop Tops", "Tanks", "Hoodies", "Hats"],
+  Hats:           ["Hoodies", "T-Shirts", "Shorts", "Sweatpants"],
+  "Phone Cases":  ["Hoodies", "T-Shirts", "Hats", "Shorts"],
+  Sets:           ["Hats", "Phone Cases", "T-Shirts", "Shorts"],
+  Other:          ["Hoodies", "T-Shirts", "Shorts", "Hats"],
+};
+
+/** Products shown under "Style With" on a product page — a full outfit. */
 export function pairedProducts(product: ShopProduct): ShopProduct[] {
-  if (!product.pairsWith?.length) return [];
-  return product.pairsWith
+  const picked: ShopProduct[] = (product.pairsWith ?? [])
     .map((id) => products.find((p) => p.id === id))
     .filter((p): p is ShopProduct => Boolean(p));
+
+  const seen = new Set<string>([product.id, ...picked.map((p) => p.id)]);
+  const womens = product.gender === "women";
+
+  for (const type of STYLE_COMPLEMENTS[product.type ?? "Other"] ?? []) {
+    if (picked.length >= 4) break;
+    const match = products.find(
+      (p) =>
+        p.type === type &&
+        !seen.has(p.id) &&
+        !p.bundle &&
+        !HIDDEN_FROM_GRID.has(p.id) &&
+        (womens ? p.gender === "women" || p.gender === "accessory" : p.gender !== "women"),
+    );
+    if (match) { picked.push(match); seen.add(match.id); }
+  }
+  return picked.slice(0, 4);
 }
 
 /** Resolve a bundle/set product's component items to full product objects. */
