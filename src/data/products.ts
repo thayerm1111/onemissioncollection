@@ -8,6 +8,10 @@
  * When you add or change products in Shopify, just ask and this gets refreshed.
  */
 import type { ShopCollection, ShopProduct } from "@/lib/shopify";
+import {
+  FOUNDERS_NEW, FOUNDERS_OVERRIDES, FOUNDERS_MENS_IDS, FOUNDERS_WOMENS_IDS,
+  FOUNDERS_ALL_IDS,
+} from "./founders";
 
 const IMG = "https://cdn.shopify.com/s/files/1/1016/0406/5559/files";
 const I = (file: string, v: string) => `${IMG}/${file}.png?v=${v}`;
@@ -1242,6 +1246,15 @@ export const staticCollections: Record<string, ShopCollection> = {
   },
 };
 
+/* ---------------- FOUNDERS COLLECTION ----------------
+   Add the new drop pieces to the catalog and re-skin the two that already
+   existed (tee + yoga shorts) with their Founders names and model photos. */
+staticCollections["the-collection"].products.push(...FOUNDERS_NEW);
+for (const patch of FOUNDERS_OVERRIDES) {
+  const target = staticCollections["the-collection"].products.find((p) => p.id === patch.id);
+  if (target) Object.assign(target, patch);
+}
+
 // Pair each hoodie / sweatshirt with the matching sweatpants + sweat shorts,
 // shown as a "Complete the set" option on the product page.
 const SET_PAIR_IDS = [
@@ -1315,14 +1328,15 @@ const gridProducts = products.filter((p) => !HIDDEN_FROM_GRID.has(p.id));
    per-variant cap below (100 ÷ number of colors) drives the "X of N left"
    live counter. Flip DROP_MODE to false to reveal the full catalog again. */
 export const DROP_MODE = true;
-export const DROP_IDS: string[] = [
-  "gid://shopify/Product/10410168287511", // One Mission Statement Hoodie (6 colors)
-  "gid://shopify/Product/10419606126871", // OM Gold Hoodie
-  "gid://shopify/Product/10410152689943", // OM x One Mission — Black
-  "gid://shopify/Product/10409780904215", // Heavyweight Tee — Gray
-  "gid://shopify/Product/10409780543767", // Heavyweight Tee — White
-  "gid://shopify/Product/10409776873751", // Heavyweight Tee — Black
-];
+
+/**
+ * PRE_LAUNCH — the Founders Collection is visible but not yet purchasable.
+ * Product pages show "Launching Soon" + the waitlist instead of Add to Bag.
+ * Flip to false on launch day to open checkout.
+ */
+export const PRE_LAUNCH = true;
+
+export const DROP_IDS: string[] = FOUNDERS_MENS_IDS;
 export const DROP_SET = new Set(DROP_IDS);
 // Units stocked per size/color variant (100 per size, split across colors).
 export const DROP_VARIANT_CAP: Record<string, number> = {
@@ -1334,36 +1348,21 @@ export const DROP_VARIANT_CAP: Record<string, number> = {
   "gid://shopify/Product/10409776873751": 100, // 1 color
 };
 export function dropProducts(): ShopProduct[] {
-  const items = DROP_IDS
+  return DROP_IDS
     .map((id) => products.find((p) => p.id === id))
     .filter((p): p is ShopProduct => Boolean(p));
-  // Lead with "The Fit" full-look set (male model) as the hero tile of the drop.
-  const theFit = products.find((p) => p.id === "gid://shopify/Product/bundle-the-fit");
-  return theFit ? [theFit, ...items] : items;
 }
 
-// Women's launch collection — shown on the Women tab during the drop.
-export const WOMEN_DROP_IDS: string[] = [
-  "gid://shopify/Product/10419151339799", // Women's High-Rise Yoga Shorts (female model)
-  "gid://shopify/Product/10419153633559", // Women's Solid High-Rise Leggings
-  "gid://shopify/Product/10410184114455", // Women's High-Waisted Biker Shorts
-  "gid://shopify/Product/10410220159255", // Women's Snow Washed Crop Top
-  "gid://shopify/Product/10410180837655", // Women's Crop Tank Top
-  "gid://shopify/Product/10410239754519", // Women's Cropped Half-Zip Sweatshirt
-  "gid://shopify/Product/10410239262999", // Women's Essential Cropped Hoodie
-];
+// Women's side of the Founders Collection.
+export const WOMEN_DROP_IDS: string[] = FOUNDERS_WOMENS_IDS;
 export function womenDropProducts(): ShopProduct[] {
   return WOMEN_DROP_IDS
     .map((id) => products.find((p) => p.id === id))
     .filter((p): p is ShopProduct => Boolean(p));
 }
 
-// Accessories — shown on the Accessories tab during the drop.
-export const ACCESSORY_DROP_IDS: string[] = [
-  "gid://shopify/Product/10410220814615", // One Mission Script Dad Hat
-  "gid://shopify/Product/10410220912919", // One Mission Tough Phone Case
-  "gid://shopify/Product/10410364698903", // OneMission Vegan Leather Journal
-];
+// Accessories — none in the Founders Collection drop.
+export const ACCESSORY_DROP_IDS: string[] = [];
 export function accessoryDropProducts(): ShopProduct[] {
   return ACCESSORY_DROP_IDS
     .map((id) => products.find((p) => p.id === id))
@@ -1373,20 +1372,7 @@ export function accessoryDropProducts(): ShopProduct[] {
 // The curated "Featured" landing selection (home page) — a hand-picked showcase,
 // not the whole catalog. The full catalog stays browsable via Men / Women /
 // Accessories.
-const FEATURED_IDS = [
-  "gid://shopify/Product/bundle-the-fit",          // The Fit — Full Look
-  "gid://shopify/Product/10410152689943",          // OM x One Mission — Black
-  "gid://shopify/Product/10419606126871",          // OM Gold Hoodie
-  "gid://shopify/Product/10420068581655",          // Matthew 18:13 Hoodie
-  "gid://shopify/Product/10420061208855",          // Heavy Disturbed One Mission Hoodie
-  "gid://shopify/Product/10420058063127",          // The 1 Hoodie
-  "gid://shopify/Product/10420052394263",          // One Mission Hoodie — Vibin
-  "gid://shopify/Product/10420010123543",          // OM Heavyweight Sweatshirt
-  "gid://shopify/Product/10420053967127",          // Snow Washed Loose Cotton Hoodie
-  "gid://shopify/Product/10409783132439-charcoal", // Heavyweight Hoodie — Charcoal (back print)
-  "gid://shopify/Product/10419151339799",          // Women's High-Rise Yoga Shorts (female model)
-  "gid://shopify/Product/10410220814615",          // One Mission Script Dad Hat
-];
+const FEATURED_IDS = FOUNDERS_ALL_IDS;
 
 // Unisex products that should also appear in the Women's feed (in addition to
 // the Men's feed), e.g. unisex hoodies the shopper wants merchandised on both.
