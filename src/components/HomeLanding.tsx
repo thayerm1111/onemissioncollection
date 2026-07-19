@@ -37,38 +37,8 @@ export function HomeLanding() {
       {/* HERO — Founders Collection countdown (auto-opens at launch) */}
       <CountdownHero />
 
-      {/* BRAND BANNER — clickable */}
-      <Link href="#featured" className="rvl" style={{ display: "block", position: "relative", height: "62vh", minHeight: 420, width: "100%", overflow: "hidden", background: "#0f0d0b" }}>
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={`${IMG}/ed21309b808f41a2b88978fc064bb627.png?v=1784171028`} alt="One Mission" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center 42%", opacity: 0.28 }} />
-        <div style={{ position: "absolute", inset: 0, display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", textAlign: "center", color: "#f5f2ec", padding: "0 24px" }}>
-          <div style={{ fontSize: "clamp(38px,8vw,104px)", letterSpacing: ".3em", fontWeight: 500, lineHeight: 1, paddingLeft: ".3em" }}>ONEMISSION</div>
-          <div style={{ fontSize: 11, letterSpacing: ".5em", marginTop: 14, opacity: 0.85, paddingLeft: ".5em" }}>MATTHEW 18:13</div>
-          <p style={{ marginTop: 24, fontSize: 13, letterSpacing: ".06em", opacity: 0.8, fontWeight: 300, maxWidth: 460 }}>Faith-built apparel. Washed, heavyweight, and made to last — for the one worth going after.</p>
-        </div>
-      </Link>
-
-      {/* MEN / WOMEN SPLIT — always shown */}
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr" }} className="om-split">
-        <section className="rvl" style={{ position: "relative", height: "90vh", minHeight: 560, overflow: "hidden", background: "#d9d6cf" }}>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={`${IMG}/ChatGPT_Image_Jul_15_2026_03_06_23_PM_2.png?v=1784151754`} alt="Men" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center 20%" }} />
-          <div style={{ position: "absolute", inset: 0, background: "linear-gradient(180deg,rgba(0,0,0,0) 55%,rgba(0,0,0,.45) 100%)" }} />
-          <div style={{ position: "absolute", inset: 0, display: "flex", flexDirection: "column", justifyContent: "flex-end", alignItems: "center", color: "#fff", paddingBottom: "7vh" }}>
-            <h3 style={{ fontSize: "clamp(24px,3vw,42px)", letterSpacing: ".16em", textTransform: "uppercase", fontWeight: 400, margin: 0 }}>Men</h3>
-            <Link href="/men" style={{ marginTop: 16, fontSize: 11, letterSpacing: ".24em", textTransform: "uppercase", color: "#fff", borderBottom: "1px solid rgba(255,255,255,.6)", paddingBottom: 5, textDecoration: "none" }}>Shop Men</Link>
-          </div>
-        </section>
-        <section className="rvl" style={{ position: "relative", height: "90vh", minHeight: 560, overflow: "hidden", background: "#d9d6cf" }}>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={`${IMG}/9512eb002e2b49ea88a386cffce22dab.png?v=1784173507`} alt="Women" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center 12%" }} />
-          <div style={{ position: "absolute", inset: 0, background: "linear-gradient(180deg,rgba(0,0,0,0) 55%,rgba(0,0,0,.45) 100%)" }} />
-          <div style={{ position: "absolute", inset: 0, display: "flex", flexDirection: "column", justifyContent: "flex-end", alignItems: "center", color: "#fff", paddingBottom: "7vh" }}>
-            <h3 style={{ fontSize: "clamp(24px,3vw,42px)", letterSpacing: ".16em", textTransform: "uppercase", fontWeight: 400, margin: 0 }}>Women</h3>
-            <Link href="/women" style={{ marginTop: 16, fontSize: 11, letterSpacing: ".24em", textTransform: "uppercase", color: "#fff", borderBottom: "1px solid rgba(255,255,255,.6)", paddingBottom: 5, textDecoration: "none" }}>Shop Women</Link>
-          </div>
-        </section>
-      </div>
+      {/* Old brand banner + Men/Women split removed while the site is
+          centered on the Founders Collection drop. */}
 
       {!DROP_MODE && (<>
       {/* COLLAB */}
@@ -98,8 +68,9 @@ export function HomeLanding() {
       {/* FEATURED PRODUCTS */}
       <section id="featured" className="rvl mx-auto max-w-site px-5 py-20 sm:px-8 sm:py-28">
         <div style={{ textAlign: "center", marginBottom: 40 }}>
-          <div className="label" style={{ color: "#8c857a" }}>The Edit</div>
-          <h2 style={{ marginTop: 12, fontSize: "clamp(24px,3vw,38px)", letterSpacing: ".14em", textTransform: "uppercase", fontWeight: 400 }}>Featured</h2>
+          <div className="label" style={{ color: "#8c857a" }}>The Drop</div>
+          <h2 style={{ marginTop: 12, fontSize: "clamp(24px,3vw,38px)", letterSpacing: ".14em", textTransform: "uppercase", fontWeight: 400 }}>The Founders Collection</h2>
+          <p style={{ marginTop: 14, fontSize: 14, color: "#8c857a", letterSpacing: ".02em" }}>Five pieces. 500 of each. Launching July 27.</p>
         </div>
         <ProductGrid products={featuredProducts()} />
       </section>

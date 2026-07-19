@@ -44,18 +44,12 @@ export function CountdownHero() {
   const t = timeLeft(now ?? undefined);
 
   return (
-    <section className="relative min-h-[92vh] w-full overflow-hidden bg-ink">
-      {/* model shot */}
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img
-        src={HERO_IMG}
-        alt="The Founders Collection"
-        className="absolute inset-0 h-full w-full object-cover object-top opacity-80"
-      />
-      {/* scrim for legibility */}
-      <div className="absolute inset-0 bg-gradient-to-b from-ink/70 via-ink/40 to-ink/90" />
-
-      <div className="relative z-10 mx-auto flex min-h-[92vh] max-w-4xl flex-col items-center justify-center px-6 py-24 text-center">
+    <section className="relative w-full overflow-hidden bg-ink">
+      {/* Garment-forward split: copy left, the full piece on the right.
+          object-contain guarantees the whole hoodie is in frame — never a
+          face crop. Stacks to image-under-copy on mobile. */}
+      <div className="mx-auto grid max-w-site items-center gap-6 px-6 py-16 lg:grid-cols-2 lg:gap-10 lg:py-20">
+        <div className="order-2 flex flex-col items-center text-center lg:order-1 lg:items-start lg:text-left">
         <p className="text-[11px] uppercase tracking-[0.4em] text-paper/60">
           The Founders Collection
         </p>
@@ -89,7 +83,7 @@ export function CountdownHero() {
             </p>
 
             {/* countdown */}
-            <div className="mt-12 flex items-start justify-center gap-3 sm:gap-8">
+            <div className="mt-12 flex items-start justify-center gap-3 sm:gap-8 lg:justify-start">
               <Unit value={t.days} label="Days" />
               <span className="pt-1 font-mono text-3xl text-paper/25 sm:pt-0 sm:text-5xl">:</span>
               <Unit value={t.hours} label="Hours" />
@@ -119,6 +113,17 @@ export function CountdownHero() {
             </div>
           </>
         )}
+        </div>
+
+        {/* the piece — whole garment, never cropped */}
+        <div className="order-1 lg:order-2">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={HERO_IMG}
+            alt="Founders Club Hoodie"
+            className="mx-auto max-h-[76vh] w-full object-contain"
+          />
+        </div>
       </div>
     </section>
   );
