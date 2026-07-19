@@ -122,11 +122,20 @@ export function Header() {
         </div>
       </div>
 
-      {/* Mobile drawer */}
+      {/* Mobile drawer. z-index and background are set inline: the drawer lives
+          inside the fixed header so it inherits that stacking context, and the
+          themed `bg-paper` class was rendering see-through over the hero. */}
       {open && (
-        <div className="fixed inset-0 z-50 sm:hidden">
-          <div className="absolute inset-0 bg-ink/30" onClick={() => setOpen(false)} />
-          <div className="absolute left-0 top-0 h-full w-4/5 max-w-xs bg-paper p-6 text-ink">
+        <div className="fixed inset-0 sm:hidden" style={{ zIndex: 9999 }}>
+          <div
+            className="absolute inset-0"
+            style={{ backgroundColor: "rgba(16,16,16,0.45)" }}
+            onClick={() => setOpen(false)}
+          />
+          <div
+            className="absolute left-0 top-0 h-full w-4/5 max-w-xs p-6 text-ink shadow-2xl"
+            style={{ backgroundColor: "#ffffff" }}
+          >
             <div className="mb-8 flex items-center justify-between">
               <span className="label text-mute">Menu</span>
               <button onClick={() => setOpen(false)} aria-label="Close">
