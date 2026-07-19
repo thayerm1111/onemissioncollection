@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { ArrowRight, ZoomIn, X, ChevronLeft, ChevronRight } from "lucide-react";
 import type { ShopProduct } from "@/lib/shopify";
-import { productPid, DROP_SET } from "@/data/products";
+import { productPid, DROP_SET, PRE_LAUNCH } from "@/data/products";
 import { useCart } from "./cart/CartProvider";
 
 const vidNum = (id: string) => id.split("/").pop() ?? "";
@@ -308,17 +308,34 @@ function SingleProductDetail({ product, pairs = [] }: { product: ShopProduct; pa
             </div>
           )}
 
-          <button
-            onClick={addToBag}
-            disabled={soldOut || allSoldOut || (!single && !selected) || (typeof selLeft === "number" && selLeft <= 0)}
-            className="mt-8 flex w-full items-center justify-center gap-2 bg-ink px-6 py-4 text-xs uppercase tracking-widest2 text-paper transition-opacity hover:opacity-90 disabled:opacity-40"
-          >
-            {soldOut || allSoldOut ? "Sold out"
-              : !single && !selected ? `Select a ${(product.optionName ?? "size").toLowerCase()}`
-              : (typeof selLeft === "number" && selLeft <= 0) ? "Sold out"
-              : <>Add to bag <ArrowRight className="h-4 w-4" /></>}
-          </button>
-          <p className="mt-3 text-center label-sm text-mute">Secure checkout via Shopify</p>
+          {PRE_LAUNCH ? (
+            /* Pre-launch: the drop is visible but not yet purchasable. */
+            <>
+              <Link
+                href="/founders"
+                className="mt-8 flex w-full items-center justify-center gap-2 bg-ink px-6 py-4 text-xs uppercase tracking-widest2 text-paper transition-opacity hover:opacity-90"
+              >
+                Launching soon — get early access <ArrowRight className="h-4 w-4" />
+              </Link>
+              <p className="mt-3 text-center label-sm text-mute">
+                Join the list to shop before anyone else
+              </p>
+            </>
+          ) : (
+            <>
+              <button
+                onClick={addToBag}
+                disabled={soldOut || allSoldOut || (!single && !selected) || (typeof selLeft === "number" && selLeft <= 0)}
+                className="mt-8 flex w-full items-center justify-center gap-2 bg-ink px-6 py-4 text-xs uppercase tracking-widest2 text-paper transition-opacity hover:opacity-90 disabled:opacity-40"
+              >
+                {soldOut || allSoldOut ? "Sold out"
+                  : !single && !selected ? `Select a ${(product.optionName ?? "size").toLowerCase()}`
+                  : (typeof selLeft === "number" && selLeft <= 0) ? "Sold out"
+                  : <>Add to bag <ArrowRight className="h-4 w-4" /></>}
+              </button>
+              <p className="mt-3 text-center label-sm text-mute">Secure checkout via Shopify</p>
+            </>
+          )}
 
           {product.description && (
             <div className="mt-10 border-t border-line pt-6">
@@ -481,21 +498,35 @@ function BundleDetail({ bundle, items }: { bundle: ShopProduct; items: ShopProdu
             })}
           </div>
 
-          <div className="mt-8 space-y-2.5">
-            <button onClick={() => addToBag(cfgs)} disabled={!allReady}
-              className="flex w-full items-center justify-center gap-2 bg-ink px-6 py-4 text-xs uppercase tracking-widest2 text-paper transition-opacity hover:opacity-90 disabled:opacity-40">
-              {allReady ? <>Add the set — {money(total)} <ArrowRight className="h-4 w-4" /></> : "Select a size for each piece"}
-            </button>
-            <div className="grid grid-cols-3 gap-2.5">
-              {cfgs.map((c, i) => (
-                <button key={c.product?.id ?? i} onClick={() => addToBag([c])} disabled={!c.variant}
-                  className="border border-ink px-2 py-3 text-[11px] uppercase tracking-widest2 text-ink transition-colors hover:bg-ink hover:text-paper disabled:opacity-30">
-                  {shortName(c.product)} · {c.product?.minPrice}
-                </button>
-              ))}
+          {PRE_LAUNCH ? (
+            <div className="mt-8">
+              <Link href="/founders"
+                className="flex w-full items-center justify-center gap-2 bg-ink px-6 py-4 text-xs uppercase tracking-widest2 text-paper transition-opacity hover:opacity-90">
+                Launching soon — get early access <ArrowRight className="h-4 w-4" />
+              </Link>
+              <p className="mt-3 text-center label-sm text-mute">
+                Join the list to shop before anyone else
+              </p>
             </div>
-          </div>
-          <p className="mt-3 text-center label-sm text-mute">Secure checkout via Shopify</p>
+          ) : (
+            <>
+              <div className="mt-8 space-y-2.5">
+                <button onClick={() => addToBag(cfgs)} disabled={!allReady}
+                  className="flex w-full items-center justify-center gap-2 bg-ink px-6 py-4 text-xs uppercase tracking-widest2 text-paper transition-opacity hover:opacity-90 disabled:opacity-40">
+                  {allReady ? <>Add the set — {money(total)} <ArrowRight className="h-4 w-4" /></> : "Select a size for each piece"}
+                </button>
+                <div className="grid grid-cols-3 gap-2.5">
+                  {cfgs.map((c, i) => (
+                    <button key={c.product?.id ?? i} onClick={() => addToBag([c])} disabled={!c.variant}
+                      className="border border-ink px-2 py-3 text-[11px] uppercase tracking-widest2 text-ink transition-colors hover:bg-ink hover:text-paper disabled:opacity-30">
+                      {shortName(c.product)} · {c.product?.minPrice}
+                    </button>
+                  ))}
+                </div>
+              </div>
+              <p className="mt-3 text-center label-sm text-mute">Secure checkout via Shopify</p>
+            </>
+          )}
 
           {bundle.description && (
             <div className="mt-10 border-t border-line pt-6">
