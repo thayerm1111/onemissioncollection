@@ -106,13 +106,29 @@ const FOUNDERS: Founder[] = [
     photo: "/founders/joey.jpg",
     pull: "Rock bottom does not have to be the end of your story.",
     story: [
-      "I’ve been able to teach and inspire others by sharing the same mindset, disciplines, and principles that helped me completely change my own life.",
+      "I grew up in an amazing family with parents who loved me and wanted the best for me. I was the middle child, and even from a young age, I always felt a little different. I had a lot of friends, tons of energy, and I loved being around people, but when it came to school, I could never seem to get myself to focus. Sitting still, paying attention, and learning the traditional way never came naturally to me. I always thought outside the box and saw things differently than most people, but at the time, I didn’t understand that those qualities could eventually become strengths.",
+      "For most of my childhood, I believed the only way to become successful was to get good grades, go to college, and follow the traditional path. Because I struggled so much in school, I started to believe there was something wrong with me and that success might not be possible for someone like me. My parents didn’t know what else to do, so they eventually enrolled me in an Alternative Learning Center. I wasn’t a bad kid, but I was lost, impressionable, and searching for a place where I felt like I belonged.",
+      "Unfortunately, I found that sense of belonging in the wrong environment. I started surrounding myself with people who were making poor decisions, and eventually, I began making those same choices. I became a product of my environment, and the road I was on led me deeper and deeper into a dark place. What started as trying to fit in eventually led to selling drugs, getting arrested, and hitting rock bottom.",
+      "I ended up spending a year in county jail, followed by a year and a half in Teen Challenge. I was also sentenced to 30 years of probation, but I was able to get off after 10 years because I followed the rules, stayed committed, and completely changed the direction of my life. During the darkest season of my life, while I was in the middle of doing my time, I came across a Bible verse that hit me like a ton of bricks.",
+      "Galatians 6:9 says, “Let us not become weary in doing good, for at the proper time we will reap a harvest if we do not give up.”",
+      "That verse became my anchor. It gave me hope that my life wasn’t over and reminded me that no matter how difficult the road became, I couldn’t give up. I still carry that verse with me every single day because it represents everything my life has become. Keep doing the right things, keep planting the right seeds, and trust that eventually the harvest will come.",
+      "While I was incarcerated, I reconnected with my high school sweetheart. She started visiting me in jail at a time when most people would have walked away. She believed in me before I had anything to show for myself and saw something in me that I was only beginning to see in myself. On July 16, 2011, I walked out of jail with one garbage bag full of clothes and a dream. I didn’t have money, a perfect plan, or many opportunities, but I had a burning desire to build a different life.",
+      "From that moment forward, I went on a heat-seeking mission to become the best version of myself. Shortly after getting out, I met a very successful Christian businessman who introduced me to the network marketing industry and eventually became my mentor. He taught me to get a crystal-clear picture of what I wanted my life to look like and then reverse engineer it. He showed me that success wasn’t about one big break. It was about simple daily disciplines compounded over time.",
+      "I put the blinders on, cut the distractions and wrong influences out of my life, changed my environment, and locked in for a season. The same energy that once got me in trouble became the energy I used to build. The ability to think differently became an advantage. The people skills I had developed from always having friends became one of my greatest strengths. Over time, the qualities that made me feel out of place in school became the exact qualities that helped me succeed in business and leadership.",
+      "Years later, I’ve had the opportunity to build sales teams all over the world and speak on stages in Croatia, Hungary, Qatar, Egypt, Slovakia, Sweden, Germany, Italy, and France. I’ve been able to teach and inspire others by sharing the same mindset, disciplines, and principles that helped me completely change my own life.",
       "Today, I’m married to that same high school sweetheart who visited me while I was in jail. We have two incredible children, we built our dream lake home in Minnesota, and we spend our winters down south. We homeschool our kids, have the time freedom to enjoy our lives together, and get to focus on making an impact in the lives of other people.",
       "Years ago, I heard Zig Ziglar say, “You can have everything in life you want if you will just help enough other people get what they want.” That quote has stayed with me because it represents the way I want to live my life.",
       "One Mission, to me, is about helping the next lost person who feels the way I once felt. The person who knows they are capable of more but doesn’t know where to start. The person who is praying for a community, a mentor, an opportunity, or someone to believe in them. It’s for the person who feels like they’ve gone too far or made too many mistakes to turn their life around.",
       "Because that person was me.",
       "One Mission is a reminder that your past does not have to determine your future. Rock bottom does not have to be the end of your story. Sometimes it becomes the foundation God uses to build an entirely new life.",
     ],
+    // The verse he found while doing his time — sits after the paragraph
+    // that quotes it (index 4).
+    highlight: {
+      before: 5,
+      lines: ["GALATIANS 6:9"],
+      caption: "Found in the darkest season. I still carry it every day.",
+    },
   },
 ];
 
