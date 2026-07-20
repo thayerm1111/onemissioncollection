@@ -104,10 +104,14 @@ const FOUNDERS: Founder[] = [
     name: "Joey Wilson",
     role: "Co-Founder",
     photo: "/founders/joey.jpg",
-    pull: "Somebody came back for me. So I go back for others.",
-    placeholder: true,
+    pull: "Rock bottom does not have to be the end of your story.",
     story: [
-      "[PLACEHOLDER — replace with Joey's real story.] I spent years believing I was too far gone to be worth the trip. I had built a version of myself that could function while being completely lost. The turning point wasn't dramatic — it was one person who kept showing up after I gave them every reason not to. This brand is me going back out. Every piece we make is a way of saying: you're not too far out. Somebody is still looking.",
+      "I’ve been able to teach and inspire others by sharing the same mindset, disciplines, and principles that helped me completely change my own life.",
+      "Today, I’m married to that same high school sweetheart who visited me while I was in jail. We have two incredible children, we built our dream lake home in Minnesota, and we spend our winters down south. We homeschool our kids, have the time freedom to enjoy our lives together, and get to focus on making an impact in the lives of other people.",
+      "Years ago, I heard Zig Ziglar say, “You can have everything in life you want if you will just help enough other people get what they want.” That quote has stayed with me because it represents the way I want to live my life.",
+      "One Mission, to me, is about helping the next lost person who feels the way I once felt. The person who knows they are capable of more but doesn’t know where to start. The person who is praying for a community, a mentor, an opportunity, or someone to believe in them. It’s for the person who feels like they’ve gone too far or made too many mistakes to turn their life around.",
+      "Because that person was me.",
+      "One Mission is a reminder that your past does not have to determine your future. Rock bottom does not have to be the end of your story. Sometimes it becomes the foundation God uses to build an entirely new life.",
     ],
   },
 ];
