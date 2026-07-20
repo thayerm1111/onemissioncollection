@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 import { Search, User, ShoppingBag, Menu, X, ChevronDown } from "lucide-react";
 import { Wordmark } from "./Wordmark";
 import { useCart } from "./cart/CartProvider";
@@ -25,8 +26,24 @@ const NAV = [
 export function Header() {
   const [open, setOpen] = useState(false);
   const [shopOpen, setShopOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const pathname = usePathname();
   const cart = useCart();
+
+  // The drawer is portalled to <body>. It has to be: this header uses
+  // backdrop-blur, and a backdrop-filter makes the header the containing block
+  // for any fixed-position descendant — which collapsed the drawer to the
+  // 64px header strip instead of filling the screen. Portalling escapes both
+  // that containing block and the header's z-index stacking context.
+  useEffect(() => setMounted(true), []);
+
+  // Don't let the page scroll behind an open drawer.
+  useEffect(() => {
+    if (!open) return;
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => { document.body.style.overflow = prev; };
+  }, [open]);
 
   // The header used to float transparently over a full-bleed mobile hero. The
   // Founders hero is its own dark section sitting below the header, so the
@@ -122,19 +139,26 @@ export function Header() {
         </div>
       </div>
 
-      {/* Mobile drawer. z-index and background are set inline: the drawer lives
-          inside the fixed header so it inherits that stacking context, and the
-          themed `bg-paper` class was rendering see-through over the hero. */}
-      {open && (
-        <div className="fixed inset-0 sm:hidden" style={{ zIndex: 9999 }}>
+      {/* Mobile drawer — portalled to <body>, see the note by `mounted` above. */}
+      {mounted && open && createPortal(
+        <div
+          className="sm:hidden"
+          style={{ position: "fixed", inset: 0, zIndex: 9999 }}
+        >
           <div
-            className="absolute inset-0"
-            style={{ backgroundColor: "rgba(16,16,16,0.45)" }}
+            style={{ position: "absolute", inset: 0, backgroundColor: "rgba(16,16,16,0.45)" }}
             onClick={() => setOpen(false)}
           />
           <div
-            className="absolute left-0 top-0 h-full w-4/5 max-w-xs p-6 text-ink shadow-2xl"
-            style={{ backgroundColor: "#ffffff" }}
+            className="w-4/5 max-w-xs p-6 text-ink shadow-2xl"
+            style={{
+              position: "absolute",
+              left: 0,
+              top: 0,
+              height: "100%",
+              backgroundColor: "#ffffff",
+              overflowY: "auto",
+            }}
           >
             <div className="mb-8 flex items-center justify-between">
               <span className="label text-mute">Menu</span>
@@ -177,7 +201,8 @@ export function Header() {
               ))}
             </nav>
           </div>
-        </div>
+        </div>,
+        document.body,
       )}
     </header>
   );
