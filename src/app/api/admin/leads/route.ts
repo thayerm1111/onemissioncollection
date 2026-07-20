@@ -53,16 +53,21 @@ export async function GET(req: Request) {
     return NextResponse.json({ ok: false, error: "not authorized" }, { status: 403 });
   }
 
-  // Service role bypasses RLS so we can read every row, not just our own.
-  const key = SUPABASE_SERVICE || SUPABASE_ANON;
-  if (!SUPABASE_URL || !key) {
+  if (!SUPABASE_URL || !SUPABASE_ANON) {
     return NextResponse.json({ ok: false, error: "storage not configured" }, { status: 500 });
   }
+
+  // Prefer the service role (bypasses RLS). If it isn't configured, read as the
+  // signed-in owner instead — the "owners can read leads" RLS policy lets their
+  // JWT select every row. Either path works; neither needs a new secret pasted
+  // into Vercel.
+  const apikey = SUPABASE_SERVICE || SUPABASE_ANON;
+  const bearer = SUPABASE_SERVICE || token;
 
   try {
     const res = await fetch(
       `${SUPABASE_URL}/rest/v1/omc_leads?select=*&order=created_at.desc&limit=5000`,
-      { headers: { apikey: key, Authorization: `Bearer ${key}` }, cache: "no-store" },
+      { headers: { apikey, Authorization: `Bearer ${bearer}` }, cache: "no-store" },
     );
     if (!res.ok) {
       return NextResponse.json(
