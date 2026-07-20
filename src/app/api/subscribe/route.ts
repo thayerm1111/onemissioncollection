@@ -68,19 +68,17 @@ async function subscribeKlaviyo(
   if (rest.length) profileAttrs.last_name = rest.join(" ");
   if (e164) profileAttrs.phone_number = e164;
 
-  // Email consent always; SMS only with its own explicit opt-in (TCPA).
-  const subscriptions: Record<string, unknown> = {
-    email: { marketing: { consent: "SUBSCRIBED" } },
-  };
-  if (e164 && smsConsent) {
-    subscriptions.sms = { marketing: { consent: "SUBSCRIBED" } };
-  }
-  profileAttrs.subscriptions = subscriptions;
+  // This endpoint records email opt-in by definition, so consent is not passed
+  // as a field. SMS is a separate legal opt-in (TCPA): we only hand Klaviyo the
+  // phone number when the person explicitly ticked the SMS box, so a number
+  // alone can never be turned into text marketing.
+  if (!smsConsent) delete profileAttrs.phone_number;
 
   const payload = {
     data: {
       type: "subscription",
       attributes: {
+        custom_source: source,
         profile: { data: { type: "profile", attributes: profileAttrs } },
       },
       relationships: { list: { data: { type: "list", id: KLAVIYO_LIST_ID } } },
