@@ -404,11 +404,12 @@ export default function AboutPage() {
               Words are cheap. Here&apos;s the work.
             </h2>
           </div>
-          {/* PLACEHOLDER — replace with real numbers, partners, and outcomes. */}
-          <div className="mt-14 grid gap-10 sm:grid-cols-3">
+          {/* Two columns, not three — the "real partners" panel is out until
+              there are named partners to put in it. Better an honest gap than
+              a claim we can't back. */}
+          <div className="mx-auto mt-14 grid max-w-3xl gap-10 sm:grid-cols-2">
             {[
-              { k: "Every order", v: "Funds the search", d: "A portion of every piece goes directly to outreach for people in crisis. [Replace with your real % and where it goes.]" },
-              { k: "Boots on ground", v: "Real partners", d: "We work alongside people already doing the hard, unglamorous work of finding the one. [Name your partners here.]" },
+              { k: "Every order", v: "Funds the search", d: "Five dollars from every purchase goes to a nonprofit working with people in crisis. Not a percentage of profit — five dollars, off the top, every single order." },
               { k: "The Inner Circle", v: "Nobody walks alone", d: "Being found is the start, not the finish. Our members get teaching, resources, and people who keep showing up." },
             ].map((s) => (
               <div key={s.k} className="text-center">
