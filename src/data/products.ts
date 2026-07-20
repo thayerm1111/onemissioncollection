@@ -1249,6 +1249,14 @@ export const staticCollections: Record<string, ShopCollection> = {
 /* ---------------- FOUNDERS COLLECTION ----------------
    Add the new drop pieces to the catalog and re-skin the two that already
    existed (tee + yoga shorts) with their Founders names and model photos. */
+// Products retired in Shopify (archived) — drop them before anything else so
+// they can't surface in any collection, search result, or pairing.
+const RETIRED_IDS = new Set<string>([
+  "gid://shopify/Product/10410220159255", // old crop tee, replaced by the re-cut Crop Top
+]);
+staticCollections["the-collection"].products =
+  staticCollections["the-collection"].products.filter((p) => !RETIRED_IDS.has(p.id));
+
 staticCollections["the-collection"].products.push(...FOUNDERS_NEW);
 for (const patch of FOUNDERS_OVERRIDES) {
   const target = staticCollections["the-collection"].products.find((p) => p.id === patch.id);

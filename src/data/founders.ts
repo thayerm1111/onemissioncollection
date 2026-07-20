@@ -52,11 +52,10 @@ const YOGA_IMGS = [
 ];
 
 const CROP_IMGS = [
-  img("c72cf32126be4927981e19e360a7e35e", "1784499486"),
-  img("56422955b4e242b3be54183023410948", "1784499486"),
-  img("fb14a0f9cfde4de88d85b6a4799e1872", "1784499486"),
-  img("c52d6d8796d8477c88ee8c83728eea18", "1784499485"),
-  img("0e437808e4cf4468883c6a445c3bee8f", "1784499487"),
+  img("840c6d9fcd7a4b438332a4da72039d55", "1784509146"),
+  img("219d1989ccf740bc883908474ae9ada5", "1784509146"),
+  img("64a93ed56bc048eb8252359bc0399490", "1784509145"),
+  img("18196a0d46c9465fac1e6e956e774a4f", "1784509145"),
 ];
 
 const SIZES = ["S", "M", "L", "XL", "2XL"];
@@ -67,7 +66,7 @@ export const FOUNDERS_SWEATPANTS = "gid://shopify/Product/10426916471063";
 export const FOUNDERS_SHORTS = "gid://shopify/Product/10426914996503";
 export const FOUNDERS_TEE = "gid://shopify/Product/10410648699159";
 export const FOUNDERS_YOGA = "gid://shopify/Product/10419151339799";
-export const FOUNDERS_CROP = "gid://shopify/Product/10410220159255";
+export const FOUNDERS_CROP = "gid://shopify/Product/10426956841239";
 
 export const FOUNDERS_MENS_IDS = [
   FOUNDERS_HOODIE, FOUNDERS_SWEATPANTS, FOUNDERS_SHORTS, FOUNDERS_TEE,
@@ -119,6 +118,23 @@ export const FOUNDERS_NEW: ShopProduct[] = [
       V(["54121870033175","54121870065943","54121870098711","54121870131479","54121870164247"][i], `Black / ${s}`, "$59.99"),
     ),
   },
+  {
+    // Re-cut in Tapstitch as a brand-new product (the previous crop tee was
+    // glitching its mockups and has been archived in Shopify).
+    id: FOUNDERS_CROP,
+    title: "Founders Club Crop Top",
+    handle: "the-founders-crop-top",
+    description:
+      "Snow-washed cropped tee, boxy fit. Black. S–XL. Limited to 500.",
+    imageUrl: CROP_IMGS[0], imageAlt: "Founders Club Crop Top",
+    images: CROP_IMGS,
+    minPrice: "$49.99", currency: "USD", hasOptions: true,
+    badge: "Founders Collection",
+    variants: [
+      ["54122016375063", "Black / S"], ["54122016407831", "Black / M"],
+      ["54122016440599", "Black / L"], ["54122016473367", "Black / XL"],
+    ].map(([id, title]) => V(id, title, "$49.99")),
+  },
 ];
 
 /* ---------- existing catalog products, re-skinned for the drop ---------- */
@@ -138,23 +154,6 @@ export const FOUNDERS_OVERRIDES: Array<Partial<ShopProduct> & { id: string }> = 
       ["53669577163031", "Black / M"], ["53669577195799", "Black / L"],
       ["53669577228567", "Black / XL"], ["53669577261335", "Black / 2XL"],
     ].map(([id, title]) => V(id, title, "$59.99")),
-  },
-  {
-    id: FOUNDERS_CROP,
-    title: "Founders Club Crop Tee",
-    description:
-      "Snow-washed cropped tee, boxy fit. Sky Blue, Pink, Khaki and Black. Limited to 500.",
-    imageUrl: CROP_IMGS[0], imageAlt: "Founders Club Crop Tee",
-    images: CROP_IMGS,
-    // Old per-color swatches pointed at the previous photo shoot — drop them
-    // so the gallery stays consistent with the new set.
-    colorImages: undefined,
-    minPrice: "$49.99",
-    badge: "Founders Collection",
-    variants: [
-      ["53665141031191", "Black / S"], ["53665141063959", "Black / M"],
-      ["53665141096727", "Black / L"], ["53665141129495", "Black / XL"],
-    ].map(([id, title]) => V(id, title, "$49.99")),
   },
   {
     id: FOUNDERS_YOGA,
