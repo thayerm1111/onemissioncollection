@@ -10,6 +10,8 @@
  */
 import type { ShopProduct } from "@/lib/shopify";
 
+// build marker: crop-top-swap
+
 const CDN = "https://cdn.shopify.com/s/files/1/1016/0406/5559/files";
 const img = (file: string, v: string) => `${CDN}/${file}.png?v=${v}`;
 const V = (id: string, title: string, price: string) => ({
