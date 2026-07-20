@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import { X } from "lucide-react";
 
 const SEEN_KEY = "omc:promo:v1";
-const PROMO_CODE = "WELCOME25";
 
 export function PromoPopup() {
   const [open, setOpen] = useState(false);
@@ -12,7 +11,6 @@ export function PromoPopup() {
   const [phone, setPhone] = useState("");
   const [consent, setConsent] = useState(true);
   const [status, setStatus] = useState<"idle" | "sending" | "done" | "error">("idle");
-  const [copied, setCopied] = useState(false);
 
   // Show once per browser, a couple seconds after the first visit.
   useEffect(() => {
@@ -45,14 +43,6 @@ export function PromoPopup() {
     setStatus("done");
   }
 
-  function copyCode() {
-    try {
-      navigator.clipboard.writeText(PROMO_CODE);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1800);
-    } catch {}
-  }
-
   if (!open) return null;
 
   return (
@@ -65,12 +55,13 @@ export function PromoPopup() {
 
         {status !== "done" ? (
           <form onSubmit={submit} className="px-8 py-10 text-center">
-            <p className="label text-mute">One Mission</p>
+            <p className="label text-mute">The Founders Collection</p>
             <h2 className="mt-3 text-3xl font-medium leading-tight tracking-tight text-ink sm:text-4xl">
-              25% off your<br />first order
+              Get in before<br />the drop
             </h2>
             <p className="mt-3 text-sm text-ink/70">
-              Join the list for early access to drops, restocks, and 25% off today.
+              500 of each piece. July 27, 8am CT. Join the list and we&apos;ll tell you
+              the moment it&apos;s live.
             </p>
 
             <div className="mt-6 space-y-3 text-left">
@@ -95,7 +86,7 @@ export function PromoPopup() {
               type="submit" disabled={!email || !consent || status === "sending"}
               className="mt-5 w-full bg-ink px-6 py-4 text-xs uppercase tracking-widest2 text-paper transition-opacity hover:opacity-90 disabled:opacity-40"
             >
-              {status === "sending" ? "One sec…" : "Unlock 25% off"}
+              {status === "sending" ? "One sec…" : "Join the list"}
             </button>
             <button type="button" onClick={dismiss} className="mt-3 text-[11px] uppercase tracking-[0.18em] text-mute hover:text-ink">
               No thanks
@@ -104,17 +95,18 @@ export function PromoPopup() {
         ) : (
           <div className="px-8 py-12 text-center">
             <p className="label text-mute">You&apos;re in</p>
-            <h2 className="mt-3 text-2xl font-medium tracking-tight text-ink sm:text-3xl">Here&apos;s 25% off</h2>
-            <p className="mt-2 text-sm text-ink/70">Use this code at checkout — it&apos;s good for your first order.</p>
-            <button
-              onClick={copyCode}
-              className="mx-auto mt-6 flex items-center justify-center gap-3 border border-ink px-6 py-4 text-lg font-semibold tracking-[0.2em] text-ink hover:bg-ink hover:text-paper"
-            >
-              {PROMO_CODE}
-              <span className="text-[10px] uppercase tracking-[0.18em]">{copied ? "Copied" : "Copy"}</span>
-            </button>
-            <button onClick={dismiss} className="mt-6 block w-full bg-ink px-6 py-4 text-xs uppercase tracking-widest2 text-paper hover:opacity-90">
-              Shop now
+            <h2 className="mt-3 text-2xl font-medium tracking-tight text-ink sm:text-3xl">
+              We&apos;ll come find you
+            </h2>
+            <p className="mt-3 text-sm text-ink/70">
+              You&apos;re on the list for the Founders Collection. We&apos;ll reach out
+              the morning it drops — July 27, 8am CT.
+            </p>
+            <p className="mt-6 text-[11px] uppercase tracking-[0.3em] text-mute">
+              Matthew 18:13
+            </p>
+            <button onClick={dismiss} className="mt-8 block w-full bg-ink px-6 py-4 text-xs uppercase tracking-widest2 text-paper hover:opacity-90">
+              Preview the collection
             </button>
           </div>
         )}
