@@ -8,6 +8,9 @@ import { useCart } from "@/components/cart/CartProvider";
 const INK = "#17140f";
 const MUTE = "#8c857a";
 
+/** Accounts that see the owner tools. Kept in sync with the API route. */
+const OWNERS = ["thayerm1111@gmail.com", "support@onemissioncollection.com"];
+
 const field: React.CSSProperties = {
   width: "100%", padding: "12px 14px", border: "1px solid rgba(0,0,0,.25)",
   background: "#fff", color: INK, fontSize: 14, outline: "none",
@@ -97,6 +100,23 @@ export default function AccountPage() {
         <Link href="/inner-circle" style={{ ...btn, display: "block", textAlign: "center", textDecoration: "none", marginBottom: 12 }}>
           Enter the Inner Circle
         </Link>
+
+        {/* Owner-only shortcut. Hiding this link is presentation, not security —
+            /api/admin/leads re-checks the signed-in email on the server. */}
+        {OWNERS.includes((user.email || "").toLowerCase()) && (
+          <Link
+            href="/admin/leads"
+            style={{
+              display: "block", width: "100%", padding: "12px", marginBottom: 12,
+              textAlign: "center", textDecoration: "none",
+              background: "transparent", color: INK,
+              fontSize: 11, letterSpacing: ".2em", textTransform: "uppercase",
+              border: "1px solid " + INK,
+            }}
+          >
+            The Waitlist
+          </Link>
+        )}
 
         <button onClick={() => signOut()} style={{ width: "100%", padding: "12px", background: "transparent", color: MUTE, fontSize: 11, letterSpacing: ".2em", textTransform: "uppercase", border: "1px solid rgba(0,0,0,.2)", cursor: "pointer" }}>
           Sign Out
