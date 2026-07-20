@@ -13,7 +13,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, ChevronDown } from "lucide-react";
 
 /* ---------- deterministic scatter for the ninety-nine ---------- */
 // Seeded so server and client render identically (no hydration mismatch).
@@ -33,25 +33,171 @@ const NINETY_NINE = Array.from({ length: 99 }, () => ({
   s: 2 + rand() * 3,        // size px
 }));
 
-/* ---------- the founders (REPLACE WITH REAL STORIES) ---------- */
-const FOUNDERS = [
+/* ---------- the founders ---------- */
+type Founder = {
+  name: string;
+  role: string;
+  photo: string;
+  pull: string;
+  /** Long-form story, one string per paragraph. */
+  story: string[];
+  /** Optional pulled-out moment rendered as a callout mid-story. */
+  highlight?: { before: number; lines: string[]; caption?: string };
+  placeholder?: boolean;
+};
+
+const FOUNDERS: Founder[] = [
   {
     name: "Matthew Thayer",
     role: "Co-Founder",
     photo: "/founders/matthew.jpg",
-    pull: "I was the one who wandered off.",
-    story:
-      "[PLACEHOLDER — replace with your real story.] There was a stretch where I had everything that was supposed to add up and none of it did. I kept moving so I wouldn't have to sit still with myself. What found me wasn't a program or a plan — it was somebody who refused to stop looking for me. That's the only reason I'm here. One Mission exists because I know what it costs to be the one nobody came back for, and I know what it's worth when somebody does.",
+    pull: "Somebody came back for me. So I go back for others.",
+    story: [
+      "I grew up learning how to adapt before I ever understood what stability was supposed to feel like.",
+      "My parents separated when I was young, and much of my childhood was shaped by constant change. We moved from place to place, finances were often uncertain, and there were private battles within my family that I was too young to fully understand. I loved my family deeply, but there were seasons when the people around me were fighting struggles of their own, and I did not always know where I fit inside of them.",
+      "I became good at adjusting. I learned how to walk into a new room, study my surroundings, and become whatever I needed to be to survive there. From the outside, that can look like strength. But when you spend enough time adapting to everyone and everything around you, it becomes difficult to know who you are when the room is finally quiet.",
+      "For me, basketball became more than a game. It gave me structure when life felt unpredictable. It gave me discipline, expectations, and a place where effort produced a result. Coaches became mentors. Teammates became family. The court became one of the few places where the noise disappeared and I knew exactly what was being asked of me.",
+      "Basketball carried me through high school and into college. It taught me how to compete, how to work when no one was watching, and how to keep showing up after disappointment. I learned that talent may open a door, but discipline, resilience, and consistency are what allow you to remain there. The game gave me confidence, but more importantly, it gave me a foundation.",
+      "Sports taught me how to compete. Life taught me why I had to.",
+      "When my basketball journey ended, I carried those lessons into business. I wanted to build something meaningful. I wanted to create a life that looked different from the circumstances I came from. At first, success felt like the answer. I thought that if I accomplished enough, earned enough, or impacted enough people, I would finally feel like I had outrun every part of my past.",
+      "Over the years, I had the opportunity to build organizations, develop leaders, educate large communities, and impact people in cities and countries around the world. I watched individuals discover confidence, create opportunities for their families, and become versions of themselves they once believed were impossible.",
+      "Those experiences changed my life. But they also taught me something success alone never could: achievement can give you a platform, but only purpose can tell you what to do with it.",
+      "Behind the accomplishments, I was still carrying the younger version of myself — the child searching for stability, the athlete trying to prove he belonged, and the young man attempting to build a future without fully understanding the pain he had carried into it.",
+      "The real turning point in my life was not one dramatic moment. It was people.",
+      "It was the people who saw something in me before I could see it in myself. The coaches who demanded more from me. The mentors who challenged the way I thought. The friends who stayed. The leaders who gave me an opportunity. The people who continued to show up during seasons when it would have been easier to walk away.",
+      "Somebody came back for me.",
+      "They did not define me by where I had been. They reminded me of who I could still become. Their belief helped me understand that my past was not a life sentence. It could become the foundation of my purpose.",
+      "Years later, that purpose became unmistakably clear.",
+      "One Sunday, while sitting in church, I heard the message of Luke 15 — the story of the shepherd who leaves the ninety-nine to search for the one who has wandered away. I had heard the story before, but that day it felt different. It felt personal. I felt the Lord speaking directly into my life, showing me that everything I had experienced was not only about where I had been, but about who I was now being called to find.",
+      "The one inspired me to leave the ninety-nine and go back for the one.",
+      "Later that same day, something happened that I still struggle to explain without getting goosebumps.",
+      "My name is Matthew. In high school football, I wore number 18. Years later, when I returned to football at the semi-professional level, I wore number 13. Because my football displayed my name and numbers together, it read:",
+      "I had never put it there as a Bible verse. To me, it was simply my name combined with the numbers I had worn. There was no deeper intention behind it.",
+      "Then a friend saw the football and asked me, “What is Matthew 18:13 in the Bible?”",
+      "When we looked it up, the verse carried the same message I had heard in church that morning: the joy of finding the one who had wandered away.",
+      "In that moment, what I had felt in church was confirmed in a way I could never have planned. My name, my numbers, my return to football, the message of Luke 15, and the verse Matthew 18:13 all came together around the same purpose.",
+      "It did not feel like coincidence. It felt like confirmation.",
+      "It felt as though God had been writing the message into my story long before I was able to recognize it. The numbers I had worn, the name I had carried my entire life, and the experiences that once seemed disconnected were pointing toward one mission.",
+      "That purpose is now at the heart of One Mission.",
+      "Matthew 18:13 tells of the joy the shepherd feels when the one who wandered is found. That verse has become deeply personal to me because, in many ways, I was the one.",
+      "I was the one trying to make sense of circumstances I could not control. I was the one searching for belonging in every new place. I was the one using sports, ambition, and achievement to cover questions I did not yet know how to answer. I was the one who looked strong from the outside while still trying to find direction within.",
+      "And I know I am not the only one.",
+      "One Mission was created for the person who feels overlooked in a world that celebrates crowds. It is for the person who has been through more than anyone realizes. The one rebuilding quietly. The one who feels behind, forgotten, or uncertain about what comes next. The one who knows there is something greater inside of them but has not yet found the path toward it.",
+      "This brand is not about pretending the difficult chapters never happened. It is about refusing to let those chapters become the end of the story.",
+      "Every piece we create carries that message. You are not defined by the home you came from, the mistakes you made, the people who left, or the seasons when you lost your way. You are still here. You still have purpose. You are still worth finding.",
+      "As a co-founder, my mission is not simply to build a successful clothing company. It is to build something people can belong to — something that represents faith, resilience, identity, and the courage to keep moving forward. I want someone to put on One Mission and feel like they are wearing more than clothing.",
+      "I want them to feel seen.",
+      "I want the person who feels alone to know there is a community waiting for them. I want the athlete struggling behind the confidence to know that strength includes asking for help. I want the young person growing up in instability to know that where they begin does not determine where they finish. I want the dreamer who has been counted out to know that their life still has meaning.",
+      "And I want the one who wandered away to know that somebody is still looking.",
+      "Everything I have experienced — my childhood, sports, leadership, business, faith, failures, and victories — has brought me back to this mission. Not to stand above anyone, but to reach behind me. Not to build something that only looks successful, but to build something that makes people feel less alone.",
+      "I once believed I was the one who had wandered too far. Then somebody came back for me.",
+      "Now, God has called me to leave the ninety-nine and go back for the one.",
+    ],
+    // The football moment — sits after the "it read:" paragraph (index 18).
+    highlight: {
+      before: 19,
+      lines: ["MATTHEW 18:13"],
+      caption: "My name. My numbers. Written years before I understood it.",
+    },
   },
   {
     name: "Joey Wilson",
     role: "Co-Founder",
     photo: "/founders/joey.jpg",
     pull: "Somebody came back for me. So I go back for others.",
-    story:
+    placeholder: true,
+    story: [
       "[PLACEHOLDER — replace with Joey's real story.] I spent years believing I was too far gone to be worth the trip. I had built a version of myself that could function while being completely lost. The turning point wasn't dramatic — it was one person who kept showing up after I gave them every reason not to. This brand is me going back out. Every piece we make is a way of saying: you're not too far out. Somebody is still looking.",
+    ],
   },
 ];
+
+/**
+ * Founder card. The stories run long, so only the opening paragraphs show
+ * until someone chooses to read the rest — the page stays scannable and the
+ * story stays whole for anyone who wants it.
+ */
+function FounderCard({ f }: { f: Founder }) {
+  const [open, setOpen] = useState(false);
+  const PREVIEW = 2;
+  const hasMore = f.story.length > PREVIEW;
+  const shown = open ? f.story : f.story.slice(0, PREVIEW);
+
+  return (
+    <article className="flex flex-col">
+      <div className="mb-7 aspect-[4/5] w-full overflow-hidden bg-ink/5">
+        {f.photo ? (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img src={f.photo} alt={f.name} className="h-full w-full object-cover" />
+        ) : (
+          <div className="flex h-full w-full items-center justify-center">
+            <span className="text-[10px] uppercase tracking-[0.3em] text-mute">Portrait</span>
+          </div>
+        )}
+      </div>
+
+      <blockquote className="text-xl leading-snug text-ink sm:text-2xl">
+        &ldquo;{f.pull}&rdquo;
+      </blockquote>
+
+      <div className="mt-6 space-y-4">
+        {shown.map((para, i) => (
+          <div key={i}>
+            <p className="text-[15px] leading-[1.85] text-ink/75">{para}</p>
+
+            {/* the football moment */}
+            {f.highlight && open && i === f.highlight.before - 1 && (
+              <div className="my-8 border-y border-line py-8 text-center">
+                {f.highlight.lines.map((l) => (
+                  <div
+                    key={l}
+                    className="text-2xl text-ink sm:text-3xl"
+                    style={{ letterSpacing: "0.16em" }}
+                  >
+                    {l}
+                  </div>
+                ))}
+                {f.highlight.caption && (
+                  <p className="mx-auto mt-4 max-w-xs text-[12px] leading-relaxed text-mute">
+                    {f.highlight.caption}
+                  </p>
+                )}
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
+
+      {/* fade + toggle */}
+      {hasMore && (
+        <>
+          {!open && (
+            <div
+              aria-hidden
+              className="-mt-10 h-10"
+              style={{ background: "linear-gradient(to bottom, transparent, #f4f4f2)" }}
+            />
+          )}
+          <button
+            onClick={() => setOpen((v) => !v)}
+            aria-expanded={open}
+            className="mt-5 flex items-center gap-2 self-start text-[11px] uppercase tracking-widest2 text-ink transition-opacity hover:opacity-60"
+          >
+            {open ? "Close" : `Read ${f.name.split(" ")[0]}'s full story`}
+            <ChevronDown
+              className={`h-3.5 w-3.5 transition-transform ${open ? "rotate-180" : ""}`}
+            />
+          </button>
+        </>
+      )}
+
+      <div className="mt-7 border-t border-line pt-4">
+        <p className="text-[13px] uppercase tracking-wider2 text-ink">{f.name}</p>
+        <p className="mt-1 text-[11px] uppercase tracking-widest2 text-mute">{f.role}</p>
+      </div>
+    </article>
+  );
+}
 
 export default function AboutPage() {
   const heroRef = useRef<HTMLDivElement>(null);
@@ -201,28 +347,7 @@ export default function AboutPage() {
 
           <div className="mt-16 grid gap-14 md:grid-cols-2 md:gap-10">
             {FOUNDERS.map((f) => (
-              <article key={f.name} className="flex flex-col">
-                <div className="mb-7 aspect-[4/5] w-full overflow-hidden bg-ink/5">
-                  {f.photo ? (
-                    // eslint-disable-next-line @next/next/no-img-element
-                    <img src={f.photo} alt={f.name} className="h-full w-full object-cover" />
-                  ) : (
-                    <div className="flex h-full w-full items-center justify-center">
-                      <span className="text-[10px] uppercase tracking-[0.3em] text-mute">
-                        Portrait
-                      </span>
-                    </div>
-                  )}
-                </div>
-                <blockquote className="text-xl leading-snug text-ink sm:text-2xl">
-                  &ldquo;{f.pull}&rdquo;
-                </blockquote>
-                <p className="mt-6 text-[15px] leading-[1.85] text-ink/75">{f.story}</p>
-                <div className="mt-7 border-t border-line pt-4">
-                  <p className="text-[13px] uppercase tracking-wider2 text-ink">{f.name}</p>
-                  <p className="mt-1 text-[11px] uppercase tracking-widest2 text-mute">{f.role}</p>
-                </div>
-              </article>
+              <FounderCard key={f.name} f={f} />
             ))}
           </div>
         </div>
