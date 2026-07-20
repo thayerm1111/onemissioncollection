@@ -81,12 +81,12 @@ export async function POST(req: Request) {
 
   if (debug) {
     return NextResponse.json({
-      ok: true, code: "WELCOME25", via,
+      ok: true, via,
       hasSupabaseUrl: Boolean(SUPABASE_URL),
       hasSupabaseKey: Boolean(SUPABASE_KEY),
       hasAdminToken: Boolean(ADMIN_TOKEN),
       result,
     });
   }
-  return NextResponse.json({ ok: true, code: "WELCOME25" });
+  return NextResponse.json({ ok: true });
 }
