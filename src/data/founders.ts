@@ -69,14 +69,19 @@ const ATHSHORTS_IMGS = [
   img("5e506ddf24d94a41a06cda6f8fbd0ed2", "1784664486"),
   img("ae96ca0d46b64a218e8922d601003d68", "1784664485"),
 ];
+// Grouped by colorway so the PDP color swap works: Black block first (it's the
+// default), then Light Gray. Each block leads with its "front" shot — the
+// gallery pairs a color's front image with the one immediately after it.
+const TANK_BLACK = img("5bda111e3737437ab238d8d9c2bf7744", "1784664517");     // model, front
+const TANK_GRAY = img("60165aae6b144d23b71db43d4865e0ff", "1784664517");      // model, front
 const TANK_IMGS = [
-  img("5bda111e3737437ab238d8d9c2bf7744", "1784664517"),
-  img("8e87b3b7888a4752b6b9767d7b818351", "1784664516"),
-  img("60165aae6b144d23b71db43d4865e0ff", "1784664517"),
-  img("1d73c57422534c4087136bc530473ed6", "1784664516"),
-  img("99f71fa5bdbf4c34a33107d26b2405f4", "1784664516"),
-  img("104ce92f580f4ac4b3e6ac7b3e05dc63", "1784664516"),
-  img("ceefd87ec02e48ea8b7a2e4073e5ff47", "1784664517"),
+  TANK_BLACK,                                                // black — model front
+  img("8e87b3b7888a4752b6b9767d7b818351", "1784664516"),     // black — model back
+  img("104ce92f580f4ac4b3e6ac7b3e05dc63", "1784664516"),     // black — flat front
+  img("99f71fa5bdbf4c34a33107d26b2405f4", "1784664516"),     // black — flat back
+  TANK_GRAY,                                                 // gray — model front
+  img("ceefd87ec02e48ea8b7a2e4073e5ff47", "1784664517"),     // gray — flat front
+  img("1d73c57422534c4087136bc530473ed6", "1784664516"),     // gray — flat back
 ];
 const SPORTCROP_IMGS = [
   img("caca9e8394504865a1217595fa4da476", "1784659357"),
@@ -235,7 +240,8 @@ export const FOUNDERS_OVERRIDES: Array<Partial<ShopProduct> & { id: string }> = 
       "Snow-washed, frayed-hem tank. Heavyweight 8.1 oz cotton. Black or Light Gray. M–2XL. Limited to 500.",
     imageUrl: TANK_IMGS[0], imageAlt: "Founders Club Washed Tank",
     images: TANK_IMGS,
-    colorImages: undefined,
+    // Click a color, the main photo swaps to that colorway.
+    colorImages: { "Black": TANK_BLACK, "Light Gray": TANK_GRAY },
     minPrice: "$49.99",
     badge: "Founders Collection",
     // Black listed first so it's the default colorway, matching the lead shot.
