@@ -1092,6 +1092,23 @@ export const staticCollections: Record<string, ShopCollection> = {
         ],
       },
       {
+        id: "gid://shopify/Product/10426942062871",
+        title: "Founders Club Cap",
+        handle: "one-mission-dad-hat-embroidered-one-mission-vintage-circle-baseball-cap",
+        description: "Bio-washed chino twill dad hat with the embroidered One Mission Founders Club circle. Low-profile, unstructured six-panel build with a self-fabric buckle. White or Charcoal, one size.",
+        imageUrl: "https://cdn.shopify.com/s/files/1/1016/0406/5559/files/12356904750907943167_2048.jpg?v=1784499912",
+        imageAlt: "Founders Club Cap",
+        images: [
+          "https://cdn.shopify.com/s/files/1/1016/0406/5559/files/12356904750907943167_2048.jpg?v=1784499912",
+          "https://cdn.shopify.com/s/files/1/1016/0406/5559/files/151736340212927190_2048.jpg?v=1784499913",
+        ],
+        minPrice: "$45.00", currency: "USD", hasOptions: true,
+        variants: [
+          V("gid://shopify/ProductVariant/54121972793623", "White / One size", "$45.00"),
+          V("gid://shopify/ProductVariant/54121972826391", "Charcoal / One size", "$45.00"),
+        ],
+      },
+      {
         id: "gid://shopify/Product/10410220912919",
         title: "One Mission Tough Phone Case",
         handle: "tough-phone-case-minimal-botanical-om-monogram-protective-cover",
