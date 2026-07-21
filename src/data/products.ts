@@ -1387,7 +1387,9 @@ export function womenDropProducts(): ShopProduct[] {
 }
 
 // Accessories — none in the Founders Collection drop.
-export const ACCESSORY_DROP_IDS: string[] = [];
+export const ACCESSORY_DROP_IDS: string[] = [
+  "gid://shopify/Product/10426942062871", // Founders Club Cap
+];
 export function accessoryDropProducts(): ShopProduct[] {
   return ACCESSORY_DROP_IDS
     .map((id) => products.find((p) => p.id === id))
@@ -1397,7 +1399,7 @@ export function accessoryDropProducts(): ShopProduct[] {
 // The curated "Featured" landing selection (home page) — a hand-picked showcase,
 // not the whole catalog. The full catalog stays browsable via Men / Women /
 // Accessories.
-const FEATURED_IDS = FOUNDERS_ALL_IDS;
+const FEATURED_IDS = [...FOUNDERS_ALL_IDS, "gid://shopify/Product/10426942062871"]; // + Founders Club Cap
 
 // Unisex products that should also appear in the Women's feed (in addition to
 // the Men's feed), e.g. unisex hoodies the shopper wants merchandised on both.
