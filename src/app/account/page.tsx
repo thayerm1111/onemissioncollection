@@ -9,7 +9,7 @@ const INK = "#17140f";
 const MUTE = "#8c857a";
 
 /** Accounts that see the owner tools. Kept in sync with the API route. */
-const OWNERS = ["thayerm1111@gmail.com", "support@onemissioncollection.com"];
+const OWNERS = ["thayerm1111@gmail.com", "support@onemissioncollection.com", "wilson55082@yahoo.com"];
 
 const field: React.CSSProperties = {
   width: "100%", padding: "12px 14px", border: "1px solid rgba(0,0,0,.25)",
