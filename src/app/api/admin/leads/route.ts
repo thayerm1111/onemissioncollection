@@ -17,10 +17,11 @@ const SUPABASE_URL = process.env.SUPABASE_URL;
 const SUPABASE_ANON = process.env.SUPABASE_ANON_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 const SUPABASE_SERVICE = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
-/** Who can read the waitlist. Add Joey's login email here when he has one. */
+/** Who can read the waitlist. */
 const OWNERS = [
   "thayerm1111@gmail.com",
   "support@onemissioncollection.com",
+  "wilson55082@yahoo.com", // Joey Wilson, co-founder
 ];
 
 async function verifiedEmail(token: string): Promise<string | null> {
