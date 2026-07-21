@@ -82,6 +82,14 @@ const SPORTCROP_IMGS = [
   img("caca9e8394504865a1217595fa4da476", "1784659357"),
   img("54452895606d4f268ef58d57dd8b36ba", "1784659356"),
 ];
+const LEGGINGS_IMGS = [
+  img("4f6b1f07635842699bb09c38b6389c72", "1784666527"),
+  img("15d9e842daee4c02997c00e050bb80f8", "1784666527"),
+  img("ab7af5f440bb40289e0a416ad9c51f63", "1784666527"),
+  img("66573ae81ddd4b6d98170e572c32568b", "1784666526"),
+  img("69e6ddf8890e4d8ea5b6e2f8508c9b5f", "1784666527"),
+  img("6b62147832e247f9b6704aa9deba4911", "1784666526"),
+];
 
 const SIZES = ["S", "M", "L", "XL", "2XL"];
 
@@ -95,12 +103,15 @@ export const FOUNDERS_CROP = "gid://shopify/Product/10426956841239";
 export const FOUNDERS_ATHSHORTS = "gid://shopify/Product/10410155868439";
 export const FOUNDERS_TANK = "gid://shopify/Product/10410362568983";
 export const FOUNDERS_SPORTCROP = "gid://shopify/Product/10410180837655";
+export const FOUNDERS_LEGGINGS = "gid://shopify/Product/10419153633559";
 
 export const FOUNDERS_MENS_IDS = [
   FOUNDERS_HOODIE, FOUNDERS_SWEATPANTS, FOUNDERS_SHORTS, FOUNDERS_TEE,
   FOUNDERS_ATHSHORTS, FOUNDERS_TANK,
 ];
-export const FOUNDERS_WOMENS_IDS = [FOUNDERS_CROP, FOUNDERS_SPORTCROP, FOUNDERS_YOGA];
+export const FOUNDERS_WOMENS_IDS = [
+  FOUNDERS_CROP, FOUNDERS_SPORTCROP, FOUNDERS_YOGA, FOUNDERS_LEGGINGS,
+];
 export const FOUNDERS_ALL_IDS = [...FOUNDERS_MENS_IDS, ...FOUNDERS_WOMENS_IDS];
 
 /* ---------- new products (not previously in the catalog) ---------- */
@@ -249,5 +260,21 @@ export const FOUNDERS_OVERRIDES: Array<Partial<ShopProduct> & { id: string }> = 
       ["53664905363735", "Black / S"], ["53664905396503", "Black / M"],
       ["53664905429271", "Black / L"], ["53664905462039", "Black / XL"],
     ].map(([id, title]) => V(id, title, "$49.99")),
+  },
+  {
+    // Founders leggings — replaces the old 6-color $49.99 leggings entry.
+    id: FOUNDERS_LEGGINGS,
+    title: "Founders Club Yoga Leggings",
+    description:
+      "High-rise, full-length legging. Second-skin nylon/spandex, squat-proof. Black. S–XL. Limited to 500.",
+    imageUrl: LEGGINGS_IMGS[0], imageAlt: "Founders Club Yoga Leggings",
+    images: LEGGINGS_IMGS,
+    colorImages: undefined,
+    minPrice: "$59.99",
+    badge: "Founders Collection",
+    variants: [
+      ["53967601533207", "Black / S"], ["53967601565975", "Black / M"],
+      ["53967601598743", "Black / L"], ["53967601631511", "Black / XL"],
+    ].map(([id, title]) => V(id, title, "$59.99")),
   },
 ];
