@@ -67,7 +67,7 @@ export function CountdownHero() {
         {live ? (
           <>
             <p className="mx-auto mt-7 max-w-md text-[15px] leading-relaxed text-paper/70">
-              3,000 pieces. Once they&apos;re gone, they&apos;re gone.
+              A limited supply. Once it&apos;s gone, it&apos;s gone.
             </p>
             <Link
               href="/featured"
@@ -79,7 +79,7 @@ export function CountdownHero() {
         ) : (
           <>
             <p className="mx-auto mt-7 max-w-md text-[15px] leading-relaxed text-paper/70">
-              Our first release. Limited to 500 of each piece.
+              Our first release. A limited supply.
             </p>
 
             {/* countdown */}

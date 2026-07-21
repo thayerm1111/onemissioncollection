@@ -60,7 +60,7 @@ export function PromoPopup() {
               Get in before<br />the drop
             </h2>
             <p className="mt-3 text-sm text-ink/70">
-              500 of each piece. July 27, 8am CT. Join the list and we&apos;ll tell you
+              A limited first release. July 27, 8am CT. Join the list and we&apos;ll tell you
               the moment it&apos;s live.
             </p>
 

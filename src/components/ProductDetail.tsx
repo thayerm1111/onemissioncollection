@@ -274,7 +274,7 @@ function SingleProductDetail({ product, pairs = [] }: { product: ShopProduct; pa
             <div className="mt-4 inline-flex items-center gap-2 border border-ink px-3 py-1.5">
               <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-ink" />
               <span className="text-[11px] font-semibold uppercase tracking-widest2 text-ink">
-                {isDrop ? "Limited drop — 100 per size · once it’s gone, it’s gone" : "Limited availability — once it’s gone, it’s gone"}
+                {isDrop ? "Limited drop — once it’s gone, it’s gone" : "Limited availability — once it’s gone, it’s gone"}
               </span>
             </div>
           )}
