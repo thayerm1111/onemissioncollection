@@ -60,6 +60,29 @@ const CROP_IMGS = [
   img("18196a0d46c9465fac1e6e956e774a4f", "1784509145"),
 ];
 
+// Second wave — added July 21. Athletic shorts + washed tank (they share the
+// same model shoot) and a women's sport crop.
+const ATHSHORTS_IMGS = [
+  img("e941cdfb49034938b7a22f65a1d1f1d2", "1784664487"),
+  img("14b8235998a3428caea1f1e71a9f4ed0", "1784664487"),
+  img("ea493f51207e4101a6105ec328e945b9", "1784664487"),
+  img("5e506ddf24d94a41a06cda6f8fbd0ed2", "1784664486"),
+  img("ae96ca0d46b64a218e8922d601003d68", "1784664485"),
+];
+const TANK_IMGS = [
+  img("5bda111e3737437ab238d8d9c2bf7744", "1784664517"),
+  img("8e87b3b7888a4752b6b9767d7b818351", "1784664516"),
+  img("60165aae6b144d23b71db43d4865e0ff", "1784664517"),
+  img("1d73c57422534c4087136bc530473ed6", "1784664516"),
+  img("99f71fa5bdbf4c34a33107d26b2405f4", "1784664516"),
+  img("104ce92f580f4ac4b3e6ac7b3e05dc63", "1784664516"),
+  img("ceefd87ec02e48ea8b7a2e4073e5ff47", "1784664517"),
+];
+const SPORTCROP_IMGS = [
+  img("caca9e8394504865a1217595fa4da476", "1784659357"),
+  img("54452895606d4f268ef58d57dd8b36ba", "1784659356"),
+];
+
 const SIZES = ["S", "M", "L", "XL", "2XL"];
 
 /** Ordered ids — drives the collection layout. */
@@ -69,11 +92,15 @@ export const FOUNDERS_SHORTS = "gid://shopify/Product/10426914996503";
 export const FOUNDERS_TEE = "gid://shopify/Product/10410648699159";
 export const FOUNDERS_YOGA = "gid://shopify/Product/10419151339799";
 export const FOUNDERS_CROP = "gid://shopify/Product/10426956841239";
+export const FOUNDERS_ATHSHORTS = "gid://shopify/Product/10410155868439";
+export const FOUNDERS_TANK = "gid://shopify/Product/10410362568983";
+export const FOUNDERS_SPORTCROP = "gid://shopify/Product/10410180837655";
 
 export const FOUNDERS_MENS_IDS = [
   FOUNDERS_HOODIE, FOUNDERS_SWEATPANTS, FOUNDERS_SHORTS, FOUNDERS_TEE,
+  FOUNDERS_ATHSHORTS, FOUNDERS_TANK,
 ];
-export const FOUNDERS_WOMENS_IDS = [FOUNDERS_CROP, FOUNDERS_YOGA];
+export const FOUNDERS_WOMENS_IDS = [FOUNDERS_CROP, FOUNDERS_SPORTCROP, FOUNDERS_YOGA];
 export const FOUNDERS_ALL_IDS = [...FOUNDERS_MENS_IDS, ...FOUNDERS_WOMENS_IDS];
 
 /* ---------- new products (not previously in the catalog) ---------- */
@@ -135,6 +162,53 @@ export const FOUNDERS_NEW: ShopProduct[] = [
     variants: [
       ["54122016375063", "Black / S"], ["54122016407831", "Black / M"],
       ["54122016440599", "Black / L"], ["54122016473367", "Black / XL"],
+    ].map(([id, title]) => V(id, title, "$49.99")),
+  },
+  {
+    id: FOUNDERS_ATHSHORTS,
+    title: "Founders Club Athletic Shorts",
+    handle: "founders-club-athletic-shorts",
+    description:
+      "Loose-fit performance short, quick-dry poly/elastane. Made for the gym and the run. Black. S–2XL. Limited to 500.",
+    imageUrl: ATHSHORTS_IMGS[0], imageAlt: "Founders Club Athletic Shorts",
+    images: ATHSHORTS_IMGS,
+    minPrice: "$59.99", currency: "USD", hasOptions: true,
+    badge: "Founders Collection",
+    variants: SIZES.map((s, i) =>
+      V(["53664779206935","53664779239703","53664779272471","53664779305239","53664779338007"][i], `Black / ${s}`, "$59.99"),
+    ),
+  },
+  {
+    id: FOUNDERS_TANK,
+    title: "Founders Club Washed Tank",
+    handle: "founders-club-washed-tank",
+    description:
+      "Snow-washed, frayed-hem tank. Heavyweight 8.1 oz cotton. Black or Light Gray. M–2XL. Limited to 500.",
+    imageUrl: TANK_IMGS[0], imageAlt: "Founders Club Washed Tank",
+    images: TANK_IMGS,
+    minPrice: "$49.99", currency: "USD", hasOptions: true,
+    badge: "Founders Collection",
+    // Black listed first so it's the default colorway, matching the lead shot.
+    variants: [
+      ["53666213429527", "Black / M"], ["53666213462295", "Black / L"],
+      ["53666213495063", "Black / XL"], ["53666213527831", "Black / 2XL"],
+      ["53666213298455", "Light Gray / M"], ["53666213331223", "Light Gray / L"],
+      ["53666213363991", "Light Gray / XL"], ["53666213396759", "Light Gray / 2XL"],
+    ].map(([id, title]) => V(id, title, "$49.99")),
+  },
+  {
+    id: FOUNDERS_SPORTCROP,
+    title: "Founders Club Sport Crop",
+    handle: "founders-club-sport-crop",
+    description:
+      "Fitted sport crop, second-skin rayon/spandex. Round neck, cropped. Black. S–XL. Limited to 500.",
+    imageUrl: SPORTCROP_IMGS[0], imageAlt: "Founders Club Sport Crop",
+    images: SPORTCROP_IMGS,
+    minPrice: "$49.99", currency: "USD", hasOptions: true,
+    badge: "Founders Collection",
+    variants: [
+      ["53664905363735", "Black / S"], ["53664905396503", "Black / M"],
+      ["53664905429271", "Black / L"], ["53664905462039", "Black / XL"],
     ].map(([id, title]) => V(id, title, "$49.99")),
   },
 ];
