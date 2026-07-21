@@ -126,7 +126,7 @@ export const FOUNDERS_NEW: ShopProduct[] = [
     title: "Founders Club Hoodie",
     handle: "founders-club-hoodie",
     description:
-      "Vintage washed, frayed heavyweight fleece. 10.6 oz — the anchor piece of the Founders Collection. Limited to 500.",
+      "Vintage washed, frayed heavyweight fleece. 10.6 oz — the anchor piece of the Founders Collection. Limited supply.",
     imageUrl: HOODIE_IMGS[0], imageAlt: "Founders Club Hoodie",
     images: HOODIE_IMGS,
     minPrice: "$99.99", currency: "USD", hasOptions: true,
@@ -140,7 +140,7 @@ export const FOUNDERS_NEW: ShopProduct[] = [
     title: "Founders Club Sweatpants",
     handle: "the-founders-club-sweatpants",
     description:
-      "Straight-leg heavyweight sweatpant, 12.7 oz brushed cotton blend. Built to be lived in. Limited to 500.",
+      "Straight-leg heavyweight sweatpant, 12.7 oz brushed cotton blend. Built to be lived in. Limited supply.",
     imageUrl: SWEATPANT_IMGS[0], imageAlt: "Founders Club Sweatpants",
     images: SWEATPANT_IMGS,
     minPrice: "$79.99", currency: "USD", hasOptions: true,
@@ -154,7 +154,7 @@ export const FOUNDERS_NEW: ShopProduct[] = [
     title: "Founders Club Lounge Shorts",
     handle: "the-founders-club-lounge-shorts",
     description:
-      "Sun-faded, distressed 100% cotton short. Broken-in from day one. Limited to 500.",
+      "Sun-faded, distressed 100% cotton short. Broken-in from day one. Limited supply.",
     imageUrl: SHORTS_IMGS[0], imageAlt: "Founders Club Lounge Shorts",
     images: SHORTS_IMGS,
     minPrice: "$59.99", currency: "USD", hasOptions: true,
@@ -170,7 +170,7 @@ export const FOUNDERS_NEW: ShopProduct[] = [
     title: "Founders Club Crop Top",
     handle: "the-founders-crop-top",
     description:
-      "Snow-washed cropped tee, boxy fit. Black. S–XL. Limited to 500.",
+      "Snow-washed cropped tee, boxy fit. Black. S–XL. Limited supply.",
     imageUrl: CROP_IMGS[0], imageAlt: "Founders Club Crop Top",
     images: CROP_IMGS,
     minPrice: "$49.99", currency: "USD", hasOptions: true,
@@ -188,7 +188,7 @@ export const FOUNDERS_OVERRIDES: Array<Partial<ShopProduct> & { id: string }> = 
     id: FOUNDERS_TEE,
     title: "Founders Club Tee",
     description:
-      "Essential heavyweight cotton tee, 9.7 oz, drop shoulder. Black. XS–2XL. Limited to 500.",
+      "Essential heavyweight cotton tee, 9.7 oz, drop shoulder. Black. XS–2XL. Limited supply.",
     imageUrl: TEE_IMGS[0], imageAlt: "Founders Club Tee",
     images: TEE_IMGS,
     colorImages: undefined,
@@ -204,7 +204,7 @@ export const FOUNDERS_OVERRIDES: Array<Partial<ShopProduct> & { id: string }> = 
     id: FOUNDERS_YOGA,
     title: "Founders Club Yoga Shorts",
     description:
-      "High-rise, second-skin nylon/spandex short. Black. Sizes 4–12. Limited to 500.",
+      "High-rise, second-skin nylon/spandex short. Black. Sizes 4–12. Limited supply.",
     imageUrl: YOGA_IMGS[0], imageAlt: "Founders Club Yoga Shorts",
     images: YOGA_IMGS,
     colorImages: undefined,
@@ -223,7 +223,7 @@ export const FOUNDERS_OVERRIDES: Array<Partial<ShopProduct> & { id: string }> = 
     id: FOUNDERS_ATHSHORTS,
     title: "Founders Club Athletic Shorts",
     description:
-      "Loose-fit performance short, quick-dry poly/elastane. Made for the gym and the run. Black. S–2XL. Limited to 500.",
+      "Loose-fit performance short, quick-dry poly/elastane. Made for the gym and the run. Black. S–2XL. Limited supply.",
     imageUrl: ATHSHORTS_IMGS[0], imageAlt: "Founders Club Athletic Shorts",
     images: ATHSHORTS_IMGS,
     colorImages: undefined,
@@ -237,7 +237,7 @@ export const FOUNDERS_OVERRIDES: Array<Partial<ShopProduct> & { id: string }> = 
     id: FOUNDERS_TANK,
     title: "Founders Club Washed Tank",
     description:
-      "Snow-washed, frayed-hem tank. Heavyweight 8.1 oz cotton. Black or Light Gray. M–2XL. Limited to 500.",
+      "Snow-washed, frayed-hem tank. Heavyweight 8.1 oz cotton. Black or Light Gray. M–2XL. Limited supply.",
     imageUrl: TANK_IMGS[0], imageAlt: "Founders Club Washed Tank",
     images: TANK_IMGS,
     // Click a color, the main photo swaps to that colorway.
@@ -256,7 +256,7 @@ export const FOUNDERS_OVERRIDES: Array<Partial<ShopProduct> & { id: string }> = 
     id: FOUNDERS_SPORTCROP,
     title: "Founders Club Sport Crop",
     description:
-      "Fitted sport crop, second-skin rayon/spandex. Round neck, cropped. Black. S–XL. Limited to 500.",
+      "Fitted sport crop, second-skin rayon/spandex. Round neck, cropped. Black. S–XL. Limited supply.",
     imageUrl: SPORTCROP_IMGS[0], imageAlt: "Founders Club Sport Crop",
     images: SPORTCROP_IMGS,
     colorImages: undefined,
@@ -272,7 +272,7 @@ export const FOUNDERS_OVERRIDES: Array<Partial<ShopProduct> & { id: string }> = 
     id: FOUNDERS_LEGGINGS,
     title: "Founders Club Yoga Leggings",
     description:
-      "High-rise, full-length legging. Second-skin nylon/spandex, squat-proof. Black. S–XL. Limited to 500.",
+      "High-rise, full-length legging. Second-skin nylon/spandex, squat-proof. Black. S–XL. Limited supply.",
     imageUrl: LEGGINGS_IMGS[0], imageAlt: "Founders Club Yoga Leggings",
     images: LEGGINGS_IMGS,
     colorImages: undefined,
