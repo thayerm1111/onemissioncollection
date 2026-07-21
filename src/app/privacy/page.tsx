@@ -13,7 +13,7 @@ export default function PrivacyPage() {
     <LegalPage
       eyebrow="Legal"
       title="Privacy Policy"
-      updated="July 20, 2026"
+      updated="July 21, 2026"
       intro="This explains what we collect, why, who we hand it to, and how to make us delete it. We don't sell your personal information."
     >
       <Section n="01" title="What we collect">
@@ -77,6 +77,15 @@ export default function PrivacyPage() {
 
       <Section n="04" title="Text messages">
         <p>
+          If you provide your mobile number and opt in, we send text messages
+          through our messaging provider (Klaviyo). These include{" "}
+          <strong>promotional messages</strong> — product launches, drops,
+          special offers, and cart reminders — and{" "}
+          <strong>transactional messages</strong> such as order and shipping
+          updates. Message frequency varies. Message and data rates may apply.
+          Consent to receive texts is not a condition of any purchase.
+        </p>
+        <p>
           Mobile numbers collected for text marketing get specific protection:{" "}
           <strong>
             we do not sell them, and we do not share them with third parties or
@@ -87,6 +96,11 @@ export default function PrivacyPage() {
         </p>
         <p>
           Reply STOP to any message to stop receiving them, or HELP for help.
+          You can also review our{" "}
+          <Link href="/terms" className="text-ink underline">
+            Terms of Service
+          </Link>
+          .
         </p>
       </Section>
 
