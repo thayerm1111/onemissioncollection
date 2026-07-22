@@ -13,8 +13,7 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { LAUNCH_LABEL, isPreLaunch, timeLeft } from "@/data/launch";
 
-const HERO_IMG =
-  "https://cdn.shopify.com/s/files/1/1016/0406/5559/files/08ee07ff5cc34c9db2bdbfa390a4ee15.png?v=1784493957";
+const HERO_IMG = "/founders/sweatpants-4.jpg";
 
 function Unit({ value, label }: { value: number; label: string }) {
   return (
