@@ -2,10 +2,13 @@
 
 import { createClient, type SupabaseClient } from "@supabase/supabase-js";
 
-// The project URL is public; the anon key is a public, RLS-protected key that
-// is safe to ship in the browser. Set NEXT_PUBLIC_SUPABASE_ANON_KEY in Vercel.
-const SUPABASE_URL = "https://pguzevnkmpwfuzcjbcbx.supabase.co";
-const ANON_KEY = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || "";
+// One Mission Collection's OWN Supabase project — fully separate from
+// weare1mission (its own auth user pool + emails). Both the URL and the
+// publishable key are public, RLS-protected, and safe to ship in the browser,
+// so they're pinned here (not read from env) to guarantee the store never
+// falls back to the old shared project.
+const SUPABASE_URL = "https://lqhagjirnjzlivdaiwwl.supabase.co";
+const ANON_KEY = "sb_publishable_Y4kFZfS8AkpthfvSQgYx-Q_B0_zj4mO";
 
 let _client: SupabaseClient | null = null;
 
