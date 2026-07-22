@@ -31,7 +31,8 @@ const HOODIE_IMGS = [
 const SWEATPANT_IMGS = [
   img("d1f54a0738334855ae546a1ef42ca7ad", "1784494432"),
   img("a5e83aa8c93d486383f4e63fba039fd4", "1784494431"),
-  img("ea99d2945a7340abbb2b2c69b537f345", "1784494430"),
+  // Removed: ea99d2945a7340abbb2b2c69b537f345 — this file 404s on the Shopify
+  // CDN (broken flat shot). Re-add once a working URL exists.
 ];
 const SHORTS_IMGS = [
   img("27b5146931d345d79e995588ec7feb4c", "1784493712"),
