@@ -122,9 +122,12 @@ export const FOUNDERS_TANK = "gid://shopify/Product/10410362568983";
 export const FOUNDERS_SPORTCROP = "gid://shopify/Product/10410180837655";
 export const FOUNDERS_LEGGINGS = "gid://shopify/Product/10419153633559";
 
+// Interleave so the near-identical "full set" shots (hoodie / sweatpants /
+// lounge shorts) aren't stacked together — the athletic shorts + tee + tank
+// break up the repetition, and the athletic-shorts shot leads row one.
 export const FOUNDERS_MENS_IDS = [
-  FOUNDERS_HOODIE, FOUNDERS_SWEATPANTS, FOUNDERS_SHORTS, FOUNDERS_TEE,
-  FOUNDERS_ATHSHORTS, FOUNDERS_TANK,
+  FOUNDERS_HOODIE, FOUNDERS_ATHSHORTS, FOUNDERS_TEE,
+  FOUNDERS_SWEATPANTS, FOUNDERS_TANK, FOUNDERS_SHORTS,
 ];
 // Women's cuts of the unisex set — same garments and Shopify variants, shown on
 // a female model only. Synthetic "-w" ids keep the product routes unique while
