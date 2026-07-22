@@ -26,9 +26,9 @@ const btn: React.CSSProperties = {
 };
 
 export default function AccountPage() {
-  const { user, loading, configured, signIn, signUp, signOut } = useAuth();
+  const { user, loading, configured, signIn, signUp, signOut, resetPassword } = useAuth();
   const cart = useCart();
-  const [mode, setMode] = useState<"login" | "signup">("login");
+  const [mode, setMode] = useState<"login" | "signup" | "reset">("login");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
@@ -38,6 +38,16 @@ export default function AccountPage() {
   async function submit(e: React.FormEvent) {
     e.preventDefault();
     setBusy(true); setMsg(null);
+
+    if (mode === "reset") {
+      const res = await resetPassword(email);
+      setBusy(false);
+      setMsg(res.error
+        ? res.error
+        : "If an account exists for that email, we've sent a link to reset your password. Check your inbox (and spam).");
+      return;
+    }
+
     const res = mode === "login"
       ? await signIn(email, password)
       : await signUp(email, password, name);
@@ -130,8 +140,13 @@ export default function AccountPage() {
       <div style={{ textAlign: "center", marginBottom: 32 }}>
         <div style={{ fontSize: 11, letterSpacing: ".3em", textTransform: "uppercase", color: MUTE }}>One Mission Collection</div>
         <h1 style={{ marginTop: 12, fontSize: "clamp(24px,3vw,34px)", letterSpacing: ".12em", textTransform: "uppercase", fontWeight: 400 }}>
-          {mode === "login" ? "Sign In" : "Create Account"}
+          {mode === "login" ? "Sign In" : mode === "signup" ? "Create Account" : "Reset Password"}
         </h1>
+        {mode === "reset" && (
+          <p style={{ marginTop: 12, color: MUTE, fontSize: 13, lineHeight: 1.6 }}>
+            Enter your email and we&apos;ll send you a link to set a new password.
+          </p>
+        )}
       </div>
 
       <form onSubmit={submit} style={{ display: "flex", flexDirection: "column", gap: 16 }}>
@@ -145,18 +160,29 @@ export default function AccountPage() {
           <label style={label}>Email</label>
           <input style={field} type="email" required value={email} onChange={(e) => setEmail(e.target.value)} autoComplete="email" />
         </div>
-        <div>
-          <label style={label}>Password</label>
-          <input style={field} type="password" required minLength={6} value={password} onChange={(e) => setPassword(e.target.value)} autoComplete={mode === "login" ? "current-password" : "new-password"} />
-        </div>
+        {mode !== "reset" && (
+          <div>
+            <label style={label}>Password</label>
+            <input style={field} type="password" required minLength={6} value={password} onChange={(e) => setPassword(e.target.value)} autoComplete={mode === "login" ? "current-password" : "new-password"} />
+            {mode === "login" && (
+              <button
+                type="button"
+                onClick={() => { setMode("reset"); setMsg(null); }}
+                style={{ marginTop: 8, background: "none", border: "none", padding: 0, cursor: "pointer", color: MUTE, fontSize: 12, letterSpacing: ".04em" }}
+              >
+                Forgot password?
+              </button>
+            )}
+          </div>
+        )}
         {msg && <p style={{ fontSize: 13, color: INK, background: "#efece4", padding: "10px 12px" }}>{msg}</p>}
         <button type="submit" disabled={busy} style={{ ...btn, opacity: busy ? 0.6 : 1 }}>
-          {busy ? "…" : mode === "login" ? "Sign In" : "Create Account"}
+          {busy ? "…" : mode === "login" ? "Sign In" : mode === "signup" ? "Create Account" : "Send Reset Link"}
         </button>
       </form>
 
       <p style={{ marginTop: 22, textAlign: "center", fontSize: 13, color: MUTE }}>
-        {mode === "login" ? "New here?" : "Already a member?"}{" "}
+        {mode === "login" ? "New here?" : mode === "signup" ? "Already a member?" : "Remembered it?"}{" "}
         <button
           onClick={() => { setMode(mode === "login" ? "signup" : "login"); setMsg(null); }}
           style={{ color: INK, borderBottom: "1px solid " + INK, background: "none", border: "none", borderBottomWidth: 1, cursor: "pointer", padding: 0 }}
