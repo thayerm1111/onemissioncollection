@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Affiliates",
   description:
-    "Join the One Mission Collection affiliate program. Earn 15% on every order you refer, and give your audience 10% off.",
+    "Join the One Mission Collection affiliate program. Earn 20% commission on every order you refer through your personal link.",
 };
 
 const REGISTER = "https://af.uppromote.com/k3vbq8-x0/register";
@@ -79,7 +79,7 @@ export default function AffiliatePage() {
               margin: 0,
             }}
           >
-            Earn 15%
+            Earn 20%
             <br />
             On Every Order
           </h1>
@@ -94,9 +94,9 @@ export default function AffiliatePage() {
               color: "#3a352d",
             }}
           >
-            Share the collection with your audience and earn 15% on every sale
-            you refer — plus your followers get 10% off with your code. Free to
-            join, no minimums. Carry the mission and get paid for it.
+            Share the collection with your audience and earn 20% commission on
+            every sale you refer through your personal link. Free to join, no
+            minimums. Carry the mission and get paid for it.
           </p>
           <div
             style={{
@@ -144,17 +144,17 @@ export default function AffiliatePage() {
             {
               n: "01",
               t: "Apply",
-              d: "Sign up in under a minute. Once approved, you'll get your own referral link and personal discount code.",
+              d: "Sign up in under a minute. Once approved, you'll get your own personal referral link.",
             },
             {
               n: "02",
               t: "Share",
-              d: "Post your link or code anywhere — Instagram, TikTok, your group, or one-to-one. Your code gives followers 10% off, and every click is tracked.",
+              d: "Post your link anywhere — Instagram, TikTok, your group, or one-to-one. Every click and order through your link is tracked automatically.",
             },
             {
               n: "03",
-              t: "Earn 15%",
-              d: "Get 15% of every order that comes through you. Track sales and earnings live, with payouts sent regularly.",
+              t: "Earn 20%",
+              d: "Get 20% commission on every order that comes through you. Track sales and earnings live, with payouts sent regularly.",
             },
           ].map((s) => (
             <div key={s.n} style={{ textAlign: "center" }}>
@@ -239,8 +239,8 @@ export default function AffiliatePage() {
             lineHeight: 1.6,
           }}
         >
-          Turn your reach into a partnership. Apply today, give your audience 10%
-          off, and start earning 15%.
+          Turn your reach into a partnership. Apply today, share your link, and
+          start earning 20% commission.
         </p>
         <div style={{ marginTop: 32 }}>
           <a
