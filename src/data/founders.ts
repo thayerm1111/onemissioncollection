@@ -28,11 +28,13 @@ const HOODIE_IMGS = [
   img("2ce80c15271c4c9e8bd0c569db9483db", "1784493957"),
   img("11b70f0ce2fb4ab9bc2b977a2079e35a", "1784493957"),
 ];
+// Sweatpants — reshot set hosted in /public (the earlier Shopify CDN set had a
+// broken photo). Order: full front, back, leg detail, seated.
 const SWEATPANT_IMGS = [
-  img("d1f54a0738334855ae546a1ef42ca7ad", "1784494432"),
-  img("a5e83aa8c93d486383f4e63fba039fd4", "1784494431"),
-  // Removed: ea99d2945a7340abbb2b2c69b537f345 — this file 404s on the Shopify
-  // CDN (broken flat shot). Re-add once a working URL exists.
+  "/founders/sweatpants-1.jpg",
+  "/founders/sweatpants-2.jpg",
+  "/founders/sweatpants-3.jpg",
+  "/founders/sweatpants-4.jpg",
 ];
 const SHORTS_IMGS = [
   img("27b5146931d345d79e995588ec7feb4c", "1784493712"),
@@ -144,6 +146,11 @@ export const FOUNDERS_NEW: ShopProduct[] = [
       "Straight-leg heavyweight sweatpant, 12.7 oz brushed cotton blend. Built to be lived in. Limited supply.",
     imageUrl: SWEATPANT_IMGS[0], imageAlt: "Founders Club Sweatpants",
     images: SWEATPANT_IMGS,
+    // Shot on a dark studio backdrop, so flag as a model lead — that skips the
+    // multiply blend the grid applies to white-sweep flats (which would crush
+    // these to black). `flat` = the cropped leg-detail for the "Style With" tile.
+    model: SWEATPANT_IMGS[0],
+    flat: SWEATPANT_IMGS[2],
     minPrice: "$79.99", currency: "USD", hasOptions: true,
     badge: "Founders Collection",
     variants: SIZES.map((s, i) =>
