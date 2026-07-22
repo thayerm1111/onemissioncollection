@@ -126,7 +126,14 @@ export const FOUNDERS_MENS_IDS = [
   FOUNDERS_HOODIE, FOUNDERS_SWEATPANTS, FOUNDERS_SHORTS, FOUNDERS_TEE,
   FOUNDERS_ATHSHORTS, FOUNDERS_TANK,
 ];
+// Women's cuts of the unisex set — same garments and Shopify variants, shown on
+// a female model only. Synthetic "-w" ids keep the product routes unique while
+// still checking out against the real variants (see FOUNDERS_NEW).
+export const FOUNDERS_HOODIE_W = "gid://shopify/Product/10426914013463-w";
+export const FOUNDERS_SWEATPANTS_W = "gid://shopify/Product/10426916471063-w";
+
 export const FOUNDERS_WOMENS_IDS = [
+  FOUNDERS_HOODIE_W, FOUNDERS_SWEATPANTS_W,
   FOUNDERS_CROP, FOUNDERS_SPORTCROP, FOUNDERS_YOGA, FOUNDERS_LEGGINGS,
 ];
 export const FOUNDERS_ALL_IDS = [...FOUNDERS_MENS_IDS, ...FOUNDERS_WOMENS_IDS];
@@ -199,6 +206,44 @@ export const FOUNDERS_NEW: ShopProduct[] = [
       ["54122016375063", "Black / S"], ["54122016407831", "Black / M"],
       ["54122016440599", "Black / L"], ["54122016473367", "Black / XL"],
     ].map(([id, title]) => V(id, title, "$49.99")),
+  },
+
+  // ---- Women's listings of the unisex hoodie + sweatpants (girl-only photos) ----
+  // Same garments and variant ids as the men's entries, so they check out
+  // against the same Shopify inventory — just merchandised on the female model
+  // for the Women feed.
+  {
+    id: FOUNDERS_HOODIE_W,
+    title: "Founders Club Hoodie",
+    handle: "founders-club-hoodie-women",
+    description:
+      "Vintage washed, frayed heavyweight fleece. 10.6 oz — the anchor piece of the Founders Collection. Limited supply.",
+    imageUrl: "/founders/woman-front.jpg", imageAlt: "Founders Club Hoodie",
+    images: ["/founders/woman-front.jpg", "/founders/woman-back.jpg", "/founders/woman-seated.jpg"],
+    model: "/founders/woman-front.jpg",
+    minPrice: "$99.99", currency: "USD", hasOptions: true,
+    badge: "Founders Collection",
+    gender: "women", type: "Hoodies",
+    variants: SIZES.map((s, i) =>
+      V(["54121865806103","54121865838871","54121865871639","54121865904407","54121865937175"][i], `Black / ${s}`, "$99.99"),
+    ),
+  },
+  {
+    id: FOUNDERS_SWEATPANTS_W,
+    title: "Founders Club Sweatpants",
+    handle: "founders-club-sweatpants-women",
+    description:
+      "Straight-leg heavyweight sweatpant, 12.7 oz brushed cotton blend. Built to be lived in. Limited supply.",
+    imageUrl: "/founders/woman-front.jpg", imageAlt: "Founders Club Sweatpants",
+    images: ["/founders/woman-front.jpg", "/founders/woman-back.jpg", "/founders/woman-pants.jpg", "/founders/woman-seated.jpg"],
+    model: "/founders/woman-front.jpg",
+    flat: "/founders/woman-pants.jpg",
+    minPrice: "$79.99", currency: "USD", hasOptions: true,
+    badge: "Founders Collection",
+    gender: "women", type: "Sweatpants",
+    variants: SIZES.map((s, i) =>
+      V(["54121874882839","54121874915607","54121874948375","54121874981143","54121875013911"][i], `Black / ${s}`, "$79.99"),
+    ),
   },
 ];
 

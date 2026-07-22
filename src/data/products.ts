@@ -1426,7 +1426,10 @@ export function productsFor(cat: "all" | "men" | "women" | "accessories"): ShopP
 
 /** Curated Featured selection shown on the home page. */
 export function featuredProducts(): ShopProduct[] {
-  if (DROP_MODE) return [...dropProducts(), ...womenDropProducts()];
+  // The women's cuts of the hoodie/sweatpants ("-w") are the same garments as
+  // the men's entries, so keep them out of Featured to avoid duplicate tiles —
+  // they still show in the Women feed.
+  if (DROP_MODE) return [...dropProducts(), ...womenDropProducts().filter((p) => !p.id.endsWith("-w"))];
   return FEATURED_IDS
     .map((id) => products.find((p) => p.id === id))
     .filter((p): p is ShopProduct => Boolean(p));
