@@ -218,9 +218,11 @@ export const FOUNDERS_NEW: ShopProduct[] = [
     handle: "founders-club-hoodie-women",
     description:
       "Vintage washed, frayed heavyweight fleece. 10.6 oz — the anchor piece of the Founders Collection. Limited supply.",
-    imageUrl: "/founders/woman-front.jpg", imageAlt: "Founders Club Hoodie",
-    images: ["/founders/woman-front.jpg", "/founders/woman-back.jpg", "/founders/woman-seated.jpg"],
-    model: "/founders/woman-front.jpg",
+    // Lead with the back view (shows the hoodie back print) so the tile reads
+    // distinctly from the sweatpants tile.
+    imageUrl: "/founders/woman-back.jpg", imageAlt: "Founders Club Hoodie",
+    images: ["/founders/woman-back.jpg", "/founders/woman-front.jpg", "/founders/woman-seated.jpg"],
+    model: "/founders/woman-back.jpg",
     minPrice: "$99.99", currency: "USD", hasOptions: true,
     badge: "Founders Collection",
     gender: "women", type: "Hoodies",
@@ -234,11 +236,11 @@ export const FOUNDERS_NEW: ShopProduct[] = [
     handle: "founders-club-sweatpants-women",
     description:
       "Straight-leg heavyweight sweatpant, 12.7 oz brushed cotton blend. Built to be lived in. Limited supply.",
-    // Lead with the pants shot so this tile reads as the sweatpants (distinct
-    // from the hoodie tile, which leads with the full-front look).
-    imageUrl: "/founders/woman-pants.jpg", imageAlt: "Founders Club Sweatpants",
-    images: ["/founders/woman-pants.jpg", "/founders/woman-front.jpg", "/founders/woman-back.jpg", "/founders/woman-seated.jpg"],
-    model: "/founders/woman-pants.jpg",
+    // Lead with the seated shot so this tile reads distinctly from the hoodie
+    // tile (which leads with the back view). `flat` keeps the pants close-up.
+    imageUrl: "/founders/woman-seated.jpg", imageAlt: "Founders Club Sweatpants",
+    images: ["/founders/woman-seated.jpg", "/founders/woman-front.jpg", "/founders/woman-back.jpg", "/founders/woman-pants.jpg"],
+    model: "/founders/woman-seated.jpg",
     flat: "/founders/woman-pants.jpg",
     minPrice: "$79.99", currency: "USD", hasOptions: true,
     badge: "Founders Collection",
