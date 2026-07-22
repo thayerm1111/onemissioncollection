@@ -13,8 +13,9 @@ export const dynamic = "force-dynamic";
 // it with Supabase to get the user's REAL email (never trust an email from the
 // client), then run both checks with that email.
 
-const SUPABASE_URL = process.env.SUPABASE_URL;
-const SUPABASE_ANON = process.env.SUPABASE_ANON_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+// OMC's own Supabase project (public URL + publishable key, pinned).
+const SUPABASE_URL = "https://lqhagjirnjzlivdaiwwl.supabase.co";
+const SUPABASE_ANON = "sb_publishable_Y4kFZfS8AkpthfvSQgYx-Q_B0_zj4mO";
 const SHOP_DOMAIN = process.env.SHOPIFY_STORE_DOMAIN || "1-mission-2.myshopify.com";
 const ADMIN_TOKEN = process.env.SHOPIFY_ADMIN_TOKEN;
 
