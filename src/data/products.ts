@@ -1487,11 +1487,23 @@ const STYLE_COMPLEMENTS: Record<string, string[]> = {
   Other:          ["Hoodies", "T-Shirts", "Shorts", "Hats"],
 };
 
-/** Products shown under "Style With" on a product page — a full outfit. */
+/** Products shown under "Style With" on a product page — a full outfit.
+ *
+ * In drop mode the storefront only shows the live Founders Collection, so the
+ * pairings must draw from that same live set — never future/unreleased catalog
+ * items that aren't shoppable yet. When drop mode is off, fall back to the full
+ * catalog (minus grid-hidden items). */
 export function pairedProducts(product: ShopProduct): ShopProduct[] {
+  const liveSet = DROP_MODE
+    ? new Set<string>([...DROP_IDS, ...WOMEN_DROP_IDS, ...ACCESSORY_DROP_IDS])
+    : null;
+  const isLive = (p: ShopProduct) =>
+    liveSet ? liveSet.has(p.id) : !HIDDEN_FROM_GRID.has(p.id);
+
   const picked: ShopProduct[] = (product.pairsWith ?? [])
     .map((id) => products.find((p) => p.id === id))
-    .filter((p): p is ShopProduct => Boolean(p));
+    .filter((p): p is ShopProduct => Boolean(p))
+    .filter(isLive);
 
   const seen = new Set<string>([product.id, ...picked.map((p) => p.id)]);
   const womens = product.gender === "women";
@@ -1503,7 +1515,7 @@ export function pairedProducts(product: ShopProduct): ShopProduct[] {
         p.type === type &&
         !seen.has(p.id) &&
         !p.bundle &&
-        !HIDDEN_FROM_GRID.has(p.id) &&
+        isLive(p) &&
         (womens ? p.gender === "women" || p.gender === "accessory" : p.gender !== "women"),
     );
     if (match) { picked.push(match); seen.add(match.id); }
