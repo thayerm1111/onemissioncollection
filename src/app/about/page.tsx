@@ -6,9 +6,6 @@
  * This page enacts Matthew 18:13 rather than describing it. The visitor
  * arrives as "the one" — ninety-nine marks scatter as they scroll, one
  * remains, and only then do the founders appear as the two who went looking.
- *
- * PLACEHOLDER CONTENT: the two testimonies in FOUNDERS below are written as
- * stand-ins. Replace `story` (and name/role/photo) with the real words.
  */
 
 import { useEffect, useRef, useState } from "react";
@@ -71,9 +68,9 @@ const FOUNDERS: Founder[] = [
       "One Sunday, while sitting in church, I heard the message of Luke 15 — the story of the shepherd who leaves the ninety-nine to search for the one who has wandered away. I had heard the story before, but that day it felt different. It felt personal. I felt the Lord speaking directly into my life, showing me that everything I had experienced was not only about where I had been, but about who I was now being called to find.",
       "The one inspired me to leave the ninety-nine and go back for the one.",
       "Later that same day, something happened that I still struggle to explain without getting goosebumps.",
-      "My name is Matthew. In high school football, I wore number 18. Years later, when I returned to football at the semi-professional level, I wore number 13. Because my football displayed my name and numbers together, it read:",
+      "My name is Matthew. In high school football, I wore number 18. Years later, when I returned to football at the semi-professional level, I wore number 13. Because my football jersey displayed my name and numbers together, it read:",
       "I had never put it there as a Bible verse. To me, it was simply my name combined with the numbers I had worn. There was no deeper intention behind it.",
-      "Then a friend saw the football and asked me, “What is Matthew 18:13 in the Bible?”",
+      "Then a friend saw the jersey and asked me, “What is Matthew 18:13 in the Bible?”",
       "When we looked it up, the verse carried the same message I had heard in church that morning: the joy of finding the one who had wandered away.",
       "In that moment, what I had felt in church was confirmed in a way I could never have planned. My name, my numbers, my return to football, the message of Luke 15, and the verse Matthew 18:13 all came together around the same purpose.",
       "It did not feel like coincidence. It felt like confirmation.",
