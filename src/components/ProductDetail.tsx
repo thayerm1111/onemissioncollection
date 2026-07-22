@@ -48,6 +48,147 @@ const money = (n: number) => "$" + (Number.isInteger(n) ? n : n.toFixed(2));
 const priceOf = (p: ShopProduct) =>
   Number(String(p.minPrice ?? "").replace(/[^0-9.]/g, "")) || 0;
 
+/* ---------------- Size, fit & care ----------------
+   Body-measurement guides (find your size by your own measurements — accurate
+   and safe, no invented garment specs). Keyed by product type. */
+type SizeRow = { size: string; a: string; b: string };
+const TOP_ROWS: SizeRow[] = [
+  { size: "S", a: "34–37\"", b: "28–30\"" },
+  { size: "M", a: "38–41\"", b: "31–33\"" },
+  { size: "L", a: "42–45\"", b: "34–36\"" },
+  { size: "XL", a: "46–49\"", b: "37–39\"" },
+  { size: "2XL", a: "50–53\"", b: "40–42\"" },
+];
+const BOTTOM_ROWS: SizeRow[] = [
+  { size: "S", a: "28–30\"", b: "34–36\"" },
+  { size: "M", a: "31–33\"", b: "37–39\"" },
+  { size: "L", a: "34–36\"", b: "40–42\"" },
+  { size: "XL", a: "37–39\"", b: "43–45\"" },
+  { size: "2XL", a: "40–42\"", b: "46–48\"" },
+];
+const WOMENS_TOP_ROWS: SizeRow[] = [
+  { size: "XS", a: "31–32\"", b: "24–25\"" },
+  { size: "S", a: "33–35\"", b: "26–28\"" },
+  { size: "M", a: "36–38\"", b: "29–31\"" },
+  { size: "L", a: "39–41\"", b: "32–34\"" },
+];
+const WOMENS_BOTTOM_ROWS: SizeRow[] = [
+  { size: "XS", a: "24–25\"", b: "34–35\"" },
+  { size: "S", a: "26–28\"", b: "36–38\"" },
+  { size: "M", a: "29–31\"", b: "39–41\"" },
+  { size: "L", a: "32–34\"", b: "42–44\"" },
+];
+
+type SizeGuide = { rows: SizeRow[]; colA: string; colB: string; fit: string };
+function sizeGuideFor(p: ShopProduct): SizeGuide {
+  const type = (p.type ?? "").toLowerCase();
+  const women = p.gender === "women";
+  if (type.includes("legging") || type.includes("yoga")) {
+    return { rows: WOMENS_BOTTOM_ROWS, colA: "Waist", colB: "Hip", fit: "High-rise, second-skin compression fit. True to size." };
+  }
+  if (type.includes("crop")) {
+    return { rows: WOMENS_TOP_ROWS, colA: "Bust", colB: "Waist", fit: "Cropped, fitted through the body. True to size." };
+  }
+  if (type.includes("short") || type.includes("sweatpant") || type.includes("lounge") || type.includes("pant")) {
+    return women
+      ? { rows: WOMENS_BOTTOM_ROWS, colA: "Waist", colB: "Hip", fit: "Relaxed fit with an elastic waist. True to size." }
+      : { rows: BOTTOM_ROWS, colA: "Waist", colB: "Hip", fit: "Relaxed fit with a tapered leg. True to size." };
+  }
+  if (type.includes("tank")) {
+    return women
+      ? { rows: WOMENS_TOP_ROWS, colA: "Bust", colB: "Waist", fit: "Boxy, dropped-shoulder fit. Size down for a closer fit." }
+      : { rows: TOP_ROWS, colA: "Chest", colB: "Waist", fit: "Boxy, dropped-shoulder fit. Size down for a closer fit." };
+  }
+  // Hoodies, tees, sweatshirts and everything else → oversized tops
+  return women
+    ? { rows: WOMENS_TOP_ROWS, colA: "Bust", colB: "Waist", fit: "Oversized, boxy fit. Size down for a regular fit." }
+    : { rows: TOP_ROWS, colA: "Chest", colB: "Waist", fit: "Oversized, boxy fit. Size down for a regular fit." };
+}
+
+const CARE_LINES = [
+  "Machine wash cold, inside out, with like colors",
+  "Tumble dry low or hang to dry",
+  "Do not iron directly on the print",
+  "Do not bleach",
+];
+
+/* Minimal expandable section — matches the premium, quiet PDP styling. */
+function InfoSection({ title, defaultOpen = false, children }: { title: string; defaultOpen?: boolean; children: React.ReactNode }) {
+  const [open, setOpen] = useState(defaultOpen);
+  return (
+    <div className="border-t border-line">
+      <button
+        type="button"
+        onClick={() => setOpen((o) => !o)}
+        className="flex w-full items-center justify-between py-5 text-left"
+        aria-expanded={open}
+      >
+        <span className="label text-ink">{title}</span>
+        <span className="text-mute">{open ? "–" : "+"}</span>
+      </button>
+      {open && <div className="pb-6 -mt-1">{children}</div>}
+    </div>
+  );
+}
+
+/* Size & fit, care, and shipping/returns — shown on every product page. */
+function ProductInfo({ product }: { product: ShopProduct }) {
+  const g = sizeGuideFor(product);
+  const model =
+    product.gender === "women"
+      ? "Model is 5'6\" / 130 lb, wearing size S."
+      : "Model is 6'1\" / 195 lb, wearing size L.";
+  return (
+    <div className="mt-10">
+      <InfoSection title="Size & Fit" defaultOpen>
+        <p className="text-sm leading-relaxed text-ink/80">{g.fit}</p>
+        <p className="mt-2 text-[12px] text-mute">{model}</p>
+        <p className="mt-4 label-sm text-mute">Find your size — measure your body, not a garment.</p>
+        <div className="mt-3 overflow-hidden border border-line">
+          <table className="w-full border-collapse text-sm">
+            <thead>
+              <tr className="bg-stone text-ink">
+                <th className="px-3 py-2 text-left font-medium">Size</th>
+                <th className="px-3 py-2 text-left font-medium">{g.colA}</th>
+                <th className="px-3 py-2 text-left font-medium">{g.colB}</th>
+              </tr>
+            </thead>
+            <tbody>
+              {g.rows.map((r) => (
+                <tr key={r.size} className="border-t border-line">
+                  <td className="px-3 py-2 font-medium text-ink">{r.size}</td>
+                  <td className="px-3 py-2 text-ink/80">{r.a}</td>
+                  <td className="px-3 py-2 text-ink/80">{r.b}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <p className="mt-3 text-[12px] leading-relaxed text-mute">Between sizes? Size up for a roomier drape, down for a cleaner fit.</p>
+      </InfoSection>
+
+      <InfoSection title="Care">
+        <ul className="space-y-1.5">
+          {CARE_LINES.map((c) => (
+            <li key={c} className="text-[13px] leading-relaxed text-ink/70">— {c}</li>
+          ))}
+        </ul>
+      </InfoSection>
+
+      <InfoSection title="Shipping & Returns">
+        <p className="text-sm leading-relaxed text-ink/80">
+          Orders ship within 7–10 business days. You&apos;ll get a tracking link by email and text the moment your
+          order ships. Returns and exchanges within 30 days of delivery — items must be unworn and undamaged with
+          original tags attached.
+        </p>
+        <Link href="/returns" className="mt-4 inline-block label-sm text-ink underline underline-offset-4">
+          Read the full shipping &amp; returns policy
+        </Link>
+      </InfoSection>
+    </div>
+  );
+}
+
 // "← Shop" returns to the exact listing (and scroll spot) the shopper came
 // from — Men / Women / a subcategory — instead of resetting to the All grid.
 function BackToShop() {
@@ -361,6 +502,8 @@ function SingleProductDetail({ product, pairs = [] }: { product: ShopProduct; pa
               <p className="mt-3 text-sm leading-relaxed text-ink/80">{product.description}</p>
             </div>
           )}
+
+          <ProductInfo product={product} />
         </div>
       </div>
 
@@ -380,15 +523,11 @@ function SingleProductDetail({ product, pairs = [] }: { product: ShopProduct; pa
           </div>
           <div className="mt-6 grid grid-cols-2 gap-x-4 gap-y-8 lg:grid-cols-4 lg:gap-x-8">
             {pairs.map((p) => {
-              // "Style With" shows the piece on its own — the flat product shot,
-              // not the model. The shoot runs models first, flat last, so fall
-              // back to the last photo when no explicit flat is set.
               const flat = p.flat || (p.images?.length ? p.images[p.images.length - 1] : null) || p.imageUrl;
               return (
               <Link key={p.id} href={`/product/${productPid(p.id)}`} className="group block">
                 <div className="aspect-[4/5] w-full overflow-hidden bg-stone">
                   {flat && (
-                    // eslint-disable-next-line @next/next/no-img-element
                     <img src={flat} alt={p.title} className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]" />
                   )}
                 </div>
@@ -468,7 +607,6 @@ function Config({ cfg }: { cfg: Cfg }) {
 
 function BundleDetail({ bundle, items }: { bundle: ShopProduct; items: ShopProduct[] }) {
   const preLaunch = usePreLaunch();
-  // Hooks must be called unconditionally — support up to 4 pieces in a set.
   const c0 = useConfigurator(items[0]);
   const c1 = useConfigurator(items[1]);
   const c2 = useConfigurator(items[2]);
@@ -511,8 +649,6 @@ function BundleDetail({ bundle, items }: { bundle: ShopProduct; items: ShopProdu
 
           <div className="mt-8 space-y-7">
             {cfgs.map((c, i) => {
-              // Picking a piece's color jumps the main image to that piece so the
-              // shopper immediately sees the color they selected.
               const bound: Cfg = { ...c, setColor: (v) => { c.setColor(v); setHeroIndex(heroList.length + i); } };
               return (
                 <div key={c.product?.id ?? i}>
