@@ -12,6 +12,8 @@ type AuthCtx = {
   signUp: (email: string, password: string, name?: string) => Promise<{ error?: string; needsConfirm?: boolean }>;
   signIn: (email: string, password: string) => Promise<{ error?: string }>;
   signOut: () => Promise<void>;
+  resetPassword: (email: string) => Promise<{ error?: string }>;
+  updatePassword: (password: string) => Promise<{ error?: string }>;
 };
 
 const Ctx = createContext<AuthCtx | null>(null);
@@ -62,6 +64,22 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     async signOut() {
       const sb = getSupabase();
       await sb?.auth.signOut();
+    },
+    async resetPassword(email) {
+      const sb = getSupabase();
+      if (!sb) return { error: "Accounts aren't set up yet." };
+      const redirectTo =
+        typeof window !== "undefined"
+          ? `${window.location.origin}/reset-password`
+          : undefined;
+      const { error } = await sb.auth.resetPasswordForEmail(email, { redirectTo });
+      return error ? { error: error.message } : {};
+    },
+    async updatePassword(password) {
+      const sb = getSupabase();
+      if (!sb) return { error: "Accounts aren't set up yet." };
+      const { error } = await sb.auth.updateUser({ password });
+      return error ? { error: error.message } : {};
     },
   }), [session, loading, configured]);
 
