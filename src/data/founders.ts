@@ -27,6 +27,10 @@ const HOODIE_IMGS = [
   img("8e125bae4e674ee98f69965d3b58a67f", "1784493957"),
   img("2ce80c15271c4c9e8bd0c569db9483db", "1784493957"),
   img("11b70f0ce2fb4ab9bc2b977a2079e35a", "1784493957"),
+  // Female model wearing the set (hosted in /public).
+  "/founders/woman-front.jpg",
+  "/founders/woman-back.jpg",
+  "/founders/woman-seated.jpg",
 ];
 // Sweatpants — reshot set hosted in /public (the earlier Shopify CDN set had a
 // broken photo). Order: full front, back, leg detail, seated.
@@ -35,6 +39,11 @@ const SWEATPANT_IMGS = [
   "/founders/sweatpants-2.jpg",
   "/founders/sweatpants-3.jpg",
   "/founders/sweatpants-4.jpg",
+  // Female model wearing the set.
+  "/founders/woman-front.jpg",
+  "/founders/woman-back.jpg",
+  "/founders/woman-pants.jpg",
+  "/founders/woman-seated.jpg",
 ];
 const SHORTS_IMGS = [
   img("27b5146931d345d79e995588ec7feb4c", "1784493712"),
@@ -132,6 +141,9 @@ export const FOUNDERS_NEW: ShopProduct[] = [
       "Vintage washed, frayed heavyweight fleece. 10.6 oz — the anchor piece of the Founders Collection. Limited supply.",
     imageUrl: HOODIE_IMGS[0], imageAlt: "Founders Club Hoodie",
     images: HOODIE_IMGS,
+    // Flagged as a model lead so the grid skips the multiply blend — the
+    // appended female shots are on a dark backdrop and would crush to black.
+    model: HOODIE_IMGS[0],
     minPrice: "$99.99", currency: "USD", hasOptions: true,
     badge: "Founders Collection",
     variants: SIZES.map((s, i) =>
