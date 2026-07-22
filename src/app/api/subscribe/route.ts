@@ -6,8 +6,12 @@ export const dynamic = "force-dynamic";
 // Marketing opt-in from the promo popup (email + phone + consent).
 const SHOP_DOMAIN = process.env.SHOPIFY_STORE_DOMAIN || "1-mission-2.myshopify.com";
 const ADMIN_TOKEN = process.env.SHOPIFY_ADMIN_TOKEN;
-const SUPABASE_URL = process.env.SUPABASE_URL;
-const SUPABASE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABASE_ANON_KEY;
+// One Mission Collection's own Supabase project (separate from weare1mission).
+// URL + publishable key are public and pinned so the waitlist insert lands in
+// the OMC project regardless of any stale env pointing at the old shared one.
+// Row-level security allows the publishable key to insert leads.
+const SUPABASE_URL = "https://lqhagjirnjzlivdaiwwl.supabase.co";
+const SUPABASE_KEY = "sb_publishable_Y4kFZfS8AkpthfvSQgYx-Q_B0_zj4mO";
 
 async function createShopifyCustomer(email: string, phone: string, name = "", source = "popup") {
   const mutation = `mutation($input: CustomerInput!){ customerCreate(input:$input){ customer{ id } userErrors{ message } } }`;
