@@ -105,9 +105,9 @@ export function PromoPopup() {
             <p className="mt-6 text-[11px] uppercase tracking-[0.3em] text-mute">
               Matthew 18:13
             </p>
-            <button onClick={dismiss} className="mt-8 block w-full bg-ink px-6 py-4 text-xs uppercase tracking-widest2 text-paper hover:opacity-90">
+            <a href="/featured" onClick={dismiss} className="mt-8 block w-full bg-ink px-6 py-4 text-center text-xs uppercase tracking-widest2 text-paper hover:opacity-90">
               Preview the collection
-            </button>
+            </a>
           </div>
         )}
       </div>
