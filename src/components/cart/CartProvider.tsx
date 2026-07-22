@@ -148,6 +148,10 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
 
   const checkout = useCallback(() => {
     if (!items.length) return;
+    const w = window as unknown as { fbq?: (...a: unknown[]) => void };
+    if (w.fbq) {
+      w.fbq("track", "InitiateCheckout", { content_ids: items.map((i) => i.productId), content_type: "product", value: items.reduce((n, i) => n + i.price * i.qty, 0), currency: "USD", num_items: items.reduce((n, i) => n + i.qty, 0) });
+    }
     const path = items.map((i) => `${numeric(i.variantId)}:${i.qty}`).join(",");
     window.location.href = `https://${checkoutDomain}/cart/${path}`;
   }, [items]);
