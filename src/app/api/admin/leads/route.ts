@@ -13,8 +13,11 @@ export const dynamic = "force-dynamic";
  * (email addresses are not credentials).
  */
 
-const SUPABASE_URL = process.env.SUPABASE_URL;
-const SUPABASE_ANON = process.env.SUPABASE_ANON_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+// OMC's own Supabase project. URL + publishable key are public and pinned;
+// the service-role key stays in env (set SUPABASE_SERVICE_ROLE_KEY in Vercel to
+// the NEW project's secret key so the owner waitlist view can read all rows).
+const SUPABASE_URL = "https://lqhagjirnjzlivdaiwwl.supabase.co";
+const SUPABASE_ANON = "sb_publishable_Y4kFZfS8AkpthfvSQgYx-Q_B0_zj4mO";
 const SUPABASE_SERVICE = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
 /** Who can read the waitlist. */
