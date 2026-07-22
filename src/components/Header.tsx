@@ -4,7 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
-import { Search, User, ShoppingBag, Menu, X, ChevronDown } from "lucide-react";
+import { User, ShoppingBag, Menu, X, ChevronDown } from "lucide-react";
 import { Wordmark } from "./Wordmark";
 import { useCart } from "./cart/CartProvider";
 
@@ -122,9 +122,6 @@ export function Header() {
 
         {/* Right: utilities */}
         <div className="flex items-center justify-end gap-4 sm:gap-5">
-          <button aria-label="Search" className="hidden hover:opacity-60 sm:block">
-            <Search className="h-[18px] w-[18px]" />
-          </button>
           <Link href="/account" aria-label="Account" className="hover:opacity-60">
             <User className="h-[18px] w-[18px]" />
           </Link>
