@@ -51,6 +51,12 @@ const priceOf = (p: ShopProduct) =>
 /* ---------------- Size, fit & care ----------------
    Body-measurement guides (find your size by your own measurements — accurate
    and safe, no invented garment specs). Keyed by product type. */
+function fbTrack(event: string, params?: Record<string, unknown>) {
+  if (typeof window === "undefined") return;
+  const w = window as unknown as { fbq?: (...a: unknown[]) => void };
+  if (w.fbq) w.fbq("track", event, params);
+}
+
 type SizeRow = { size: string; a: string; b: string };
 const TOP_ROWS: SizeRow[] = [
   { size: "S", a: "34–37\"", b: "28–30\"" },
@@ -371,6 +377,11 @@ function SingleProductDetail({ product, pairs = [] }: { product: ShopProduct; pa
   const soldOut = Boolean(product.soldOut);
   const cart = useCart();
 
+  useEffect(() => {
+    fbTrack("ViewContent", { content_ids: [product.id], content_name: product.title, content_type: "product", value: priceOf(product), currency: "USD" });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [product.id]);
+
   // Drop scarcity: live per-variant stock (if a Storefront token is configured).
   const isDrop = DROP_SET.has(product.id);
   const stock = useDropStock(isDrop);
@@ -396,6 +407,7 @@ function SingleProductDetail({ product, pairs = [] }: { product: ShopProduct; pa
       price: priceNum(selected.price ?? product.minPrice),
       image: image ?? undefined,
     });
+    fbTrack("AddToCart", { content_ids: [product.id], content_name: product.title, content_type: "product", value: priceNum(selected.price ?? product.minPrice), currency: "USD" });
   }
 
   return (
