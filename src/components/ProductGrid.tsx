@@ -1,4 +1,8 @@
+"use client";
+
+import { useState } from "react";
 import Link from "next/link";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import type { ShopProduct } from "@/lib/shopify";
 import { productPid } from "@/data/products";
 
@@ -44,8 +48,26 @@ function Tile({ product, context }: { product: ShopProduct; context?: "women" })
   // A `womenModel` shows only in the Women feed; otherwise fall back to the
   // shared model, then the flat product photo.
   const lead = (context === "women" && product.womenModel) || product.model || null;
-  const front = lead ?? imgs[0] ?? null;
-  const hover = lead ? (imgs[0] ?? null) : (imgs[1] ?? null);
+  // Everything the shopper can page through: the model lead first (if any),
+  // then all product photos — de-duped so a lead that's also in `images`
+  // doesn't repeat.
+  const gallery = (lead ? [lead, ...imgs] : imgs).filter(
+    (v, i, a): v is string => Boolean(v) && a.indexOf(v) === i,
+  );
+  const n = gallery.length;
+
+  // `idx` tracks the photo the shopper has paged to. Until they click an arrow,
+  // the tile keeps its default behaviour: lead photo, revealing the next shot
+  // (usually the back) on hover.
+  const [idx, setIdx] = useState(0);
+  const [paged, setPaged] = useState(false);
+  const page = (e: React.MouseEvent, d: number) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setPaged(true);
+    setIdx((p) => (p + d + n) % n);
+  };
+
   const soldOut = Boolean(product.soldOut);
   const href = `/product/${productPid(product.id)}`;
 
@@ -55,6 +77,10 @@ function Tile({ product, context }: { product: ShopProduct; context?: "women" })
   const isModel = Boolean(lead);
   const blend = isModel ? undefined : ("multiply" as const);
   const bg = isModel ? "#efede9" : tileBg(product.id);
+
+  const cur = paged ? idx : 0;
+  const front = gallery[cur] ?? null;
+  const hover = !paged ? gallery[1] ?? null : null;
 
   return (
     <Link href={href} className="group block">
@@ -78,8 +104,40 @@ function Tile({ product, context }: { product: ShopProduct; context?: "women" })
             className="absolute inset-0 h-full w-full object-cover opacity-0 transition-opacity duration-500 group-hover:opacity-100"
           />
         )}
+
+        {/* Click-through paging — arrows + dots appear on hover. They page the
+            photos without following the tile's link to the product page. */}
+        {n > 1 && (
+          <>
+            <button
+              type="button"
+              onClick={(e) => page(e, -1)}
+              aria-label="Previous photo"
+              className="absolute left-2 top-1/2 z-10 grid h-8 w-8 -translate-y-1/2 place-items-center rounded-full bg-paper/85 text-ink opacity-0 transition-opacity duration-200 group-hover:opacity-100"
+            >
+              <ChevronLeft className="h-4 w-4" />
+            </button>
+            <button
+              type="button"
+              onClick={(e) => page(e, 1)}
+              aria-label="Next photo"
+              className="absolute right-2 top-1/2 z-10 grid h-8 w-8 -translate-y-1/2 place-items-center rounded-full bg-paper/85 text-ink opacity-0 transition-opacity duration-200 group-hover:opacity-100"
+            >
+              <ChevronRight className="h-4 w-4" />
+            </button>
+            <span className="pointer-events-none absolute bottom-3 left-1/2 flex -translate-x-1/2 gap-1.5 opacity-0 transition-opacity duration-200 group-hover:opacity-100">
+              {gallery.map((_, d) => (
+                <span
+                  key={d}
+                  className={`h-1.5 w-1.5 rounded-full ${cur === d ? "bg-ink" : "bg-ink/30"}`}
+                />
+              ))}
+            </span>
+          </>
+        )}
+
         {soldOut && (
-          <span className="absolute left-3 top-3 label-sm text-ink">Sold out</span>
+          <span className="absolute left-3 top-3 z-10 label-sm text-ink">Sold out</span>
         )}
       </div>
       <div className="mt-3 sm:mt-4">

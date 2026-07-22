@@ -379,18 +379,24 @@ function SingleProductDetail({ product, pairs = [] }: { product: ShopProduct; pa
             </p>
           </div>
           <div className="mt-6 grid grid-cols-2 gap-x-4 gap-y-8 lg:grid-cols-4 lg:gap-x-8">
-            {pairs.map((p) => (
+            {pairs.map((p) => {
+              // "Style With" shows the piece on its own — the flat product shot,
+              // not the model. The shoot runs models first, flat last, so fall
+              // back to the last photo when no explicit flat is set.
+              const flat = p.flat || (p.images?.length ? p.images[p.images.length - 1] : null) || p.imageUrl;
+              return (
               <Link key={p.id} href={`/product/${productPid(p.id)}`} className="group block">
                 <div className="aspect-[4/5] w-full overflow-hidden bg-stone">
-                  {p.imageUrl && (
+                  {flat && (
                     // eslint-disable-next-line @next/next/no-img-element
-                    <img src={p.imageUrl} alt={p.title} className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]" />
+                    <img src={flat} alt={p.title} className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]" />
                   )}
                 </div>
                 <p className="mt-3 text-sm text-ink">{p.title}</p>
                 <p className="mt-1 text-sm text-mute">{p.minPrice}</p>
               </Link>
-            ))}
+              );
+            })}
           </div>
         </div>
       )}
