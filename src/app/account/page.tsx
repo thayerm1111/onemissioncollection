@@ -101,10 +101,13 @@ export default function AccountPage() {
 
         <div style={{ border: "1px solid rgba(0,0,0,.12)", padding: "20px 22px", marginBottom: 16 }}>
           <div style={{ ...label, marginBottom: 10 }}>Orders</div>
-          <a href="https://1-mission-2.myshopify.com/account" target="_blank" rel="noopener noreferrer"
-             style={{ fontSize: 13, color: INK, borderBottom: "1px solid " + INK, paddingBottom: 3, textDecoration: "none" }}>
-            View order history
-          </a>
+          <p style={{ fontSize: 13, color: INK, lineHeight: 1.6, margin: 0 }}>
+            Your order confirmation and tracking are sent to your email. Need help with an order?{" "}
+            <a href="mailto:support@onemissioncollection.com"
+               style={{ color: INK, borderBottom: "1px solid " + INK, paddingBottom: 2, textDecoration: "none" }}>
+              Contact support
+            </a>
+          </p>
         </div>
 
         <Link href="/inner-circle" style={{ ...btn, display: "block", textAlign: "center", textDecoration: "none", marginBottom: 12 }}>
