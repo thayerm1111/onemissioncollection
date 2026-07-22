@@ -58,6 +58,7 @@ export interface ShopProduct {
   optionName?: string;      // label for the size/option selector, e.g. "Model" for a phone case
   gender?: "men" | "women" | "unisex" | "accessory";  // used for the Men / Women / Accessories nav
   type?: string;            // subcategory for drill-down nav, e.g. "Hoodies", "Shorts", "T-Shirts"
+  flat?: string;            // product-only (no model) photo used in "Style With" tiles
   model?: string;           // optional lifestyle/model photo shown as the grid lead (flips to flat on hover)
   womenModel?: string;      // model photo shown as the grid lead ONLY in the Women feed (Men stays flat)
   bundle?: string[];        // for a "set" product: the component product ids (e.g. [hoodieId, shortsId])
