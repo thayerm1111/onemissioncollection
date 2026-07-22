@@ -240,6 +240,9 @@ export const FOUNDERS_OVERRIDES: Array<Partial<ShopProduct> & { id: string }> = 
       "Snow-washed, frayed-hem tank. Heavyweight 8.1 oz cotton. Black or Light Gray. M–2XL. Limited supply.",
     imageUrl: TANK_IMGS[0], imageAlt: "Founders Club Washed Tank",
     images: TANK_IMGS,
+    // Product-only shot for "Style With" — the Black flat front (last image is
+    // the gray colorway, so pin it to Black to match the default).
+    flat: TANK_IMGS[2],
     // Click a color, the main photo swaps to that colorway.
     colorImages: { "Black": TANK_BLACK, "Light Gray": TANK_GRAY },
     minPrice: "$49.99",
