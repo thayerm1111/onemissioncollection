@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Affiliates",
   description:
-    "Join the One Mission Collection affiliate program. Earn 20% commission on every order you refer through your personal link.",
+    "Join the One Mission Collection affiliate program. Earn 12% commission on every order you refer through your personal link.",
 };
 
 const REGISTER = "https://af.uppromote.com/k3vbq8-x0/register";
@@ -79,7 +79,7 @@ export default function AffiliatePage() {
               margin: 0,
             }}
           >
-            Earn 20%
+            Earn 12%
             <br />
             On Every Order
           </h1>
@@ -94,7 +94,7 @@ export default function AffiliatePage() {
               color: "#3a352d",
             }}
           >
-            Share the collection with your audience and earn 20% commission on
+            Share the collection with your audience and earn 12% commission on
             every sale you refer through your personal link. Free to join, no
             minimums. Carry the mission and get paid for it.
           </p>
@@ -153,8 +153,8 @@ export default function AffiliatePage() {
             },
             {
               n: "03",
-              t: "Earn 20%",
-              d: "Get 20% commission on every order that comes through you. Track sales and earnings live, with payouts sent regularly.",
+              t: "Earn 12%",
+              d: "Get 12% commission on every order that comes through you. Track sales and earnings live, with payouts sent regularly.",
             },
           ].map((s) => (
             <div key={s.n} style={{ textAlign: "center" }}>
@@ -240,7 +240,7 @@ export default function AffiliatePage() {
           }}
         >
           Turn your reach into a partnership. Apply today, share your link, and
-          start earning 20% commission.
+          start earning 12% commission.
         </p>
         <div style={{ marginTop: 32 }}>
           <a
