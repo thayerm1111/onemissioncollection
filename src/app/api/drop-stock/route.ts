@@ -11,12 +11,16 @@ const DOMAIN = process.env.SHOPIFY_STORE_DOMAIN || "1-mission-2.myshopify.com";
 const TOKEN = process.env.SHOPIFY_STOREFRONT_TOKEN;
 
 const HANDLES = [
-  "one-mission-statement-hoodie",
-  "om-gold-hoodie",
-  "om-x-one-mission",
-  "heavy-weight-one-mission-grey-tee",
-  "one-mission-heavyweight-tee-1",
-  "one-mission-heavyweight-tee",
+  "founders-club-hoodie",
+  "the-founders-club-sweatpants",
+  "the-founders-club-lounge-shorts",
+  "one-mission-tm-heavy-tee",
+  "one-mission-workout-short",
+  "snow-washed-frayed-hem-tank-top",
+  "the-founders-crop-top",
+  "one-mission-women-s-tight-crewneck-crop-tank-top",
+  "womens-high-rise-yoga-shorts",
+  "women-s-solid-high-rise-leggings",
 ];
 
 export async function GET(req: Request) {
