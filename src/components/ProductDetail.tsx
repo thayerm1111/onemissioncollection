@@ -5,8 +5,13 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { ArrowRight, ZoomIn, X, ChevronLeft, ChevronRight } from "lucide-react";
 import type { ShopProduct } from "@/lib/shopify";
-import { productPid, DROP_SET } from "@/data/products";
+import { productPid } from "@/data/products";
+import { FOUNDERS_ALL_IDS } from "@/data/founders";
 import { isPreLaunch } from "@/data/launch";
+
+// Every Founders Collection piece (men's + women's) is a limited drop, so the
+// live sold-out / "only N left" size treatment applies to all of them.
+const DROP_ALL_SET = new Set<string>(FOUNDERS_ALL_IDS);
 import { useCart } from "./cart/CartProvider";
 
 /**
@@ -383,7 +388,7 @@ function SingleProductDetail({ product, pairs = [] }: { product: ShopProduct; pa
   }, [product.id]);
 
   // Drop scarcity: live per-variant stock (if a Storefront token is configured).
-  const isDrop = DROP_SET.has(product.id);
+  const isDrop = DROP_ALL_SET.has(product.id);
   const stock = useDropStock(isDrop);
   const stockOf = (id?: string) => (id && stock ? stock[vidNum(id)] : undefined);
   const selLeft = stockOf(selected?.id);
