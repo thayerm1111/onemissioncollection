@@ -6,7 +6,8 @@ import {
   Headphones, BookOpen, FileText, Play, MapPin, Lock, ArrowRight, Download,
   Sparkles, Plus, Star, Trash2, Pencil, X, UploadCloud, Loader2, Calendar,
   Gauge, GraduationCap, FolderOpen, CheckSquare, Square, Copy, Image as ImageIcon,
-  Users, Link2, Flame, ExternalLink,
+  Users, Link2, Flame, ExternalLink, MessageCircle, CalendarDays, Milestone,
+  Send, Award, CheckCircle2, Circle, Clock,
 } from "lucide-react";
 import { useAuth } from "@/components/auth/AuthProvider";
 import { getSupabase } from "@/lib/supabaseClient";
@@ -57,7 +58,22 @@ type Item = {
 };
 type Affiliate = { email: string; referral_url: string | null; discount_code: string | null; level: string | null };
 type Access = { allowed: boolean; reason: "affiliate" | "purchase" | null };
-type Tab = "command" | "featured" | "development" | "academy" | "resources" | "daily" | "experiences";
+type Tab = "command" | "featured" | "development" | "mission" | "academy" | "resources" | "daily" | "community" | "events" | "experiences";
+
+const STAGES: { title: string; desc: string }[] = [
+  { title: "Discover Your Identity", desc: "Understand who you are and whose you are before you chase what you do." },
+  { title: "Define Your Mission", desc: "Put words to the assignment you were built to carry." },
+  { title: "Reprogram Your Mindset", desc: "Trade limiting beliefs for the truth about what's possible for you." },
+  { title: "Align Your Habits", desc: "Build a daily system that moves you toward the person you're becoming." },
+  { title: "Build Discipline", desc: "Learn to keep your word to yourself when motivation runs out." },
+  { title: "Strengthen Your Faith", desc: "Anchor your growth in something bigger than a mood." },
+  { title: "Lead Yourself", desc: "Take full ownership before you try to lead anyone else." },
+  { title: "Impact Others", desc: "Turn your growth outward — go find the one." },
+];
+const COMM_CHANNELS = [
+  ["intro", "Introductions"], ["win", "Wins"], ["prayer", "Prayer"], ["discussion", "Discussion"],
+] as const;
+const commLabel = (c: string) => COMM_CHANNELS.find(([k]) => k === c)?.[1] ?? c;
 
 const EXPERIENCES = [
   { title: "The Founders Retreat", blurb: "A weekend to reset, refocus, and build with people on the same mission." },
@@ -103,6 +119,7 @@ export default function InnerCirclePage() {
   const { user, session, loading } = useAuth();
   const email = (user?.email ?? "").toLowerCase() || null;
   const isOwner = Boolean(email && OWNERS.includes(email));
+  const name = (user?.user_metadata?.name as string) || (email ? email.split("@")[0] : "Member");
 
   const [access, setAccess] = useState<Access | null>(null);
   const [checking, setChecking] = useState(false);
@@ -206,9 +223,12 @@ export default function InnerCirclePage() {
     { key: "command", label: "Command Center", icon: Gauge, aff: true },
     { key: "featured", label: "This Week", icon: Star },
     { key: "development", label: "Development", icon: BookOpen },
+    { key: "mission", label: "Mission Path", icon: Milestone },
     { key: "academy", label: "Academy", icon: GraduationCap, aff: true },
     { key: "resources", label: "Resources", icon: FolderOpen, aff: true },
     { key: "daily", label: "Daily Actions", icon: CheckSquare, aff: true },
+    { key: "community", label: "Community", icon: MessageCircle },
+    { key: "events", label: "Events", icon: CalendarDays },
     { key: "experiences", label: "Experiences", icon: MapPin },
   ];
   const visibleTabs = TABS.filter((t) => !t.aff || isAffiliate);
@@ -266,6 +286,9 @@ export default function InnerCirclePage() {
             {tab === "academy" && <ListView title="Affiliate Academy" items={academyItems} cats={AFFILIATE_CATS.filter(([k]) => ACADEMY_TRACKS.includes(k)).map(([k, l]) => ({ key: k, label: l }))} cat={cat} setCat={setCat} loading={loadingItems} isOwner={isOwner} onFeature={makeFeatured} onDelete={removeItem} onEdit={setEditing} emptyOwner="No training yet. Add content with audience “Affiliate” and a track (Start Here, Sales, Social, Leadership)." emptyMember="Your training is being built. Check back soon." />}
             {tab === "resources" && <ResourcesView items={resourceItems} loading={loadingItems} isOwner={isOwner} onDelete={removeItem} onEdit={setEditing} />}
             {tab === "daily" && <DailyActions email={email} />}
+            {tab === "mission" && <MissionPath email={email} name={name} />}
+            {tab === "community" && <CommunityView email={email} name={name} isOwner={isOwner} />}
+            {tab === "events" && <EventsView email={email} isOwner={isOwner} />}
             {tab === "experiences" && <ExperiencesView />}
           </main>
         </div>
@@ -677,6 +700,238 @@ function ManageAffiliates({ onClose }: { onClose: () => void }) {
         :global(.omc-input:focus){outline:none;border-color:#17140f}
       `}</style>
     </div>
+  );
+}
+
+/* ---------------- Mission Path ---------------- */
+function MissionPath({ email }: { email: string | null; name: string }) {
+  const [done, setDone] = useState<Set<number>>(new Set());
+  const [reflections, setReflections] = useState<Record<number, string>>({});
+  const [ready, setReady] = useState(false);
+
+  useEffect(() => {
+    const sb = getSupabase(); if (!sb || !email) return;
+    let active = true;
+    sb.from("omc_mission_progress").select("*").then(({ data }) => {
+      if (!active) return;
+      const rows = (data as { stage: number; reflection: string | null }[]) ?? [];
+      setDone(new Set(rows.map((r) => r.stage)));
+      const rf: Record<number, string> = {};
+      rows.forEach((r) => { if (r.reflection) rf[r.stage] = r.reflection; });
+      setReflections(rf); setReady(true);
+    });
+    return () => { active = false; };
+  }, [email]);
+
+  async function complete(stage: number) {
+    const sb = getSupabase(); if (!sb || !email) return;
+    const next = new Set(done); next.add(stage); setDone(next);
+    await sb.from("omc_mission_progress").upsert({ email, stage, reflection: reflections[stage] || null, completed_at: new Date().toISOString() });
+  }
+  const count = done.size;
+  const pct = Math.round((count / STAGES.length) * 100);
+  const badges = [count >= 1 && "First Step", count >= 4 && "Halfway There", count >= STAGES.length && "Mission Complete"].filter(Boolean) as string[];
+
+  return (
+    <section>
+      <p className="label text-mute">Mission Path</p>
+      <p className="mt-1 text-[13px] text-mute">A guided journey from who you are to the impact you&apos;re called to make.</p>
+      <div className="mt-4 border border-line bg-gradient-to-br from-sky-50 to-stone/30 p-5">
+        <div className="flex items-center justify-between text-[13px]"><span className="text-ink">{count} of {STAGES.length} stages</span><span className="text-mute">{pct}%</span></div>
+        <div className="mt-2 h-2 w-full overflow-hidden rounded-full bg-line"><div className="h-full rounded-full bg-sky-500 transition-all" style={{ width: `${pct}%` }} /></div>
+        {badges.length > 0 && <div className="mt-3 flex flex-wrap gap-2">{badges.map((b) => <span key={b} className="inline-flex items-center gap-1.5 rounded-sm bg-ink px-2 py-1 text-[10px] uppercase tracking-widest2 text-paper"><Award className="h-3 w-3" /> {b}</span>)}</div>}
+      </div>
+      {!ready ? <div className="mt-8 flex justify-center"><Loader2 className="h-5 w-5 animate-spin text-mute" /></div> : (
+        <ol className="mt-6 space-y-3">
+          {STAGES.map((s, i) => {
+            const stage = i + 1; const isDone = done.has(stage); const unlocked = stage === 1 || done.has(stage - 1);
+            return (
+              <li key={stage} className={`border p-5 ${isDone ? "border-sky-300 bg-sky-50" : unlocked ? "border-line bg-paper" : "border-line bg-stone/30 opacity-70"}`}>
+                <div className="flex items-start gap-3">
+                  <div className="mt-0.5">{isDone ? <CheckCircle2 className="h-5 w-5 text-sky-500" /> : unlocked ? <Circle className="h-5 w-5 text-ink" /> : <Lock className="h-5 w-5 text-mute" />}</div>
+                  <div className="min-w-0 flex-1">
+                    <p className="label-sm text-mute">Stage {stage}</p>
+                    <h3 className="text-lg text-ink">{s.title}</h3>
+                    <p className="mt-1 text-[14px] leading-relaxed text-ink/75">{s.desc}</p>
+                    {unlocked && (
+                      <>
+                        <textarea value={reflections[stage] ?? ""} onChange={(e) => setReflections({ ...reflections, [stage]: e.target.value })} rows={2} placeholder="Reflection (optional) — what stood out, what you'll do…" className="mt-3 w-full resize-none border border-line bg-white px-3 py-2 text-[13px] text-ink focus:border-ink focus:outline-none" />
+                        <button onClick={() => complete(stage)} className={`mt-2 inline-flex items-center gap-2 px-4 py-2 text-[11px] uppercase tracking-widest2 ${isDone ? "border border-line text-mute" : "bg-ink text-paper hover:opacity-90"}`}>{isDone ? "Saved — update" : "Mark complete"}</button>
+                      </>
+                    )}
+                  </div>
+                </div>
+              </li>
+            );
+          })}
+        </ol>
+      )}
+    </section>
+  );
+}
+
+/* ---------------- Community ---------------- */
+type Post = { id: string; email: string; name: string | null; channel: string; body: string; created_at: string };
+type Comment = { id: string; post_id: string; email: string; name: string | null; body: string; created_at: string };
+function CommunityView({ email, name, isOwner }: { email: string | null; name: string; isOwner: boolean }) {
+  const [posts, setPosts] = useState<Post[]>([]);
+  const [comments, setComments] = useState<Comment[]>([]);
+  const [channel, setChannel] = useState<string>("all");
+  const [newChannel, setNewChannel] = useState<string>("discussion");
+  const [body, setBody] = useState("");
+  const [busy, setBusy] = useState(false);
+  const [ready, setReady] = useState(false);
+
+  const load = useCallback(async () => {
+    const sb = getSupabase(); if (!sb) return;
+    const [p, c] = await Promise.all([
+      sb.from("omc_community_posts").select("*").order("created_at", { ascending: false }),
+      sb.from("omc_community_comments").select("*").order("created_at", { ascending: true }),
+    ]);
+    setPosts((p.data as Post[]) ?? []); setComments((c.data as Comment[]) ?? []); setReady(true);
+  }, []);
+  useEffect(() => { load(); }, [load]);
+
+  async function post() {
+    if (!body.trim() || !email) return;
+    const sb = getSupabase(); if (!sb) return;
+    setBusy(true);
+    await sb.from("omc_community_posts").insert({ email, name, channel: newChannel, body: body.trim() });
+    setBody(""); setBusy(false); await load();
+  }
+  async function addComment(postId: string, text: string) {
+    if (!text.trim() || !email) return;
+    const sb = getSupabase(); if (!sb) return;
+    await sb.from("omc_community_comments").insert({ post_id: postId, email, name, body: text.trim() });
+    await load();
+  }
+  async function del(id: string) {
+    const sb = getSupabase(); if (!sb) return;
+    if (!confirm("Delete this post?")) return;
+    await sb.from("omc_community_posts").delete().eq("id", id); await load();
+  }
+  const shown = channel === "all" ? posts : posts.filter((p) => p.channel === channel);
+
+  return (
+    <section>
+      <p className="label text-mute">Community</p>
+      <div className="mt-4 border border-line bg-paper p-4">
+        <div className="flex flex-wrap gap-2">
+          {COMM_CHANNELS.map(([k, l]) => <button key={k} onClick={() => setNewChannel(k)} className={`border px-3 py-1.5 text-[11px] uppercase tracking-wider2 ${newChannel === k ? "border-ink bg-ink text-paper" : "border-line text-mute hover:border-ink"}`}>{l}</button>)}
+        </div>
+        <textarea value={body} onChange={(e) => setBody(e.target.value)} rows={3} placeholder="Share a win, an intro, a prayer request, or start a discussion…" className="mt-3 w-full resize-none border border-line bg-white px-3 py-2 text-[14px] text-ink focus:border-ink focus:outline-none" />
+        <button onClick={post} disabled={busy || !body.trim()} className="mt-2 inline-flex items-center gap-2 bg-ink px-5 py-2.5 text-[11px] uppercase tracking-widest2 text-paper hover:opacity-90 disabled:opacity-50"><Send className="h-4 w-4" /> Post</button>
+      </div>
+      <div className="mt-5 flex flex-wrap gap-2">
+        {[["all", "All"] as const, ...COMM_CHANNELS].map(([k, l]) => <button key={k} onClick={() => setChannel(k)} className={`border px-3.5 py-2 text-[11px] uppercase tracking-wider2 ${channel === k ? "border-ink bg-ink text-paper" : "border-line text-mute hover:border-ink"}`}>{l}</button>)}
+      </div>
+      {!ready ? <div className="mt-8 flex justify-center"><Loader2 className="h-5 w-5 animate-spin text-mute" /></div>
+        : shown.length === 0 ? <EmptyState text="No posts yet. Be the first to share." />
+          : <div className="mt-5 space-y-4">{shown.map((p) => <CommunityPost key={p.id} p={p} comments={comments.filter((c) => c.post_id === p.id)} canDelete={isOwner || p.email === email} onDelete={() => del(p.id)} onComment={(t) => addComment(p.id, t)} />)}</div>}
+    </section>
+  );
+}
+function CommunityPost({ p, comments, canDelete, onDelete, onComment }: { p: Post; comments: Comment[]; canDelete: boolean; onDelete: () => void; onComment: (t: string) => void }) {
+  const [text, setText] = useState("");
+  return (
+    <article className="border border-line bg-paper p-5">
+      <div className="flex items-center justify-between">
+        <div className="flex items-center gap-2 text-mute">
+          <span className="rounded-sm bg-sky-100 px-1.5 py-0.5 text-[9px] uppercase tracking-widest2 text-sky-700">{commLabel(p.channel)}</span>
+          <span className="text-[12px] text-ink">{p.name || p.email.split("@")[0]}</span>
+        </div>
+        {canDelete && <button onClick={onDelete} className="text-mute hover:text-red-600"><Trash2 className="h-4 w-4" /></button>}
+      </div>
+      <p className="mt-2 whitespace-pre-wrap text-[14px] leading-relaxed text-ink/85">{p.body}</p>
+      {comments.length > 0 && <div className="mt-3 space-y-2 border-t border-line pt-3">{comments.map((c) => <p key={c.id} className="text-[13px]"><span className="text-ink">{c.name || "Member"}: </span><span className="text-ink/75">{c.body}</span></p>)}</div>}
+      <div className="mt-3 flex gap-2">
+        <input value={text} onChange={(e) => setText(e.target.value)} placeholder="Add a comment…" className="min-w-0 flex-1 border border-line bg-white px-3 py-2 text-[13px] text-ink focus:border-ink focus:outline-none" />
+        <button onClick={() => { onComment(text); setText(""); }} disabled={!text.trim()} className="bg-ink px-3 py-2 text-[10px] uppercase tracking-widest2 text-paper disabled:opacity-40">Send</button>
+      </div>
+    </article>
+  );
+}
+
+/* ---------------- Events ---------------- */
+type Ev = { id: string; title: string; description: string | null; starts_at: string | null; location: string | null; join_url: string | null };
+function EventsView({ email, isOwner }: { email: string | null; isOwner: boolean }) {
+  const [events, setEvents] = useState<Ev[]>([]);
+  const [rsvps, setRsvps] = useState<{ email: string; event_id: string }[]>([]);
+  const [ready, setReady] = useState(false);
+  const [adding, setAdding] = useState(false);
+  const [f, setF] = useState({ title: "", description: "", starts_at: "", location: "", join_url: "" });
+
+  const load = useCallback(async () => {
+    const sb = getSupabase(); if (!sb) return;
+    const [e, r] = await Promise.all([
+      sb.from("omc_events").select("*").order("starts_at", { ascending: true }),
+      sb.from("omc_event_rsvps").select("email,event_id"),
+    ]);
+    setEvents((e.data as Ev[]) ?? []); setRsvps((r.data as { email: string; event_id: string }[]) ?? []); setReady(true);
+  }, []);
+  useEffect(() => { load(); }, [load]);
+
+  async function addEvent() {
+    if (!f.title.trim()) return;
+    const sb = getSupabase(); if (!sb) return;
+    await sb.from("omc_events").insert({ title: f.title.trim(), description: f.description.trim() || null, starts_at: f.starts_at || null, location: f.location.trim() || null, join_url: f.join_url.trim() || null });
+    setF({ title: "", description: "", starts_at: "", location: "", join_url: "" }); setAdding(false); await load();
+  }
+  async function delEvent(id: string) {
+    const sb = getSupabase(); if (!sb) return;
+    if (!confirm("Delete this event?")) return;
+    await sb.from("omc_events").delete().eq("id", id); await load();
+  }
+  async function toggleRsvp(id: string) {
+    if (!email) return;
+    const sb = getSupabase(); if (!sb) return;
+    const mine = rsvps.some((x) => x.event_id === id && x.email === email);
+    if (mine) await sb.from("omc_event_rsvps").delete().eq("event_id", id).eq("email", email);
+    else await sb.from("omc_event_rsvps").insert({ email, event_id: id });
+    await load();
+  }
+  const fmtDate = (s: string | null) => s ? new Date(s).toLocaleString(undefined, { month: "short", day: "numeric", hour: "numeric", minute: "2-digit" }) : "Date TBA";
+
+  return (
+    <section>
+      <div className="flex items-center justify-between">
+        <p className="label text-mute">Events</p>
+        {isOwner && <button onClick={() => setAdding(!adding)} className="inline-flex items-center gap-1.5 text-[11px] uppercase tracking-widest2 text-ink hover:opacity-70"><Plus className="h-4 w-4" /> {adding ? "Close" : "Add event"}</button>}
+      </div>
+      {isOwner && adding && (
+        <div className="mt-4 space-y-2 border border-line p-4">
+          <input value={f.title} onChange={(e) => setF({ ...f, title: e.target.value })} placeholder="Title" className="w-full border border-line bg-white px-3 py-2 text-[14px]" />
+          <textarea value={f.description} onChange={(e) => setF({ ...f, description: e.target.value })} rows={2} placeholder="Description" className="w-full resize-none border border-line bg-white px-3 py-2 text-[14px]" />
+          <input type="datetime-local" value={f.starts_at} onChange={(e) => setF({ ...f, starts_at: e.target.value })} className="w-full border border-line bg-white px-3 py-2 text-[14px]" />
+          <input value={f.location} onChange={(e) => setF({ ...f, location: e.target.value })} placeholder="Location (or “Online”)" className="w-full border border-line bg-white px-3 py-2 text-[14px]" />
+          <input value={f.join_url} onChange={(e) => setF({ ...f, join_url: e.target.value })} placeholder="Join / RSVP link (optional)" className="w-full border border-line bg-white px-3 py-2 text-[14px]" />
+          <button onClick={addEvent} className="w-full bg-ink px-4 py-2.5 text-[11px] uppercase tracking-widest2 text-paper hover:opacity-90">Publish event</button>
+        </div>
+      )}
+      {!ready ? <div className="mt-8 flex justify-center"><Loader2 className="h-5 w-5 animate-spin text-mute" /></div>
+        : events.length === 0 ? <EmptyState text={isOwner ? "No events yet. Add one — a live call, retreat, or meetup." : "No events scheduled yet. Check back soon."} />
+          : <div className="mt-5 space-y-4">{events.map((ev) => {
+            const count = rsvps.filter((x) => x.event_id === ev.id).length;
+            const mine = rsvps.some((x) => x.event_id === ev.id && x.email === email);
+            return (
+              <article key={ev.id} className="border border-line bg-paper p-5">
+                <div className="flex items-start justify-between gap-3">
+                  <div className="min-w-0">
+                    <div className="flex items-center gap-2 text-mute"><Clock className="h-3.5 w-3.5" /><span className="label-sm">{fmtDate(ev.starts_at)}{ev.location ? ` · ${ev.location}` : ""}</span></div>
+                    <h3 className="mt-1 text-lg text-ink">{ev.title}</h3>
+                    {ev.description && <p className="mt-1 text-[14px] leading-relaxed text-ink/75">{ev.description}</p>}
+                  </div>
+                  {isOwner && <button onClick={() => delEvent(ev.id)} className="text-mute hover:text-red-600"><Trash2 className="h-4 w-4" /></button>}
+                </div>
+                <div className="mt-3 flex flex-wrap items-center gap-3">
+                  <button onClick={() => toggleRsvp(ev.id)} className={`inline-flex items-center gap-1.5 px-4 py-2 text-[11px] uppercase tracking-widest2 ${mine ? "border border-sky-400 bg-sky-50 text-ink" : "bg-ink text-paper hover:opacity-90"}`}>{mine ? "Going ✓" : "RSVP"}</button>
+                  <span className="text-[12px] text-mute">{count} going</span>
+                  {ev.join_url && <a href={ev.join_url} target="_blank" rel="noreferrer" className="ml-auto inline-flex items-center gap-1.5 text-[11px] uppercase tracking-widest2 text-ink underline hover:opacity-70">Join <ExternalLink className="h-3.5 w-3.5" /></a>}
+                </div>
+              </article>
+            );
+          })}</div>}
+    </section>
   );
 }
 
