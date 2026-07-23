@@ -57,6 +57,8 @@ type Item = {
   featured: boolean; sort: number; created_at: string;
 };
 type Affiliate = { email: string; referral_url: string | null; discount_code: string | null; level: string | null };
+type AffLive = { connected: boolean; isAffiliate: boolean; status?: string; referralLink?: string | null; coupon?: string | null; level?: string | null; orders?: number; sales?: number; commissionApproved?: number; commissionPending?: number; commissionPaid?: number };
+function money(n?: number) { return typeof n === "number" ? "$" + n.toLocaleString(undefined, { maximumFractionDigits: 2 }) : "—"; }
 type Access = { allowed: boolean; reason: "affiliate" | "purchase" | null };
 type Tab = "command" | "featured" | "development" | "mission" | "academy" | "resources" | "daily" | "community" | "events" | "experiences";
 
@@ -134,6 +136,7 @@ export default function InnerCirclePage() {
 
   const [myAff, setMyAff] = useState<Affiliate | null>(null);
   const [isAff, setIsAff] = useState(false);
+  const [affLive, setAffLive] = useState<AffLive | null>(null);
 
   useEffect(() => {
     const token = session?.access_token;
@@ -162,7 +165,18 @@ export default function InnerCirclePage() {
     });
     return () => { active = false; };
   }, [session, email, isOwner]);
-  const isAffiliate = isAff || isOwner;
+
+  // Live UpPromote affiliate data (referral link, coupon, orders, sales, commissions).
+  useEffect(() => {
+    const token = session?.access_token;
+    if (!token) { setAffLive(null); return; }
+    let active = true;
+    fetch("/api/inner-circle/affiliate", { method: "POST", headers: { Authorization: `Bearer ${token}` } })
+      .then((r) => r.json()).then((d) => { if (active) setAffLive(d as AffLive); }).catch(() => {});
+    return () => { active = false; };
+  }, [session?.access_token]);
+
+  const isAffiliate = isAff || isOwner || Boolean(affLive?.isAffiliate);
 
   const loadItems = useCallback(async () => {
     const sb = getSupabase();
@@ -280,7 +294,7 @@ export default function InnerCirclePage() {
               </div>
             )}
 
-            {tab === "command" && <CommandCenter aff={myAff} isOwner={isOwner} />}
+            {tab === "command" && <CommandCenter live={affLive} aff={myAff} isOwner={isOwner} />}
             {tab === "featured" && <FeaturedView featured={featured} isOwner={isOwner} onManage={() => setTab("development")} />}
             {tab === "development" && <ListView title="Development" items={devItems} cats={devCats.map(([k, l]) => ({ key: k, label: l }))} cat={cat} setCat={setCat} loading={loadingItems} isOwner={isOwner} onFeature={makeFeatured} onDelete={removeItem} onEdit={setEditing} emptyOwner="Nothing here yet. Use “Add content” to upload your first audio, video, or PDF." emptyMember="New teachings are on the way. Check back soon." />}
             {tab === "academy" && <ListView title="Affiliate Academy" items={academyItems} cats={AFFILIATE_CATS.filter(([k]) => ACADEMY_TRACKS.includes(k)).map(([k, l]) => ({ key: k, label: l }))} cat={cat} setCat={setCat} loading={loadingItems} isOwner={isOwner} onFeature={makeFeatured} onDelete={removeItem} onEdit={setEditing} emptyOwner="No training yet. Add content with audience “Affiliate” and a track (Start Here, Sales, Social, Leadership)." emptyMember="Your training is being built. Check back soon." />}
@@ -309,32 +323,48 @@ function Stat({ label, value }: { label: string; value: string }) {
     </div>
   );
 }
-function CommandCenter({ aff, isOwner }: { aff: Affiliate | null; isOwner: boolean }) {
+function CommandCenter({ live, aff, isOwner }: { live: AffLive | null; aff: Affiliate | null; isOwner: boolean }) {
+  const liveOn = Boolean(live?.connected && live?.isAffiliate);
+  const referral = live?.referralLink || aff?.referral_url || null;
+  const coupon = live?.coupon || aff?.discount_code || null;
+  const level = live?.level || aff?.level || "Mission Starter";
+  const commission = liveOn ? Number(live?.commissionApproved || 0) + Number(live?.commissionPending || 0) : undefined;
   return (
     <section>
       <p className="label text-mute">Command Center</p>
       <div className="mt-4 border border-line bg-gradient-to-br from-sky-50 to-stone/40 p-6">
         <p className="label-sm text-mute">Your referral link</p>
-        {aff?.referral_url ? (
+        {referral ? (
           <div className="mt-2 flex items-center gap-2">
-            <input readOnly value={aff.referral_url} className="min-w-0 flex-1 border border-line bg-white px-3 py-2 text-[13px] text-ink" />
-            <button onClick={() => copyText(aff.referral_url || "")} className="flex items-center gap-1.5 bg-ink px-3 py-2 text-[10px] uppercase tracking-widest2 text-paper hover:opacity-90"><Copy className="h-3.5 w-3.5" /> Copy</button>
+            <input readOnly value={referral} className="min-w-0 flex-1 border border-line bg-white px-3 py-2 text-[13px] text-ink" />
+            <button onClick={() => copyText(referral)} className="flex items-center gap-1.5 bg-ink px-3 py-2 text-[10px] uppercase tracking-widest2 text-paper hover:opacity-90"><Copy className="h-3.5 w-3.5" /> Copy</button>
           </div>
-        ) : <p className="mt-1 text-[13px] text-mute">{isOwner ? "Set this affiliate's link in Affiliates." : "Your link is being set up. Check back soon."}</p>}
+        ) : <p className="mt-1 text-[13px] text-mute">{isOwner ? "Set this affiliate's link in Affiliates, or connect UpPromote." : "Your link is being set up. Check back soon."}</p>}
         <div className="mt-4 flex flex-wrap items-center gap-6">
-          <div><p className="label-sm text-mute">Discount code</p><p className="mt-1 text-lg text-ink">{aff?.discount_code || "—"}</p></div>
-          <div><p className="label-sm text-mute">Level</p><p className="mt-1 text-lg text-ink">{aff?.level || "Mission Starter"}</p></div>
+          <div><p className="label-sm text-mute">Discount code</p><p className="mt-1 text-lg text-ink">{coupon || "—"}</p></div>
+          <div><p className="label-sm text-mute">Level / Program</p><p className="mt-1 text-lg text-ink">{level}</p></div>
         </div>
       </div>
 
       <div className="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-4">
-        <Stat label="Clicks" value="—" /><Stat label="Orders" value="—" /><Stat label="Sales" value="—" /><Stat label="Commission" value="—" />
+        <Stat label="Orders" value={liveOn ? String(live?.orders ?? 0) : "—"} />
+        <Stat label="Sales" value={liveOn ? money(live?.sales) : "—"} />
+        <Stat label="Commission" value={liveOn ? money(commission) : "—"} />
+        <Stat label="Paid" value={liveOn ? money(live?.commissionPaid) : "—"} />
       </div>
-      <div className="mt-3 flex flex-wrap items-center gap-3 rounded-sm border border-dashed border-line px-4 py-3">
-        <Link2 className="h-4 w-4 text-mute" />
-        <span className="text-[13px] text-mute">Live stats connect with UpPromote — coming soon.</span>
-        <a href={UPPROMOTE_PORTAL} target="_blank" rel="noreferrer" className="ml-auto inline-flex items-center gap-1.5 text-[11px] uppercase tracking-widest2 text-ink underline hover:opacity-70">Open UpPromote <ExternalLink className="h-3.5 w-3.5" /></a>
-      </div>
+      {liveOn ? (
+        <div className="mt-3 flex flex-wrap items-center gap-3 rounded-sm border border-sky-200 bg-sky-50 px-4 py-3">
+          <Link2 className="h-4 w-4 text-sky-500" />
+          <span className="text-[13px] text-ink">Live from UpPromote · {money(live?.commissionPending)} pending</span>
+          <a href={UPPROMOTE_PORTAL} target="_blank" rel="noreferrer" className="ml-auto inline-flex items-center gap-1.5 text-[11px] uppercase tracking-widest2 text-ink underline hover:opacity-70">Open UpPromote <ExternalLink className="h-3.5 w-3.5" /></a>
+        </div>
+      ) : (
+        <div className="mt-3 flex flex-wrap items-center gap-3 rounded-sm border border-dashed border-line px-4 py-3">
+          <Link2 className="h-4 w-4 text-mute" />
+          <span className="text-[13px] text-mute">{live && live.connected === false ? "Add UPPROMOTE_API_KEY in Vercel to show live stats." : "Live stats connect with UpPromote."}</span>
+          <a href={UPPROMOTE_PORTAL} target="_blank" rel="noreferrer" className="ml-auto inline-flex items-center gap-1.5 text-[11px] uppercase tracking-widest2 text-ink underline hover:opacity-70">Open UpPromote <ExternalLink className="h-3.5 w-3.5" /></a>
+        </div>
+      )}
 
       <div className="mt-6">
         <p className="label text-mute">Recommended next actions</p>
