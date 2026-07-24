@@ -1,10 +1,12 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
-import { ChevronLeft, ChevronRight } from "lucide-react";
-import type { ShopProduct } from "@/lib/shopify";
+import { ChevronLeft, ChevronRight, Plus } from "lucide-react";
+import type { ShopProduct, ShopVariant } from "@/lib/shopify";
 import { productPid } from "@/data/products";
+import { useCart } from "./cart/CartProvider";
+import { isPreLaunch } from "@/data/launch";
 
 // Soft, warm paper tones — each product sits on its own tile shade, like the
 // Essentials grid. Product flats are shot on a white sweep, so we blend them
@@ -23,6 +25,28 @@ function tileBg(id: string): string {
   let h = 0;
   for (let i = 0; i < id.length; i++) h = (h * 31 + id.charCodeAt(i)) >>> 0;
   return TILE_BGS[h % TILE_BGS.length];
+}
+
+const priceNum = (v?: string) => Number(String(v ?? "").replace(/[^0-9.]/g, "")) || 0;
+
+// Live pre-launch gate for the grid quick-add (mirrors the product page):
+// starts locked so first paint never shows a buyable state, then opens itself
+// the moment the launch clock hits zero.
+function usePreLaunch(): boolean {
+  const [locked, setLocked] = useState(true);
+  useEffect(() => {
+    const tick = () => setLocked(isPreLaunch());
+    tick();
+    const t = setInterval(tick, 1000);
+    return () => clearInterval(t);
+  }, []);
+  return locked;
+}
+
+function fbTrackAdd(product: ShopProduct, price: number) {
+  if (typeof window === "undefined") return;
+  const w = window as unknown as { fbq?: (...a: unknown[]) => void };
+  if (w.fbq) w.fbq("track", "AddToCart", { content_ids: [product.id], content_name: product.title, content_type: "product", value: price, currency: "USD" });
 }
 
 export function ProductGrid({ products, context }: { products: ShopProduct[]; context?: "women" }) {
@@ -61,6 +85,9 @@ function Tile({ product, context }: { product: ShopProduct; context?: "women" })
   // (usually the back) on hover.
   const [idx, setIdx] = useState(0);
   const [paged, setPaged] = useState(false);
+  const cart = useCart();
+  const locked = usePreLaunch();
+  const [quickOpen, setQuickOpen] = useState(false);
   const page = (e: React.MouseEvent, d: number) => {
     e.preventDefault();
     e.stopPropagation();
@@ -81,6 +108,25 @@ function Tile({ product, context }: { product: ShopProduct; context?: "women" })
   const cur = paged ? idx : 0;
   const front = gallery[cur] ?? null;
   const hover = !paged ? gallery[1] ?? null : null;
+
+  const variants = product.variants ?? [];
+  const canQuickAdd = !soldOut && variants.length > 0;
+  function quickAdd(e: React.MouseEvent, v: ShopVariant) {
+    e.preventDefault();
+    e.stopPropagation();
+    if (locked || !v.availableForSale) return;
+    const price = priceNum(v.price ?? product.minPrice);
+    cart.add({
+      variantId: v.id,
+      productId: product.id,
+      title: product.title,
+      variantLabel: v.title && v.title !== "Default Title" ? v.title : undefined,
+      price,
+      image: front ?? product.imageUrl ?? undefined,
+    });
+    fbTrackAdd(product, price);
+    setQuickOpen(false);
+  }
 
   return (
     <Link href={href} className="group block">
@@ -138,6 +184,43 @@ function Tile({ product, context }: { product: ShopProduct; context?: "women" })
 
         {soldOut && (
           <span className="absolute left-3 top-3 z-10 label-sm text-ink">Sold out</span>
+        )}
+
+        {/* Quick add — appears on hover; pick a size and it drops into the bag
+            without leaving the grid. Disabled until the drop opens. */}
+        {canQuickAdd && (
+          <div
+            className="pointer-events-none absolute inset-x-0 bottom-0 z-20 p-2 opacity-0 transition-opacity duration-200 group-hover:pointer-events-auto group-hover:opacity-100"
+            onClick={(e) => { e.preventDefault(); e.stopPropagation(); }}
+          >
+            {locked ? (
+              <div className="w-full bg-ink/90 px-3 py-2.5 text-center text-[10px] uppercase tracking-[0.18em] text-paper">
+                Drops Mon &middot; 8 AM CT
+              </div>
+            ) : !quickOpen ? (
+              <button
+                type="button"
+                onClick={(e) => { e.preventDefault(); e.stopPropagation(); setQuickOpen(true); }}
+                className="flex w-full items-center justify-center gap-1.5 bg-ink/90 px-3 py-2.5 text-[10px] uppercase tracking-[0.18em] text-paper transition-colors hover:bg-ink"
+              >
+                <Plus className="h-3.5 w-3.5" /> Quick add to bag
+              </button>
+            ) : (
+              <div className="flex flex-wrap items-center gap-1.5 bg-paper/95 p-2">
+                {variants.map((v) => (
+                  <button
+                    key={v.id}
+                    type="button"
+                    disabled={!v.availableForSale}
+                    onClick={(e) => quickAdd(e, v)}
+                    className={`min-w-[2.4rem] border px-2 py-1.5 text-[11px] uppercase tracking-[0.06em] transition-colors ${v.availableForSale ? "border-ink text-ink hover:bg-ink hover:text-paper" : "border-line text-mute line-through"}`}
+                  >
+                    {v.title && v.title !== "Default Title" ? v.title : "Add"}
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
         )}
       </div>
       <div className="mt-3 sm:mt-4">
