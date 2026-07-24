@@ -39,6 +39,14 @@ const STORAGE = "omc:cart:v1";
 const FREE_SHIP_THRESHOLD = 300; // free shipping on orders at/above this subtotal
 const numeric = (id: string) => id.split("/").pop();
 const money = (n: number) => "$" + (Number.isInteger(n) ? n : n.toFixed(2));
+// Founders drop product IDs (numeric Shopify product IDs) — triggers the free
+// Founding Wallet gift at checkout.
+const FOUNDERS_PRODUCT_IDS = new Set<string>([
+  "10426914013463","10426916471063","10426914996503","10410648699159","10419151339799",
+  "10426956841239","10410155868439","10410362568983","10410180837655","10419153633559",
+]);
+// "founders club wallet (free)" variant — rings up $0 with any Founders piece (first 100).
+const FREE_WALLET_VARIANT = "54537039380759";
 
 export function useCart() {
   const c = useContext(Ctx);
@@ -152,8 +160,13 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     if (w.fbq) {
       w.fbq("track", "InitiateCheckout", { content_ids: items.map((i) => i.productId), content_type: "product", value: items.reduce((n, i) => n + i.price * i.qty, 0), currency: "USD", num_items: items.reduce((n, i) => n + i.qty, 0) });
     }
-    const path = items.map((i) => `${numeric(i.variantId)}:${i.qty}`).join(",");
-    window.location.href = `https://${checkoutDomain}/cart/${path}`;
+    const parts = items.map((i) => `${numeric(i.variantId)}:${i.qty}`);
+    // Auto-add the free Founding Wallet when a Founders piece is in the bag; it
+    // rings up $0 via the "Free Wallet (first 100 orders)" automatic discount.
+    const hasFounders = items.some((i) => FOUNDERS_PRODUCT_IDS.has(numeric(i.productId) ?? ""));
+    const hasWallet = items.some((i) => numeric(i.variantId) === FREE_WALLET_VARIANT);
+    if (hasFounders && !hasWallet) parts.push(`${FREE_WALLET_VARIANT}:1`);
+    window.location.href = `https://${checkoutDomain}/cart/${parts.join(",")}`;
   }, [items]);
 
   const value: CartCtx = {
