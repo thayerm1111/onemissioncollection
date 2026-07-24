@@ -59,7 +59,11 @@ function mergeCarts(a: CartLine[], b: CartLine[]): CartLine[] {
   for (const l of a) map.set(l.key, { ...l });
   for (const l of b) {
     const ex = map.get(l.key);
-    if (ex) ex.qty += l.qty;
+    // Take the larger quantity of the two — NOT the sum. The saved cart and the
+    // local cart hold the same lines on every reload, so summing them doubled the
+    // bag on each visit. Using max keeps a returning cart stable while still
+    // pulling in any line that only exists on one side (e.g. added as a guest).
+    if (ex) ex.qty = Math.max(ex.qty, l.qty);
     else map.set(l.key, { ...l });
   }
   return [...map.values()];
