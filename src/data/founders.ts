@@ -50,7 +50,7 @@ const SHORTS_IMGS = [
   img("becf7e2da6e64a7b96d4e6f9e9aab9fc", "1784493712"),
   img("0e31268cba0d49728abe2b1f4f713471", "1784493712"),
   img("de50186913cf4fcb9243c887611542f8", "1784493711"),
-  img("471fcd8eda6b49fabb55e82a2c945d8b", "1784493711"),
+  img("c644728262114860b26314c5e163df1d", "1784566671"),
 ];
 // Tee / yoga / crop were re-cut to Black-only in Tapstitch with new pricing —
 // these image sets and variants match that final state.
@@ -66,10 +66,10 @@ const YOGA_IMGS = [
 ];
 
 const CROP_IMGS = [
-  img("840c6d9fcd7a4b438332a4da72039d55", "1784509146"),
-  img("219d1989ccf740bc883908474ae9ada5", "1784509146"),
-  img("64a93ed56bc048eb8252359bc0399490", "1784509145"),
-  img("18196a0d46c9465fac1e6e956e774a4f", "1784509145"),
+  img("840c6d9fcd7a4b438332a4da72039d55", "1784511801"),
+  img("219d1989ccf740bc883908474ae9ada5", "1784511802"),
+  img("4625da2963344bda9ed24af924a449b7", "1784511802"),
+  img("2c5ba43843204aef90530170dd5b06a0", "1784511802"),
 ];
 
 // Second wave — added July 21. Athletic shorts + washed tank (they share the
