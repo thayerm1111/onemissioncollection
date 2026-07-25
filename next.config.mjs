@@ -20,6 +20,12 @@ const nextConfig = {
         destination: "https://af.uppromote.com/k3vbq8-x0/register",
         permanent: false,
       },
+      {
+        // Shipping details live on the combined Shipping & Returns page.
+        source: "/shipping",
+        destination: "/returns",
+        permanent: true,
+      },
     ];
   },
   // Placeholder images are served locally from /public. When you add remote
