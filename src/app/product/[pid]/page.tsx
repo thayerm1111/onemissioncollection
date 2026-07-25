@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { getProductByPid, pairedProducts, bundleProducts } from "@/data/products";
 import { ProductDetail } from "@/components/ProductDetail";
+import { ProductReviews } from "@/components/ProductReviews";
 import { JsonLd } from "@/components/JsonLd";
 
 const SITE_URL = "https://onemissioncollection.com";
@@ -48,6 +49,7 @@ export default function ProductPage({ params }: { params: { pid: string } }) {
     <>
       <JsonLd data={productLd} />
       <ProductDetail product={product} pairs={pairedProducts(product)} bundleItems={bundleProducts(product)} />
+      <ProductReviews productId={params.pid} productTitle={product.title} />
     </>
   );
 }
