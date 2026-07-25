@@ -42,18 +42,12 @@ export default function FaqPage() {
         </p>
       </Section>
 
-      <Section n="04" title="How long until my order ships?">
+      <Section n="04" title="How long will my order take?">
         <p>
-          Every piece is made for you after you order, so production typically
-          takes <strong>2&ndash;7 business days</strong> before shipping. During a
-          drop, volume can push toward the longer end. Once shipped, U.S. orders
-          usually arrive in 3&ndash;7 business days. You&rsquo;ll get a tracking
-          email the moment your order leaves the facility.
-        </p>
-        <p>
-          Because items are made to order, a single order can occasionally ship in
-          more than one package &mdash; that&rsquo;s normal and there&rsquo;s no
-          extra charge.
+          Most U.S. orders arrive within{" "}
+          <strong>7&ndash;10 business days</strong>. You&rsquo;ll get a tracking
+          email as soon as your order is on its way, so you can follow it right to
+          your door.
         </p>
       </Section>
 
