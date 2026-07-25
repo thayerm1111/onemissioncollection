@@ -6,7 +6,7 @@ const CLIENT_SERVICES = [
   { label: "Order Tracking", href: "/order-tracking" },
   { label: "Wallpapers", href: "/wallpapers" },
   { label: "Your Account", href: "/account" },
-  { label: "Contact", href: "mailto:support@onemissioncollection.com", external: true },
+  { label: "Contact", href: "/contact" },
 ];
 
 const COMPANY = [
