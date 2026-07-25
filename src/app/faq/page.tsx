@@ -4,7 +4,7 @@ import { LegalPage, Section } from "@/components/LegalPage";
 export const metadata: Metadata = {
   title: "FAQ — One Mission Collection",
   description:
-    "Answers to common questions about the Founders Collection drop, the free Founding Wallet, sizing, production and shipping times, returns, order tracking, and affiliates.",
+    "Answers to common questions about the Founders Collection drop, the free Founding Wallet, sizing, shipping times, returns, order tracking, and affiliates.",
 };
 
 export default function FaqPage() {
