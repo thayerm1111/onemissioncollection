@@ -7,11 +7,35 @@
  *
  * July 27, 2026 at 8:00 AM Central. Central is on daylight time in July
  * (CDT = UTC-5), so 8:00 AM Central === 13:00 UTC.
+ *
+ * OWNER PREVIEW BYPASS
+ * --------------------
+ * Visit any page once with  ?preview=omc-preview-2026  (e.g.
+ * https://onemissioncollection.com/?preview=omc-preview-2026 ) and THIS browser
+ * unlocks the full store early — you can add to cart and check out for real
+ * before launch. The flag is saved in this browser only; every other visitor
+ * still sees the pre-launch gate until LAUNCH_AT. To turn it off, run
+ * localStorage.removeItem("omc_preview") in the console, or use a private window.
  */
 export const LAUNCH_AT = Date.parse("2026-07-27T13:00:00Z");
 
-/** True while the drop has not opened yet. */
+/** Secret token that unlocks the store early for the owners' own browser. */
+const PREVIEW_TOKEN = "omc-preview-2026";
+
+/** True while the drop has not opened yet (unless this browser has preview access). */
 export function isPreLaunch(now: number = Date.now()): boolean {
+  // Client-side owner bypass — never affects the public server render.
+  if (typeof window !== "undefined") {
+    try {
+      const params = new URLSearchParams(window.location.search);
+      if (params.get("preview") === PREVIEW_TOKEN) {
+        localStorage.setItem("omc_preview", PREVIEW_TOKEN);
+      }
+      if (localStorage.getItem("omc_preview") === PREVIEW_TOKEN) return false;
+    } catch {
+      /* localStorage/URL unavailable — fall through to the normal time gate */
+    }
+  }
   return now < LAUNCH_AT;
 }
 
