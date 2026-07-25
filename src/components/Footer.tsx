@@ -1,7 +1,9 @@
 import Link from "next/link";
 
 const CLIENT_SERVICES = [
+  { label: "FAQ", href: "/faq" },
   { label: "Shipping & Returns", href: "/returns" },
+  { label: "Order Tracking", href: "/order-tracking" },
   { label: "Wallpapers", href: "/wallpapers" },
   { label: "Your Account", href: "/account" },
   { label: "Contact", href: "mailto:support@onemissioncollection.com", external: true },

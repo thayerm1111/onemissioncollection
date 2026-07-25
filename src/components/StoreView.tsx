@@ -37,6 +37,7 @@ export function StoreView({
   // listing (e.g. after opening a product and hitting Back), so the shopper
   // lands right where they left off instead of at the top of the grid.
   const restored = useRef(false);
+  const restoring = useRef(false);
   useEffect(() => {
     if (restored.current) return;
     restored.current = true;
@@ -44,10 +45,27 @@ export function StoreView({
       const savedType = sessionStorage.getItem(`${key}:type`);
       if (savedType) setType(savedType);
       const savedY = sessionStorage.getItem(`${key}:y`);
-      if (savedY) {
-        const y = parseInt(savedY, 10);
-        // Wait for the filtered grid to lay out, then jump back to the spot.
-        requestAnimationFrame(() => requestAnimationFrame(() => window.scrollTo(0, y)));
+      const y = savedY ? parseInt(savedY, 10) : 0;
+      if (y > 0) {
+        // Product images load asynchronously, so the grid keeps growing taller
+        // after first paint. A single jump would land short (or snap to the
+        // top) because the page isn't tall enough yet and the browser clamps
+        // the scroll. Instead, re-apply the saved position every frame until we
+        // actually reach it — or ~1.5s passes — so Back always returns the
+        // shopper to the exact spot they left. `restoring` pauses the scroll
+        // saver below so these programmatic jumps don't overwrite the target.
+        restoring.current = true;
+        let tries = 0;
+        const maxTries = 90; // ~1.5s at 60fps
+        const restore = () => {
+          window.scrollTo(0, y);
+          if (Math.abs(window.scrollY - y) <= 2 || tries++ >= maxTries) {
+            restoring.current = false;
+            return;
+          }
+          requestAnimationFrame(restore);
+        };
+        requestAnimationFrame(restore);
       }
     } catch {}
   }, [key]);
@@ -63,7 +81,7 @@ export function StoreView({
   useEffect(() => {
     let raf = 0;
     const onScroll = () => {
-      if (raf) return;
+      if (raf || restoring.current) return;
       raf = requestAnimationFrame(() => {
         raf = 0;
         try {
