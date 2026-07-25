@@ -55,8 +55,8 @@ export default function PrivacyPage() {
         <p>
           <strong>Shopify</strong> — store, checkout, and payments.
           <br />
-          <strong>Tapstitch</strong> — production and fulfillment; receives your
-          name and shipping address.
+          <strong>Fulfillment &amp; shipping partners</strong> — receive your name
+          and shipping address to pack and deliver your order.
           <br />
           <strong>Klaviyo</strong> — email and text marketing; receives your name,
           email, and phone if you opted in.
