@@ -15,7 +15,7 @@ const FOUNDERS_PIDS = [
 const STATIC_ROUTES = [
   "", "founders", "featured", "men", "women", "accessories",
   "about", "affiliate", "inner-circle",
-  "faq", "order-tracking",
+  "faq", "order-tracking", "contact",
   "returns", "terms", "privacy", "cookies", "accessibility",
 ];
 
