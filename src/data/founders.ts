@@ -26,7 +26,7 @@ const HOODIE_IMGS = [
   img("d96d43e4b48c47fd9950f6d51843228c", "1784493957"),
   img("8e125bae4e674ee98f69965d3b58a67f", "1784493957"),
   img("2ce80c15271c4c9e8bd0c569db9483db", "1784493957"),
-  img("11b70f0ce2fb4ab9bc2b977a2079e35a", "1784493957"),
+  img("8e6c9b1f32144c859d2ee50e1ea3a689", "1784567046"),
   // Female model wearing the set (hosted in /public).
   "/founders/woman-front.jpg",
   "/founders/woman-back.jpg",
@@ -46,11 +46,11 @@ const SWEATPANT_IMGS = [
   "/founders/woman-seated.jpg",
 ];
 const SHORTS_IMGS = [
-  img("27b5146931d345d79e995588ec7feb4c", "1784493712"),
-  img("becf7e2da6e64a7b96d4e6f9e9aab9fc", "1784493712"),
-  img("0e31268cba0d49728abe2b1f4f713471", "1784493712"),
-  img("de50186913cf4fcb9243c887611542f8", "1784493711"),
+  img("27b5146931d345d79e995588ec7feb4c", "1784566672"),
   img("c644728262114860b26314c5e163df1d", "1784566671"),
+  img("0e31268cba0d49728abe2b1f4f713471", "1784566672"),
+  img("4ec85ee48d3641d2a582f67cb2cb7c30", "1784566671"),
+  img("becf7e2da6e64a7b96d4e6f9e9aab9fc", "1784566672"),
 ];
 // Tee / yoga / crop were re-cut to Black-only in Tapstitch with new pricing —
 // these image sets and variants match that final state.
@@ -100,12 +100,11 @@ const SPORTCROP_IMGS = [
   img("54452895606d4f268ef58d57dd8b36ba", "1784659356"),
 ];
 const LEGGINGS_IMGS = [
-  img("4f6b1f07635842699bb09c38b6389c72", "1784666527"),
-  img("15d9e842daee4c02997c00e050bb80f8", "1784666527"),
-  img("ab7af5f440bb40289e0a416ad9c51f63", "1784666527"),
-  img("66573ae81ddd4b6d98170e572c32568b", "1784666526"),
-  img("69e6ddf8890e4d8ea5b6e2f8508c9b5f", "1784666527"),
-  img("6b62147832e247f9b6704aa9deba4911", "1784666526"),
+  img("4f6b1f07635842699bb09c38b6389c72", "1784667936"),
+  img("15d9e842daee4c02997c00e050bb80f8", "1784667936"),
+  img("ab7af5f440bb40289e0a416ad9c51f63", "1784667937"),
+  img("66573ae81ddd4b6d98170e572c32568b", "1784667937"),
+  img("69e6ddf8890e4d8ea5b6e2f8508c9b5f", "1784667936"),
 ];
 
 const SIZES = ["S", "M", "L", "XL", "2XL"];
