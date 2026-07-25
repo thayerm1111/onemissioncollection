@@ -52,7 +52,7 @@ const SHORTS_IMGS = [
   img("4ec85ee48d3641d2a582f67cb2cb7c30", "1784566671"),
   img("becf7e2da6e64a7b96d4e6f9e9aab9fc", "1784566672"),
 ];
-// Tee / yoga / crop were re-cut to Black-only in Tapstitch with new pricing —
+// Tee / yoga / crop were re-cut to Black-only with new pricing —
 // these image sets and variants match that final state.
 const TEE_IMGS = [
   img("89de5daff21c427e846acd19550cf818", "1784498690"),
@@ -193,7 +193,7 @@ export const FOUNDERS_NEW: ShopProduct[] = [
     ),
   },
   {
-    // Re-cut in Tapstitch as a brand-new product (the previous crop tee was
+    // Re-cut as a brand-new product (the previous crop tee was
     // glitching its mockups and has been archived in Shopify).
     id: FOUNDERS_CROP,
     title: "Founders Club Crop Top",
