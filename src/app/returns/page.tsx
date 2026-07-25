@@ -13,21 +13,21 @@ export default function ReturnsPage() {
       eyebrow="Client Services"
       title="Shipping & Returns"
       updated="July 20, 2026"
-      intro="Every piece is made for you after you order, so timelines run a little longer than stocked retail. Here's exactly what to expect, and what to do if something isn't right."
+      intro="Here's exactly what to expect from shipping, and what to do if something isn't right."
     >
-      <Section n="01" title="Production time">
+      <Section n="01" title="Order processing">
         <p>
-          Orders are typically produced in 2&ndash;7 business days before they
-          ship. During a drop, volume can push this toward the longer end. You
-          will get a tracking email the moment your order leaves the facility.
+          Orders are typically processed within a few business days of checkout.
+          During a drop, volume can push this toward the longer end. You will get
+          a tracking email as soon as your order is on its way.
         </p>
       </Section>
 
       <Section n="02" title="Shipping time and cost">
         <p>
-          Once shipped, domestic U.S. orders usually arrive in 3&ndash;7 business
-          days. Shipping cost is calculated at checkout based on your address and
-          the option you choose.
+          Most domestic U.S. orders arrive within 7&ndash;10 business days.
+          Shipping cost is calculated at checkout based on your address and the
+          option you choose.
         </p>
         <p>
           Delivery estimates are not guarantees. Carrier delays, weather, and
