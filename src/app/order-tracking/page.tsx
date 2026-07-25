@@ -27,20 +27,18 @@ export default function OrderTrackingPage() {
 
       <Section n="02" title="When tracking becomes available">
         <p>
-          Every piece is made to order, so it&rsquo;s produced in{" "}
-          <strong>2&ndash;7 business days</strong> before it ships. As soon as it
-          leaves the facility, we send a separate <strong>shipping email with a
-          tracking number</strong>. Until then, your order status will show as
-          &ldquo;in production&rdquo; &mdash; that&rsquo;s expected.
+          Most U.S. orders arrive within{" "}
+          <strong>7&ndash;10 business days</strong>. As soon as your order is on
+          its way, we send a separate <strong>shipping email with a tracking
+          number</strong> so you can follow it to your door.
         </p>
       </Section>
 
-      <Section n="03" title="Orders that ship in more than one package">
+      <Section n="03" title="Orders that arrive in more than one package">
         <p>
-          Because items are made to order, a single order can occasionally arrive
-          in more than one shipment &mdash; each with its own tracking. If part of
-          your order arrives before the rest, the remaining pieces are still on
-          the way at no extra cost.
+          Once in a while, a single order arrives in more than one package &mdash;
+          each with its own tracking. If part of your order arrives before the
+          rest, the remaining pieces are still on the way at no extra cost.
         </p>
       </Section>
 
