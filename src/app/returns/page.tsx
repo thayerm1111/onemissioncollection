@@ -94,10 +94,10 @@ export default function ReturnsPage() {
 
       <Section n="07" title="Exchanges">
         <p>
-          Because each piece is made individually, we do not run a direct exchange
-          process. If you need a different size or color, return the original for
-          a refund and place a new order. That gets the right piece into
-          production immediately rather than waiting on your return to arrive.
+          To keep things simple, we do not run a direct exchange process. If you
+          need a different size or color, return the original for a refund and
+          place a new order. That gets the right piece on its way to you right
+          away rather than waiting on your return to arrive.
         </p>
         <p>
           Check the size guide on the product page before ordering — it is the
@@ -117,9 +117,9 @@ export default function ReturnsPage() {
       <Section n="09" title="Order changes and cancellations">
         <p>
           Contact us as soon as possible if you need to change or cancel an order.
-          If production has not started we can usually help. Once a piece is in
-          production we generally cannot stop it, and the 30-day return policy
-          becomes your route instead.
+          If your order has not been prepared for shipment yet we can usually
+          help. Once it is being prepared we generally cannot stop it, and the
+          30-day return policy becomes your route instead.
         </p>
       </Section>
 
