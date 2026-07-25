@@ -40,28 +40,26 @@ export default function TermsPage() {
         </p>
       </Section>
 
-      <Section n="03" title="Products are made to order">
+      <Section n="03" title="Product variations & finishes">
         <p>
-          Our garments are produced individually after you order them. This has
-          two practical consequences worth understanding before you buy.
+          Our garments feature washed, distressed, and hand-finished detailing, so
+          small variations from piece to piece are normal and part of the design.
+          Print placement can shift slightly, washed and distressed finishes
+          differ between garments, and colors on your screen may not match the
+          finished piece exactly. These variations are characteristics of the
+          product, not defects.
         </p>
         <p>
-          First, small variations are normal. Print placement can shift slightly,
-          washed and distressed finishes differ from piece to piece by design, and
-          colors on your screen may not match the finished garment exactly. These
-          variations are characteristics of the product, not defects.
-        </p>
-        <p>
-          Second, production usually begins soon after checkout. Once a piece
-          enters production we generally cannot cancel or change the order.
-          Contact us immediately if you need to correct something and we will do
+          Orders are generally prepared for shipment soon after checkout. Once an
+          order is being prepared we may not be able to cancel or change it.
+          Contact us right away if you need to correct something and we will do
           what we can.
         </p>
       </Section>
 
       <Section n="04" title="Limited releases">
         <p>
-          Some collections are produced in a fixed quantity and are not restocked.
+          Some collections are released in a fixed quantity and are not restocked.
           When a size or piece sells out, it may be gone permanently. We do not
           guarantee that any item will return, and we may end a release early or
           extend it at our discretion.
