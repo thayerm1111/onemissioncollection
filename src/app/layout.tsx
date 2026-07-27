@@ -20,6 +20,10 @@ const META_PIXEL_ID = "1711643830135318";
 // tracking (powers the Browse Abandonment flow) and on-site sign-up forms.
 const KLAVIYO_COMPANY_ID = "Yq65z5";
 
+// Shopify store domain — the backend this headless site checks out against.
+// Used by the UpPromote affiliate pixel to tie referrals to the right store.
+const SHOPIFY_STORE_DOMAIN = "1-mission-2.myshopify.com";
+
 const SEO_DESCRIPTION =
   "Faith-driven streetwear for the ones who felt lost. Inspired by Matthew 18:13 — leaving the 99 to find the 1. Shop the Founders Collection.";
 
@@ -83,6 +87,19 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           id="klaviyo-onsite"
           strategy="afterInteractive"
           src={`https://static.klaviyo.com/onsite/js/klaviyo.js?company_id=${KLAVIYO_COMPANY_ID}`}
+        />
+        {/* UpPromote affiliate tracking — headless / third-party-store install.
+            This is UpPromote's official pixel for a custom storefront: it reads
+            the affiliate referral when a visitor lands from an affiliate link,
+            stores it first-party, and carries attribution through to Shopify's
+            native checkout (this site checks out on the Shopify domain). `shop`
+            must be the Shopify store domain UpPromote is installed on. This lets
+            affiliate links point at onemissioncollection.com instead of the
+            Shopify online store, while orders still credit the right affiliate. */}
+        <Script
+          id="uppromote-pixel"
+          strategy="afterInteractive"
+          src={`https://pixel.uppromote.com/collect/v1/collect?shop=${SHOPIFY_STORE_DOMAIN}`}
         />
         {/* Vercel Web Analytics — live visitor tracking. Starts collecting once
             Web Analytics is enabled for this project in the Vercel dashboard.
