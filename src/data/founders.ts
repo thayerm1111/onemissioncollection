@@ -259,16 +259,18 @@ export const FOUNDERS_OVERRIDES: Array<Partial<ShopProduct> & { id: string }> = 
     id: FOUNDERS_TEE,
     title: "Founders Club Tee",
     description:
-      "Essential heavyweight cotton tee, 9.7 oz, drop shoulder. Black. XS–2XL. Limited supply.",
+      "Essential heavyweight cotton tee, 9.7 oz, drop shoulder. Black. S–3XL. Limited supply.",
     imageUrl: TEE_IMGS[0], imageAlt: "Founders Club Tee",
     images: TEE_IMGS,
     colorImages: undefined,
     minPrice: "$59.99",
     badge: "Founders Collection",
+    // Re-cut in Tapstitch as a new product (Founders Club T-shirt, 10445724778775).
+    // Checkout variant ids point at that new product; sizes S–3XL, Black.
     variants: [
-      ["53669577097495", "Black / XS"], ["53669577130263", "Black / S"],
-      ["53669577163031", "Black / M"], ["53669577195799", "Black / L"],
-      ["53669577228567", "Black / XL"], ["53669577261335", "Black / 2XL"],
+      ["54545916166423", "Black / S"], ["54545916199191", "Black / M"],
+      ["54545916231959", "Black / L"], ["54545916264727", "Black / XL"],
+      ["54545916297495", "Black / 2XL"], ["54545916330263", "Black / 3XL"],
     ].map(([id, title]) => V(id, title, "$59.99")),
   },
   {
