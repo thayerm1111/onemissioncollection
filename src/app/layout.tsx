@@ -84,6 +84,15 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           strategy="afterInteractive"
           src={`https://static.klaviyo.com/onsite/js/klaviyo.js?company_id=${KLAVIYO_COMPANY_ID}`}
         />
+        {/* Vercel Web Analytics — live visitor tracking. Starts collecting once
+            Web Analytics is enabled for this project in the Vercel dashboard.
+            Uses the framework-agnostic script (no npm dependency) to avoid any
+            build/version risk. */}
+        <Script
+          id="vercel-insights"
+          strategy="afterInteractive"
+          src="/_vercel/insights/script.js"
+        />
         <JsonLd data={ORG_LD} />
         <JsonLd data={WEBSITE_LD} />
         <AuthProvider>
