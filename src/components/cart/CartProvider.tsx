@@ -36,6 +36,21 @@ type CartCtx = {
 
 const Ctx = createContext<CartCtx | null>(null);
 const STORAGE = "omc:cart:v1";
+const REF_KEY = "omc:ref:v1"; // affiliate referral code captured from ?sca_ref / ?ref
+const REF_TTL_MS = 1000 * 60 * 60 * 24 * 60; // remember the referrer for 60 days
+
+// Read a still-valid captured affiliate referral code, if any.
+function readAffiliateRef(): string | null {
+  try {
+    const raw = localStorage.getItem(REF_KEY);
+    if (!raw) return null;
+    const { code, ts } = JSON.parse(raw) as { code?: string; ts?: number };
+    if (!code || !ts || Date.now() - ts > REF_TTL_MS) return null;
+    return String(code);
+  } catch {
+    return null;
+  }
+}
 const FREE_SHIP_THRESHOLD = 300; // free shipping on orders at/above this subtotal
 const numeric = (id: string) => id.split("/").pop();
 const money = (n: number) => "$" + (Number.isInteger(n) ? n : n.toFixed(2));
@@ -83,6 +98,17 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       if (raw) setItems(JSON.parse(raw));
     } catch {}
     setHydrated(true);
+  }, []);
+
+  // Capture the affiliate referral code when someone arrives from an affiliate
+  // link (?sca_ref=… or ?ref=…). Stored locally so we can stamp it onto the
+  // order at checkout — this is what lets each affiliate see the sales they drove.
+  useEffect(() => {
+    try {
+      const p = new URLSearchParams(window.location.search);
+      const code = p.get("sca_ref") || p.get("ref");
+      if (code) localStorage.setItem(REF_KEY, JSON.stringify({ code, ts: Date.now() }));
+    } catch {}
   }, []);
 
   // Persist the bag to the browser as it changes.
@@ -170,7 +196,13 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     const hasFounders = items.some((i) => FOUNDERS_PRODUCT_IDS.has(numeric(i.productId) ?? ""));
     const hasWallet = items.some((i) => numeric(i.variantId) === FREE_WALLET_VARIANT);
     if (hasFounders && !hasWallet) parts.push(`${FREE_WALLET_VARIANT}:1`);
-    window.location.href = `https://${checkoutDomain}/cart/${parts.join(",")}`;
+    let url = `https://${checkoutDomain}/cart/${parts.join(",")}`;
+    // Stamp the referring affiliate onto the order (rides along as an order
+    // attribute Shopify records) so the sale can be credited to them. No-op
+    // when there's no referral code, so normal checkout is unchanged.
+    const ref = readAffiliateRef();
+    if (ref) url += `?attributes[omc_ref]=${encodeURIComponent(ref)}`;
+    window.location.href = url;
   }, [items]);
 
   const value: CartCtx = {
