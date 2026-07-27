@@ -5,6 +5,7 @@ import Link from "next/link";
 import { Eye, EyeOff } from "lucide-react";
 import { useAuth } from "@/components/auth/AuthProvider";
 import { useCart } from "@/components/cart/CartProvider";
+import { AffiliateReferrals } from "@/components/AffiliateReferrals";
 
 const INK = "#17140f";
 const MUTE = "#8c857a";
@@ -100,6 +101,10 @@ export default function AccountPage() {
             <button onClick={cart.open} style={{ ...btn, marginTop: 14 }}>View Bag</button>
           )}
         </div>
+
+        {/* Affiliate back-office: shows an affiliate their own referred buyers
+            (first/last name only). Renders nothing for non-affiliates. */}
+        <AffiliateReferrals />
 
         <div style={{ border: "1px solid rgba(0,0,0,.12)", padding: "20px 22px", marginBottom: 16 }}>
           <div style={{ ...label, marginBottom: 10 }}>Orders</div>
