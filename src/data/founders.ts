@@ -75,11 +75,11 @@ const CROP_IMGS = [
 // Second wave — added July 21. Athletic shorts + washed tank (they share the
 // same model shoot) and a women's sport crop.
 const ATHSHORTS_IMGS = [
-  img("e941cdfb49034938b7a22f65a1d1f1d2", "1784664487"),
-  img("14b8235998a3428caea1f1e71a9f4ed0", "1784664487"),
-  img("ea493f51207e4101a6105ec328e945b9", "1784664487"),
-  img("5e506ddf24d94a41a06cda6f8fbd0ed2", "1784664486"),
-  img("ae96ca0d46b64a218e8922d601003d68", "1784664485"),
+  img("5818b72f35ea4714a58d3cec9ee7c282", "1785469928"),
+  img("811fd05935ea492eb5b558d8a7c60ab1", "1785469927"),
+  img("d6cfe9c1af094de0b65bbf4a2861b92d", "1785469927"),
+  img("f6a743bc363c4d80adac69c28b87761a", "1785469926"),
+  img("7b31f9192b374f0fa73e64c02c7d8fc9", "1785469925"),
 ];
 // Grouped by colorway so the PDP color swap works: Black block first (it's the
 // default), then Light Gray. Each block leads with its "front" shot — the
@@ -296,15 +296,20 @@ export const FOUNDERS_OVERRIDES: Array<Partial<ShopProduct> & { id: string }> = 
     id: FOUNDERS_ATHSHORTS,
     title: "Founders Club Athletic Shorts",
     description:
-      "Loose-fit performance short, quick-dry poly/elastane. Made for the gym and the run. Black. S–2XL. Limited supply.",
+      "Lightweight performance short, quick-dry nylon/spandex. Made for the gym and the run. Black. M–3XL. Limited supply.",
     imageUrl: ATHSHORTS_IMGS[0], imageAlt: "Founders Club Athletic Shorts",
     images: ATHSHORTS_IMGS,
     colorImages: undefined,
     minPrice: "$59.99",
     badge: "Founders Collection",
-    variants: SIZES.map((s, i) =>
-      V(["53664779206935","53664779239703","53664779272471","53664779305239","53664779338007"][i], `Black / ${s}`, "$59.99"),
-    ),
+    // Re-created in the supplier catalog (old one discontinued) — new Shopify
+    // variant ids, size run now M–3XL. Same product URL is kept so existing
+    // links and the founders-wallet trigger stay intact.
+    variants: [
+      ["54574362001687", "Black / M"], ["54574362034455", "Black / L"],
+      ["54574362067223", "Black / XL"], ["54574362099991", "Black / 2XL"],
+      ["54574362132759", "Black / 3XL"],
+    ].map(([id, title]) => V(id, title, "$59.99")),
   },
   {
     id: FOUNDERS_TANK,
