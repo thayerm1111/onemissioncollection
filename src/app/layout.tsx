@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import Script from "next/script";
 import "./globals.css";
 import { Header } from "@/components/Header";
@@ -8,6 +8,7 @@ import { CartProvider } from "@/components/cart/CartProvider";
 import { AuthProvider } from "@/components/auth/AuthProvider";
 import { PromoPopup } from "@/components/PromoPopup";
 import { JsonLd } from "@/components/JsonLd";
+import { PWARegister } from "@/components/PWARegister";
 
 const SITE_URL = "https://onemissioncollection.com";
 
@@ -47,6 +48,23 @@ export const metadata: Metadata = {
     title: "One Mission Collection — Faith-Driven Streetwear",
     description: SEO_DESCRIPTION,
   },
+  // Installable-app (PWA) metadata.
+  manifest: "/manifest.webmanifest",
+  applicationName: "One Mission",
+  appleWebApp: {
+    capable: true,
+    title: "One Mission",
+    statusBarStyle: "default",
+  },
+  icons: {
+    icon: "/icon.svg",
+    shortcut: "/icon.svg",
+    apple: "/app/apple-touch-icon.png",
+  },
+};
+
+export const viewport: Viewport = {
+  themeColor: "#f5f2ec",
 };
 
 // Site-wide structured data: the brand and the searchable site.
@@ -112,6 +130,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         />
         <JsonLd data={ORG_LD} />
         <JsonLd data={WEBSITE_LD} />
+        <PWARegister />
         <AuthProvider>
           <CartProvider>
             <IntroSplash />
