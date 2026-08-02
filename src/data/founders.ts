@@ -164,7 +164,7 @@ export const FOUNDERS_NEW: ShopProduct[] = [
     title: "Founders Club Sweatpants",
     handle: "the-founders-club-sweatpants",
     description:
-      "Straight-leg heavyweight sweatpant, 12.7 oz brushed cotton blend. Built to be lived in. Limited supply.",
+      "Straight-leg heavyweight sweatpant, 10.6 oz brushed cotton-blend fleece. Built to be lived in. Limited supply.",
     imageUrl: SWEATPANT_IMGS[0], imageAlt: "Founders Club Sweatpants",
     images: SWEATPANT_IMGS,
     // Shot on a dark studio backdrop, so flag as a model lead — that skips the
@@ -175,7 +175,7 @@ export const FOUNDERS_NEW: ShopProduct[] = [
     minPrice: "$79.99", currency: "USD", hasOptions: true,
     badge: "Founders Collection",
     variants: SIZES.map((s, i) =>
-      V(["54121874882839","54121874915607","54121874948375","54121874981143","54121875013911"][i], `Black / ${s}`, "$79.99"),
+      V(["54586052575511","54586052608279","54586052641047","54586052673815","54586052706583"][i], `Black / ${s}`, "$79.99"),
     ),
   },
   {
@@ -237,7 +237,7 @@ export const FOUNDERS_NEW: ShopProduct[] = [
     title: "Founders Club Sweatpants",
     handle: "founders-club-sweatpants-women",
     description:
-      "Straight-leg heavyweight sweatpant, 12.7 oz brushed cotton blend. Built to be lived in. Limited supply.",
+      "Straight-leg heavyweight sweatpant, 10.6 oz brushed cotton-blend fleece. Built to be lived in. Limited supply.",
     // Lead with the seated shot so this tile reads distinctly from the hoodie
     // tile (which leads with the back view). `flat` keeps the pants close-up.
     imageUrl: "/founders/woman-seated.jpg", imageAlt: "Founders Club Sweatpants",
@@ -248,7 +248,7 @@ export const FOUNDERS_NEW: ShopProduct[] = [
     badge: "Founders Collection",
     gender: "women", type: "Sweatpants",
     variants: SIZES.map((s, i) =>
-      V(["54121874882839","54121874915607","54121874948375","54121874981143","54121875013911"][i], `Black / ${s}`, "$79.99"),
+      V(["54586052575511","54586052608279","54586052641047","54586052673815","54586052706583"][i], `Black / ${s}`, "$79.99"),
     ),
   },
 ];
