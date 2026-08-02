@@ -164,7 +164,7 @@ export const FOUNDERS_NEW: ShopProduct[] = [
     title: "Founders Club Sweatpants",
     handle: "the-founders-club-sweatpants",
     description:
-      "Straight-leg heavyweight sweatpant, 15.6 oz 100% cotton. Built to be lived in. Limited supply.",
+      "Straight-leg heavyweight sweatpant, 12.7 oz brushed cotton blend. Built to be lived in. Limited supply.",
     imageUrl: SWEATPANT_IMGS[0], imageAlt: "Founders Club Sweatpants",
     images: SWEATPANT_IMGS,
     // Shot on a dark studio backdrop, so flag as a model lead — that skips the
@@ -172,15 +172,11 @@ export const FOUNDERS_NEW: ShopProduct[] = [
     // these to black). `flat` = the cropped leg-detail for the "Style With" tile.
     model: SWEATPANT_IMGS[0],
     flat: SWEATPANT_IMGS[2],
-    minPrice: "$89.99", currency: "USD", hasOptions: true,
+    minPrice: "$79.99", currency: "USD", hasOptions: true,
     badge: "Founders Collection",
-    // Backend swapped to the new Tapstitch sweatpant (Shopify product
-    // 10462893998359) — 15.6 oz 100% cotton, sizes 2XS–L, $89.99. Photos kept.
-    variants: [
-      ["54585999393047", "Black / 2XS"], ["54585999425815", "Black / XS"],
-      ["54585999458583", "Black / S"], ["54585999491351", "Black / M"],
-      ["54585999524119", "Black / L"],
-    ].map(([id, title]) => V(id, title, "$89.99")),
+    variants: SIZES.map((s, i) =>
+      V(["54121874882839","54121874915607","54121874948375","54121874981143","54121875013911"][i], `Black / ${s}`, "$79.99"),
+    ),
   },
   {
     id: FOUNDERS_SHORTS,
@@ -241,22 +237,19 @@ export const FOUNDERS_NEW: ShopProduct[] = [
     title: "Founders Club Sweatpants",
     handle: "founders-club-sweatpants-women",
     description:
-      "Straight-leg heavyweight sweatpant, 15.6 oz 100% cotton. Built to be lived in. Limited supply.",
+      "Straight-leg heavyweight sweatpant, 12.7 oz brushed cotton blend. Built to be lived in. Limited supply.",
     // Lead with the seated shot so this tile reads distinctly from the hoodie
     // tile (which leads with the back view). `flat` keeps the pants close-up.
     imageUrl: "/founders/woman-seated.jpg", imageAlt: "Founders Club Sweatpants",
     images: ["/founders/woman-seated.jpg", "/founders/woman-front.jpg", "/founders/woman-back.jpg", "/founders/woman-pants.jpg"],
     model: "/founders/woman-seated.jpg",
     flat: "/founders/woman-pants.jpg",
-    minPrice: "$89.99", currency: "USD", hasOptions: true,
+    minPrice: "$79.99", currency: "USD", hasOptions: true,
     badge: "Founders Collection",
     gender: "women", type: "Sweatpants",
-    // Same new backend sweatpant as the men's listing (10462893998359).
-    variants: [
-      ["54585999393047", "Black / 2XS"], ["54585999425815", "Black / XS"],
-      ["54585999458583", "Black / S"], ["54585999491351", "Black / M"],
-      ["54585999524119", "Black / L"],
-    ].map(([id, title]) => V(id, title, "$89.99")),
+    variants: SIZES.map((s, i) =>
+      V(["54121874882839","54121874915607","54121874948375","54121874981143","54121875013911"][i], `Black / ${s}`, "$79.99"),
+    ),
   },
 ];
 
